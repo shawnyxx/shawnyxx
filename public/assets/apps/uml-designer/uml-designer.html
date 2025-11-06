@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Single-File UML Designer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root {
+    color-scheme: light dark;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 15px;
+    --bg: #f5f7fb;
+    --panel: #ffffff;
+    --border: #d0d5dd;
+    --text: #1f2933;
+    --accent: #2563eb;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  header {
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+  }
+
+  header h1 {
+    margin: 0;
+    font-size: 1.25rem;
+  }
+
+  main {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+
+  @media (max-width: 1000px) {
+    main {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  }
+
+  .panel h2 {
+    margin: 0 0 0.75rem;
+    font-size: 1.1rem;
+  }
+
+  .controls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .controls label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .controls input[type="file"],
+  .controls select,
+  .controls button,
+  .controls textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font: inherit;
+    background: white;
+    color: inherit;
+  }
+
+  .controls button {
+    cursor: pointer;
+    border: none;
+    background: var(--accent);
+    color: white;
+    font-weight: 600;
+    transition: transform 0.05s ease, box-shadow 0.1s ease;
+  }
+
+  .controls button.secondary {
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+  }
+
+  .controls button:active {
+    transform: translateY(1px);
+    box-shadow: inset 0 3px 6px rgba(15, 23, 42, 0.18);
+  }
+
+  #canvas {
+    position: relative;
+    min-height: 540px;
+    background: radial-gradient(circle at top left, rgba(37,99,235,0.08), transparent 40%), var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .uml-node {
+    position: absolute;
+    min-width: 180px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+    cursor: move;
+    user-select: none;
+  }
+
+  .uml-node header {
+    border-radius: 10px 10px 0 0;
+    padding: 0.6rem 0.75rem;
+    background: linear-gradient(120deg, rgba(37, 99, 235, 0.85), rgba(99, 102, 241, 0.85));
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .uml-node header span {
+    font-weight: 600;
+  }
+
+  .uml-node ul {
+    list-style: none;
+    margin: 0;
+    padding: 0.6rem 0.75rem;
+    border-top: 1px solid var(--border);
+    background: rgba(148, 163, 184, 0.08);
+  }
+
+  .uml-node ul li {
+    margin-bottom: 0.25rem;
+    word-break: break-word;
+  }
+
+  .floating-actions {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 10;
+  }
+
+  .floating-actions button {
+    padding: 0.75rem 1rem;
+    border-radius: 999px;
+  }
+
+  #contextMenu {
+    position: fixed;
+    z-index: 20;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: 0 12px 34px rgba(15, 23, 42, 0.18);
+    display: none;
+    min-width: 180px;
+    padding: 0.25rem;
+  }
+
+  #contextMenu button {
+    width: 100%;
+    border: none;
+    background: transparent;
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    font: inherit;
+    color: var(--text);
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  #contextMenu button:hover {
+    background: rgba(37, 99, 235, 0.12);
+  }
+
+  dialog {
+    border: none;
+    border-radius: 12px;
+    padding: 0;
+    max-width: 560px;
+    width: min(92vw, 560px);
+    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.16);
+  }
+
+  dialog::backdrop {
+    background: rgba(15, 23, 42, 0.45);
+  }
+
+  .modal {
+    padding: 1.25rem 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  /* Improved class editor styles */
+  .class-editor {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .class-editor .section {
+    background: rgba(15,23,42,0.03);
+    border: 1px solid rgba(15,23,42,0.04);
+    padding: 0.75rem;
+    border-radius: 8px;
+  }
+
+  .field-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .field-item {
+    display: grid;
+    grid-template-columns: 120px 1fr 120px 36px;
+    gap: 0.5rem;
+    align-items: center;
+    background: white;
+    border: 1px solid var(--border);
+    padding: 0.45rem;
+    border-radius: 8px;
+  }
+
+  .field-item input[type="text"],
+  .field-item input[type="search"],
+  .field-item select {
+    padding: 0.45rem 0.55rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font: inherit;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .field-actions {
+    display: flex;
+    gap: 0.4rem;
+    justify-content: flex-end;
+  }
+
+  .remove-btn {
+    background: transparent;
+    border: 1px solid rgba(220,38,38,0.08);
+    color: #b91c1c;
+    padding: 0.35rem 0.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  .small-btn {
+    padding: 0.35rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+  }
+
+  /* Responsive fallback for field-item grid */
+  @media (max-width: 480px) {
+    .field-item { grid-template-columns: 1fr; }
+  }
+
+  .modal h3 {
+    margin: 0;
+  }
+
+  .field-group {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .field-group input,
+  .field-group select {
+    flex: 1;
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: rgba(37, 99, 235, 0.1);
+    color: var(--accent);
+    border-radius: 999px;
+    padding: 0.25rem 0.65rem;
+    font-size: 0.8rem;
+  }
+
+  .qr-modal {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  @media (max-width: 680px) {
+    .qr-modal {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+  }
+
+  #qrImage {
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.18);
+  }
+
+  .video-wrapper {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    background: black;
+  }
+
+  .video-wrapper video {
+    width: 100%;
+    display: block;
+  }
+
+  details {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+  }
+
+  summary {
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  code {
+    background: rgba(15, 23, 42, 0.08);
+    border-radius: 6px;
+    padding: 0 0.25rem;
+  }
+
+  .method-static {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.85rem;
+    padding: 0.3rem 0.6rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: rgba(148, 163, 184, 0.12);
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>UML Designer</h1>
+  <span class="tag" id="languageTag">Language: JavaScript</span>
+</header>
+<main>
+  <section class="panel">
+    <h2>Project Controls</h2>
+    <div class="controls">
+      <div>
+        <label for="languageSelect">Target language</label>
+        <select id="languageSelect">
+          <option value="JavaScript" selected>JavaScript</option>
+          <option value="TypeScript">TypeScript</option>
+          <option value="Python">Python</option>
+          <option value="Java">Java</option>
+        </select>
+      </div>
+      <div>
+        <label for="importSource">Import TS/JS classes</label>
+        <input type="file" id="importSource" accept=".ts,.js" multiple>
+      </div>
+      <div>
+        <button id="addClassBtn">New class</button>
+      </div>
+      <div>
+        <button id="saveLocalBtn" class="secondary">Save to local storage</button>
+      </div>
+      <div>
+        <button id="loadLocalBtn" class="secondary">Restore from local storage</button>
+      </div>
+      <div>
+        <button id="exportJsonBtn">Export as JSON</button>
+      </div>
+      <div>
+        <label for="importJsonInput">Import from JSON</label>
+        <input type="file" id="importJsonInput" accept=".json">
+      </div>
+      <div>
+        <button id="shareBtn" class="secondary">Share via link & QR</button>
+      </div>
+      <div>
+        <button id="scanQrBtn" class="secondary">Import from QR</button>
+      </div>
+    </div>
+  </section>
+  <section class="panel" style="padding: 0;">
+    <div id="canvas"></div>
+  </section>
+</main>
+
+<div class="floating-actions">
+  <button id="clearBtn" class="secondary">Clear canvas</button>
+</div>
+
+<dialog id="classDialog">
+  <form method="dialog" class="modal" id="classForm">
+    <h3 id="classDialogTitle">Create class</h3>
+    <div class="class-editor">
+      <div>
+        <label for="classNameInput">Class name</label>
+        <input id="classNameInput" name="className" required placeholder="e.g. ProjectPlanner">
+      </div>
+
+      <div class="section">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Attributes</strong>
+          <div class="field-actions">
+            <button type="button" id="addAttributeBtn" class="small-btn">Add attribute</button>
+          </div>
+        </div>
+        <div id="attributesContainer" class="field-list"></div>
+      </div>
+
+      <div class="section">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Methods</strong>
+          <div class="field-actions">
+            <button type="button" id="addMethodBtn" class="small-btn">Add method</button>
+          </div>
+        </div>
+        <div id="methodsContainer" class="field-list"></div>
+      </div>
+    </div>
+    <menu style="display:flex; gap:0.75rem; justify-content:flex-end; margin:0; padding:0;">
+      <button value="cancel" class="secondary">Cancel</button>
+      <button id="submitClassBtn" value="confirm">Save</button>
+    </menu>
+  </form>
+</dialog>
+
+<dialog id="shareDialog">
+  <div class="modal">
+    <h3>Share diagram</h3>
+    <div class="qr-modal">
+      <img id="qrImage" alt="QR code" width="180" height="180">
+      <div>
+        <p>Use this link or QR code to share the current UML diagram. Links embed the model as Base64-encoded JSON.</p>
+        <textarea id="shareLink" rows="3" readonly></textarea>
+        <button id="copyLinkBtn" class="secondary">Copy link</button>
+        <p id="shareWarning" style="margin:0.5rem 0 0; color:#b91c1c; font-size:0.85rem; display:none;">Link is large; QR generation uses an external service and may fail on very long payloads.</p>
+      </div>
+    </div>
+    <menu style="display:flex; gap:0.75rem; justify-content:flex-end; margin:0; padding:0;">
+      <button id="closeShareBtn" class="secondary">Close</button>
+    </menu>
+  </div>
+</dialog>
+
+<dialog id="qrScannerDialog">
+  <div class="modal">
+    <h3>Scan QR code</h3>
+    <p id="qrScannerStatus">Initializing scanner...</p>
+    <div class="video-wrapper" hidden>
+      <video id="qrVideo" playsinline></video>
+    </div>
+    <menu style="display:flex; gap:0.75rem; justify-content:flex-end; margin:0; padding:0;">
+      <button id="closeScannerBtn" class="secondary">Cancel</button>
+    </menu>
+  </div>
+</dialog>
+
+<section class="panel" style="margin: 0 1.5rem 2rem;">
+  <h2>Maintenance Notes</h2>
+  <details open>
+    <summary>How to extend and maintain this designer</summary>
+    <ol style="line-height:1.6; padding-left:1.2rem;">
+      <li><strong>Data model</strong>: Diagram state lives in <code>umlData</code>. Every class object stores <code>id</code>, <code>name</code>, <code>attributes</code>, <code>methods</code>, and <code>position</code>. Update <code>renderCanvas()</code> if you introduce new visual metadata.</li>
+      <li><strong>Parser</strong>: <code>parseClassesFromSource()</code> targets standard ES/TS classes. To support decorators, mixins, or advanced signatures, augment its regexes and normalisation logic.</li>
+      <li><strong>Interactions</strong>: Drag behaviour is wired in <code>attachNodeDrag()</code>. Add snapping, alignment lines, or connectors there.</li>
+      <li><strong>Persistence</strong>: Local storage uses the <code>uml-designer-state</code> key. If you ship breaking schema changes, introduce a <code>version</code> flag and migration path in <code>loadUml()</code>.</li>
+      <li><strong>Sharing</strong>: Share links embed Base64 JSON and render QR codes through <code>api.qrserver.com</code>. Swap <code>openShareDialog()</code> if you prefer an offline QR library.</li>
+      <li><strong>QR import</strong>: <code>startQrScanner()</code> uses the native <code>BarcodeDetector</code>. Add a fallback (e.g. ZXing) for browsers without camera APIs.</li>
+      <li><strong>Testing</strong>: Because this is a single file, browser-based unit tests (Playwright, Cypress) are a quick way to guard parsing, serialization, and drag behaviour before modifications.</li>
+    </ol>
+  </details>
+</section>
+
+<div id="contextMenu" hidden>
+  <button data-action="duplicate">Duplicate class</button>
+  <button data-action="delete">Delete class</button>
+</div>
+
+<script>
+(function() {
+  const QR_SERVICE = "https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=";
+  const MAX_QR_SAFE_LENGTH = 1500;
+  const LOCAL_STORAGE_KEY = "uml-designer-state";
+
+  const canvas = document.getElementById("canvas");
+  const languageSelect = document.getElementById("languageSelect");
+  const languageTag = document.getElementById("languageTag");
+  const addClassBtn = document.getElementById("addClassBtn");
+  const importSource = document.getElementById("importSource");
+  const saveLocalBtn = document.getElementById("saveLocalBtn");
+  const loadLocalBtn = document.getElementById("loadLocalBtn");
+  const exportJsonBtn = document.getElementById("exportJsonBtn");
+  const importJsonInput = document.getElementById("importJsonInput");
+  const shareBtn = document.getElementById("shareBtn");
+  const scanQrBtn = document.getElementById("scanQrBtn");
+  const clearBtn = document.getElementById("clearBtn");
+
+  const classDialog = document.getElementById("classDialog");
+  const classForm = document.getElementById("classForm");
+  const classDialogTitle = document.getElementById("classDialogTitle");
+  const classNameInput = document.getElementById("classNameInput");
+  const addAttributeBtn = document.getElementById("addAttributeBtn");
+  const attributesContainer = document.getElementById("attributesContainer");
+  const addMethodBtn = document.getElementById("addMethodBtn");
+  const methodsContainer = document.getElementById("methodsContainer");
+  const submitClassBtn = document.getElementById("submitClassBtn");
+
+  const shareDialog = document.getElementById("shareDialog");
+  const shareLinkEl = document.getElementById("shareLink");
+  const qrImage = document.getElementById("qrImage");
+  const shareWarning = document.getElementById("shareWarning");
+  const copyLinkBtn = document.getElementById("copyLinkBtn");
+  const closeShareBtn = document.getElementById("closeShareBtn");
+  const contextMenu = document.getElementById("contextMenu");
+
+  const qrScannerDialog = document.getElementById("qrScannerDialog");
+  const qrScannerStatus = document.getElementById("qrScannerStatus");
+  const qrVideo = document.getElementById("qrVideo");
+  const closeScannerBtn = document.getElementById("closeScannerBtn");
+
+  let umlData = { language: "JavaScript", classes: [] };
+  let editingClassId = null;
+  let mediaStream = null;
+  let scanInterval = null;
+  let contextTargetId = null;
+
+  function createId() {
+    return crypto.randomUUID ? crypto.randomUUID() : `id-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+  }
+
+  function closeContextMenu() {
+    contextTargetId = null;
+    if (contextMenu) {
+      contextMenu.style.display = "none";
+      contextMenu.hidden = true;
+    }
+  }
+
+  function openContextMenu(x, y, classId) {
+    if (!contextMenu) return;
+    contextTargetId = classId;
+    contextMenu.hidden = false;
+    contextMenu.style.display = "block";
+    const { offsetWidth, offsetHeight } = contextMenu;
+    const clampedX = Math.min(x, window.innerWidth - offsetWidth - 8);
+    const clampedY = Math.min(y, window.innerHeight - offsetHeight - 8);
+    contextMenu.style.left = `${Math.max(8, clampedX)}px`;
+    contextMenu.style.top = `${Math.max(8, clampedY)}px`;
+  }
+
+  function normalizeVisibility(value) {
+    return value || "public";
+  }
+
+  function addAttributeFields(data = {}) {
+    const wrapper = document.createElement("div");
+    wrapper.className = "field-item";
+
+    const visibility = document.createElement("select");
+    visibility.name = "attributeVisibility";
+    ["public", "private", "protected"].forEach(v => {
+      const opt = document.createElement("option"); opt.value = v; opt.textContent = v; visibility.appendChild(opt);
+    });
+
+    const name = document.createElement("input");
+    name.name = "attributeName"; name.placeholder = "Attribute name"; name.required = true; name.type = "text";
+
+    const type = document.createElement("input");
+    type.name = "attributeType"; type.placeholder = "Type"; type.type = "text";
+
+    const remove = document.createElement("button");
+    remove.type = "button"; remove.className = "remove-btn"; remove.textContent = "Remove";
+
+    visibility.value = normalizeVisibility(data.visibility);
+    name.value = data.name || "";
+    type.value = data.type || "";
+    if (umlData.language !== "TypeScript") type.hidden = true;
+    remove.addEventListener("click", () => wrapper.remove());
+
+    wrapper.appendChild(visibility);
+    wrapper.appendChild(name);
+    wrapper.appendChild(type);
+    wrapper.appendChild(remove);
+    attributesContainer.appendChild(wrapper);
+  }
+
+  function addMethodFields(data = {}) {
+    const wrapper = document.createElement("div");
+    wrapper.className = "field-item";
+
+    const visibility = document.createElement("select");
+    visibility.name = "methodVisibility";
+    ["public", "private", "protected"].forEach(v => {
+      const opt = document.createElement("option"); opt.value = v; opt.textContent = v; visibility.appendChild(opt);
+    });
+
+    const name = document.createElement("input");
+    name.name = "methodName"; name.placeholder = "Method name"; name.required = true; name.type = "text";
+
+    const params = document.createElement("input");
+    params.name = "methodParams"; params.placeholder = "Params (comma-separated)"; params.type = "text";
+
+    const ret = document.createElement("input");
+    ret.name = "methodReturn"; ret.placeholder = "Return type"; ret.type = "text";
+
+    const staticLabel = document.createElement("label");
+    staticLabel.className = "method-static";
+    const staticCheckbox = document.createElement("input");
+    staticCheckbox.type = "checkbox"; staticCheckbox.name = "methodStatic";
+    staticLabel.appendChild(staticCheckbox);
+    staticLabel.appendChild(document.createTextNode(" static"));
+
+    const remove = document.createElement("button");
+    remove.type = "button"; remove.className = "remove-btn"; remove.textContent = "Remove";
+
+    visibility.value = normalizeVisibility(data.visibility);
+    name.value = data.name || "";
+    params.value = (data.params || []).join(", ");
+    ret.value = data.returnType || "";
+    if (umlData.language !== "TypeScript") ret.hidden = true;
+    staticCheckbox.checked = !!data.isStatic;
+    remove.addEventListener("click", () => wrapper.remove());
+
+    wrapper.appendChild(visibility);
+    wrapper.appendChild(name);
+    wrapper.appendChild(params);
+    wrapper.appendChild(ret);
+    wrapper.appendChild(staticLabel);
+    wrapper.appendChild(remove);
+    methodsContainer.appendChild(wrapper);
+  }
+
+  function clearFieldContainers() {
+    attributesContainer.innerHTML = "";
+    methodsContainer.innerHTML = "";
+  }
+
+  function openClassModal(existingClass = null) {
+    editingClassId = existingClass ? existingClass.id : null;
+    classDialogTitle.textContent = existingClass ? `Edit class: ${existingClass.name}` : "Create class";
+    classNameInput.value = existingClass ? existingClass.name : "";
+    clearFieldContainers();
+    const attrs = existingClass ? existingClass.attributes : [];
+    const methods = existingClass ? existingClass.methods : [];
+    if (attrs.length === 0) addAttributeFields();
+    else attrs.forEach(addAttributeFields);
+    if (methods.length === 0) addMethodFields();
+    else methods.forEach(addMethodFields);
+    classDialog.showModal();
+  }
+
+  function collectFormData() {
+    const className = classNameInput.value.trim();
+    if (!className) throw new Error("Class name is required");
+    const attributes = Array.from(attributesContainer.children).map(group => {
+      const visibilityEl = group.querySelector('select[name="attributeVisibility"]');
+      const nameEl = group.querySelector('input[name="attributeName"]');
+      const typeEl = group.querySelector('input[name="attributeType"]');
+      return {
+        visibility: visibilityEl.value,
+        name: nameEl.value.trim(),
+        type: typeEl && !typeEl.hidden ? typeEl.value.trim() : ""
+      };
+    }).filter(attr => attr.name);
+    const methods = Array.from(methodsContainer.children).map(group => {
+      const visibilityEl = group.querySelector('select[name="methodVisibility"]');
+      const nameEl = group.querySelector('input[name="methodName"]');
+      const paramsEl = group.querySelector('input[name="methodParams"]');
+      const returnEl = group.querySelector('input[name="methodReturn"]');
+      const staticEl = group.querySelector('input[name="methodStatic"]');
+      return {
+        visibility: visibilityEl.value,
+        name: nameEl.value.trim(),
+        params: paramsEl.value.split(",").map(p => p.trim()).filter(Boolean),
+        returnType: returnEl && !returnEl.hidden ? returnEl.value.trim() : "",
+        isStatic: staticEl ? staticEl.checked : false
+      };
+    }).filter(method => method.name);
+    return { className, attributes, methods };
+  }
+
+  function upsertClass({ className, attributes, methods }) {
+    const existingIndex = umlData.classes.findIndex(cls => cls.id === editingClassId);
+    const defaultPosition = existingIndex >= 0 ? umlData.classes[existingIndex].position : { x: 48 + umlData.classes.length * 48, y: 48 + umlData.classes.length * 36 };
+    const payload = {
+      id: editingClassId || createId(),
+      name: className,
+      attributes,
+      methods,
+      position: defaultPosition
+    };
+    if (existingIndex >= 0) umlData.classes.splice(existingIndex, 1, payload);
+    else umlData.classes.push(payload);
+    renderCanvas();
+    classDialog.close();
+  }
+
+  function duplicateClass(classId) {
+    const original = umlData.classes.find(cls => cls.id === classId);
+    if (!original) return;
+    const clone = typeof structuredClone === "function" ? structuredClone(original) : JSON.parse(JSON.stringify(original));
+    const baseName = original.name;
+    let suffix = 1;
+    let copyName = `${baseName}Copy`;
+    while (umlData.classes.some(cls => cls.name === copyName)) {
+      suffix += 1;
+      copyName = `${baseName}Copy${suffix}`;
+    }
+    clone.id = createId();
+    clone.name = copyName;
+    clone.position = {
+      x: original.position.x + 24,
+      y: original.position.y + 24
+    };
+    umlData.classes.push(clone);
+    renderCanvas();
+  }
+
+  function deleteClass(classId) {
+    const index = umlData.classes.findIndex(cls => cls.id === classId);
+    if (index === -1) return;
+    umlData.classes.splice(index, 1);
+    renderCanvas();
+  }
+
+  function visibilitySymbol(value) {
+    switch (value) {
+      case "private": return "-";
+      case "protected": return "#";
+      default: return "+";
+    }
+  }
+
+  function formatAttribute(attr) {
+    const typeSuffix = umlData.language === "TypeScript" && attr.type ? `: ${attr.type}` : "";
+    return `${visibilitySymbol(attr.visibility)} ${attr.name}${typeSuffix}`;
+  }
+
+  function formatMethod(method) {
+    const params = method.params.join(", ");
+    const typeSuffix = umlData.language === "TypeScript" && method.returnType ? `: ${method.returnType}` : "";
+    const staticPrefix = method.isStatic ? "static " : "";
+    return `${visibilitySymbol(method.visibility)} ${staticPrefix}${method.name}(${params})${typeSuffix}`.trim();
+  }
+
+  function renderCanvas() {
+    closeContextMenu();
+    canvas.innerHTML = "";
+    umlData.classes.forEach(cls => {
+      const node = document.createElement("div");
+      node.className = "uml-node";
+      node.style.left = `${cls.position.x}px`;
+      node.style.top = `${cls.position.y}px`;
+      node.dataset.id = cls.id;
+      node.innerHTML = `
+        <header>
+          <span>${cls.name}</span>
+          <button type="button" data-action="edit" class="secondary" style="background:rgba(255,255,255,0.2);color:white;border:none;padding:0.2rem 0.4rem;border-radius:6px;">Edit</button>
+        </header>
+        <ul>${cls.attributes.length ? cls.attributes.map(attr => `<li>${formatAttribute(attr)}</li>`).join("") : "<li><em>No attributes</em></li>"}</ul>
+        <ul>${cls.methods.length ? cls.methods.map(method => `<li>${formatMethod(method)}</li>`).join("") : "<li><em>No methods</em></li>"}</ul>
+      `;
+      canvas.appendChild(node);
+      attachNodeDrag(node, cls.id);
+      node.querySelector("button[data-action=edit]").addEventListener("click", event => {
+        event.stopPropagation();
+        const targetClass = umlData.classes.find(c => c.id === cls.id);
+        if (targetClass) openClassModal(targetClass);
+      });
+    });
+  }
+
+  function attachNodeDrag(node, classId) {
+    let dragging = false;
+    let offsetX = 0;
+    let offsetY = 0;
+
+    node.addEventListener("pointerdown", event => {
+      if (event.target.tagName === "BUTTON") return;
+      dragging = true;
+      node.setPointerCapture(event.pointerId);
+      offsetX = event.clientX - node.offsetLeft;
+      offsetY = event.clientY - node.offsetTop;
+      node.style.transition = "none";
+    });
+
+    node.addEventListener("pointermove", event => {
+      if (!dragging) return;
+      node.style.left = `${event.clientX - offsetX}px`;
+      node.style.top = `${event.clientY - offsetY}px`;
+    });
+
+    node.addEventListener("pointerup", event => {
+      if (!dragging) return;
+      dragging = false;
+      node.releasePointerCapture(event.pointerId);
+      const cls = umlData.classes.find(c => c.id === classId);
+      if (cls) {
+        cls.position.x = node.offsetLeft;
+        cls.position.y = node.offsetTop;
+      }
+    });
+  }
+
+  function saveToLocalStorage() {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(umlData));
+  }
+
+  function loadFromLocalStorage() {
+    const payload = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (!payload) {
+      alert("No diagram found in local storage.");
+      return;
+    }
+    loadUml(JSON.parse(payload));
+  }
+
+  function exportJson() {
+    const blob = new Blob([JSON.stringify(umlData, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = `uml-designer-${Date.now()}.json`;
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor);
+    URL.revokeObjectURL(url);
+  }
+
+  function importJson(file) {
+    const reader = new FileReader();
+    reader.onload = event => loadUml(JSON.parse(event.target.result));
+    reader.readAsText(file);
+  }
+
+  function loadUml(data) {
+    umlData = {
+      language: data.language || "JavaScript",
+      classes: Array.isArray(data.classes) ? data.classes : []
+    };
+    languageSelect.value = umlData.language;
+    languageTag.textContent = `Language: ${umlData.language}`;
+    renderCanvas();
+  }
+
+  function buildShareLink() {
+    const serialized = JSON.stringify(umlData);
+    const payload = btoa(unescape(encodeURIComponent(serialized)));
+    const base = window.location.href.split("?")[0];
+    return `${base}?uml=${payload}`;
+  }
+
+  function openShareDialog() {
+    const link = buildShareLink();
+    shareLinkEl.value = link;
+    shareWarning.style.display = link.length > MAX_QR_SAFE_LENGTH ? "block" : "none";
+    qrImage.src = `${QR_SERVICE}${encodeURIComponent(link)}`;
+    qrImage.alt = link.length > MAX_QR_SAFE_LENGTH ? "Link may exceed QR capacity" : "QR code";
+    shareDialog.showModal();
+  }
+
+  async function copyShareLink() {
+    try {
+      await navigator.clipboard.writeText(shareLinkEl.value);
+    } catch (error) {
+      shareLinkEl.select();
+      document.execCommand("copy");
+    }
+  }
+
+  function handleFileImports(files) {
+    Array.from(files).forEach(file => {
+      const reader = new FileReader();
+      reader.onload = event => {
+        const classes = parseClassesFromSource(event.target.result, file.name);
+        pushImportedClasses(classes);
+      };
+      reader.readAsText(file);
+    });
+  }
+
+  function pushImportedClasses(classes) {
+    classes.forEach(cls => {
+      if (!umlData.classes.some(existing => existing.name === cls.name)) {
+        cls.id = createId();
+        cls.position = { x: 60 + umlData.classes.length * 40, y: 60 + umlData.classes.length * 30 };
+        umlData.classes.push(cls);
+      }
+    });
+    renderCanvas();
+  }
+
+  function parseClassesFromSource(source, fileName = "") {
+    const sanitized = source.replace(/\/\*[\s\S]*?\*\//g, "").replace(/([^:])\/\/.*$/gm, "$1");
+    const classRegex = /class\s+(\w+)\s*(?:extends\s+([\w.]+))?\s*\{([\s\S]*?)\}/g;
+    const propertyRegex = /(public|protected|private)?\s*(readonly\s+)?(\w+)\s*(?::\s*([\w<>,\s\[\]\.?]+))?\s*(=|;)/g;
+  const methodRegex = /(public|protected|private)?\s*(static\s+)?(async\s+)?(\w+)\s*\(([^)]*)\)\s*(?::\s*([^\{\/]+))?\s*\{/g;
+    const classes = [];
+    let match;
+    while ((match = classRegex.exec(sanitized))) {
+      const [, className, baseClass, body] = match;
+      const attributes = [];
+      const methods = [];
+      let propMatch;
+      while ((propMatch = propertyRegex.exec(body))) {
+        const [, visibility, , name, type] = propMatch;
+        if (name === "constructor") continue;
+        attributes.push({
+          visibility: normalizeVisibility(visibility),
+          name,
+          type: type ? type.replace(/\s+/g, " ") : ""
+        });
+      }
+      let methodMatch;
+      while ((methodMatch = methodRegex.exec(body))) {
+        const [, visibility, staticKeyword, , name, params, returnType] = methodMatch;
+        if (name === "constructor") continue;
+        methods.push({
+          visibility: normalizeVisibility(visibility),
+          name,
+          params: params.split(",").map(p => p.trim().split(/[:=]/)[0].trim()).filter(Boolean),
+          returnType: returnType ? returnType.trim() : "",
+          isStatic: Boolean(staticKeyword)
+        });
+      }
+      classes.push({
+        name: className,
+        baseClass: baseClass || null,
+        attributes,
+        methods,
+        source: fileName
+      });
+    }
+    return classes;
+  }
+
+  function clearCanvas() {
+    if (confirm("Remove all classes from the canvas?")) {
+      umlData.classes = [];
+      renderCanvas();
+    }
+  }
+
+  function hydrateFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.has("uml")) {
+      try {
+        const payload = params.get("uml");
+        const json = JSON.parse(decodeURIComponent(escape(atob(payload))));
+        loadUml(json);
+      } catch (error) {
+        console.warn("Unable to parse UML payload from URL:", error);
+        renderCanvas();
+      }
+    } else {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) loadUml(JSON.parse(saved));
+      else renderCanvas();
+    }
+  }
+
+  async function startQrScanner() {
+    if (!("BarcodeDetector" in window)) {
+      qrScannerStatus.textContent = "BarcodeDetector API unavailable. Paste the shared link instead.";
+      qrScannerDialog.showModal();
+      return;
+    }
+    try {
+      const formats = typeof BarcodeDetector.getSupportedFormats === "function" ? await BarcodeDetector.getSupportedFormats() : ["qr_code"];
+      if (!formats.includes("qr_code")) {
+        qrScannerStatus.textContent = "QR detection unsupported on this browser.";
+        qrScannerDialog.showModal();
+        return;
+      }
+      const detector = new BarcodeDetector({ formats: ["qr_code"] });
+      mediaStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+      qrVideo.srcObject = mediaStream;
+      await qrVideo.play();
+      document.querySelector("#qrScannerDialog .video-wrapper").hidden = false;
+      qrScannerStatus.textContent = "Point the QR code at the camera.";
+      qrScannerDialog.showModal();
+      const canvasEl = document.createElement("canvas");
+      const ctx = canvasEl.getContext("2d");
+      scanInterval = setInterval(async () => {
+        if (qrVideo.readyState !== qrVideo.HAVE_ENOUGH_DATA) return;
+        canvasEl.width = qrVideo.videoWidth;
+        canvasEl.height = qrVideo.videoHeight;
+        ctx.drawImage(qrVideo, 0, 0, canvasEl.width, canvasEl.height);
+        const imageData = ctx.getImageData(0, 0, canvasEl.width, canvasEl.height);
+        try {
+          const codes = await detector.detect(imageData);
+          if (codes.length) {
+            stopQrScanner();
+            applyImportedLink(codes[0].rawValue);
+          }
+        } catch (err) {
+          console.error("QR detect error", err);
+        }
+      }, 500);
+    } catch (err) {
+      qrScannerStatus.textContent = "Cannot access camera. Check permissions.";
+      console.error(err);
+      qrScannerDialog.showModal();
+    }
+  }
+
+  function stopQrScanner() {
+    if (scanInterval) {
+      clearInterval(scanInterval);
+      scanInterval = null;
+    }
+    if (mediaStream) {
+      mediaStream.getTracks().forEach(track => track.stop());
+      mediaStream = null;
+    }
+    qrVideo.pause();
+    qrVideo.srcObject = null;
+    qrScannerDialog.close();
+    document.querySelector("#qrScannerDialog .video-wrapper").hidden = true;
+  }
+
+  function applyImportedLink(link) {
+    try {
+      const url = new URL(link);
+      const payload = url.searchParams.get("uml");
+      if (!payload) throw new Error("No uml parameter found");
+      const json = JSON.parse(decodeURIComponent(escape(atob(payload))));
+      loadUml(json);
+    } catch (error) {
+      alert("Unable to import diagram from link/QR. Ensure it was generated by this tool.");
+      console.error(error);
+    }
+  }
+
+  addClassBtn.addEventListener("click", () => openClassModal());
+  addAttributeBtn.addEventListener("click", () => addAttributeFields());
+  addMethodBtn.addEventListener("click", () => addMethodFields());
+  submitClassBtn.addEventListener("click", event => {
+    event.preventDefault();
+    try {
+      const data = collectFormData();
+      upsertClass(data);
+    } catch (error) {
+      alert(error.message);
+    }
+  });
+
+  classDialog.addEventListener("close", () => {
+    editingClassId = null;
+  });
+
+  languageSelect.addEventListener("change", () => {
+    umlData.language = languageSelect.value;
+    languageTag.textContent = `Language: ${umlData.language}`;
+    renderCanvas();
+  });
+
+  importSource.addEventListener("change", event => {
+    if (event.target.files.length) handleFileImports(event.target.files);
+    event.target.value = "";
+  });
+
+  saveLocalBtn.addEventListener("click", () => {
+    saveToLocalStorage();
+    alert("Diagram saved locally.");
+  });
+
+  loadLocalBtn.addEventListener("click", () => loadFromLocalStorage());
+  exportJsonBtn.addEventListener("click", () => exportJson());
+
+  importJsonInput.addEventListener("change", event => {
+    if (event.target.files.length) importJson(event.target.files[0]);
+    event.target.value = "";
+  });
+
+  shareBtn.addEventListener("click", () => openShareDialog());
+  copyLinkBtn.addEventListener("click", () => copyShareLink());
+  closeShareBtn.addEventListener("click", () => shareDialog.close());
+
+  scanQrBtn.addEventListener("click", () => startQrScanner());
+  closeScannerBtn.addEventListener("click", () => stopQrScanner());
+
+  clearBtn.addEventListener("click", () => clearCanvas());
+
+  if (contextMenu) {
+    canvas.addEventListener("contextmenu", event => {
+      const targetNode = event.target.closest(".uml-node");
+      if (!targetNode) return;
+      event.preventDefault();
+      openContextMenu(event.clientX, event.clientY, targetNode.dataset.id);
+    });
+
+    contextMenu.addEventListener("click", event => {
+      const action = event.target.dataset.action;
+      if (!action) return;
+      if (action === "duplicate" && contextTargetId) duplicateClass(contextTargetId);
+      if (action === "delete" && contextTargetId) deleteClass(contextTargetId);
+      closeContextMenu();
+    });
+
+    document.addEventListener("click", event => {
+      if (contextMenu.contains(event.target)) return;
+      closeContextMenu();
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") closeContextMenu();
+    });
+
+    window.addEventListener("resize", closeContextMenu);
+    window.addEventListener("blur", closeContextMenu);
+  }
+
+  shareDialog.addEventListener("cancel", event => {
+    event.preventDefault();
+    shareDialog.close();
+  });
+
+  qrScannerDialog.addEventListener("cancel", event => {
+    event.preventDefault();
+    stopQrScanner();
+  });
+
+  window.addEventListener("beforeunload", () => saveToLocalStorage());
+
+  hydrateFromUrl();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+{
+    "apps": [
+        {
+            "id": "settings",
+            "name": "Settings",
+            "author": "Shawnyxx",
+            "description": "Customize your portfolio experience with various settings and preferences.",
+            "path": "/assets/apps/featured-apps/settings.xml",
+            "icon": "",
+            "tags": ["system", "settings", "preferences"],
+            "version": "2.0",
+            "status": ""
+        },
+        {
+            "id": "app-creator",
+            "name": "App Creator",
+            "author": "Shawnyxx",
+            "description": "Create and edit custom apps for your portfolio.",
+            "path": "/src/apps/app-creator/index.html",
+            "icon": "",
+            "tags": ["development", "tools", "creator"],
+            "version": "1.0",
+            "status": ""
+        }
+    ],
+    "beta": [
+        {
+            "id": "minecraft-calendar",
+            "name": "Minecraft Calendar",
+            "author": "Shawnyxx",
+            "description": "A calendar application with Minecraft theme.",
+            "path": "/assets/apps/minecraft-calendar/index.html",
+            "icon": "/assets/apps/minecraft-calendar/icon.svg",
+            "tags": ["minecraft", "calendar", "productivity"],
+            "version": "1.0.0",
+            "status": "Last Chance"
+        },
+        {
+            "id": "json-tools",
+            "name": "JSON Tools",
+            "author": "Shawnyxx",
+            "description": "Various JSON utilities and tools.",
+            "path": "/assets/apps/json-tools/index.html",
+            "icon": "/assets/apps/json-tools/icon.svg",
+            "tags": [
+                "tools",
+                "json",
+                "development"
+            ],
+            "version": "3.0.0",
+            "status": ""
+        },
+        {
+            "id": "image-to-json",
+            "name": "Image to JSON",
+            "author": "Shawnyxx",
+            "description": "Convert images to JSON format.",
+            "path": "/assets/apps/json-tools/image2json.html",
+            "icon": "/assets/apps/json-tools/image2json-icon.svg",
+            "tags": [
+                "tools",
+                "json",
+                "conversion"
+            ],
+            "version": "1.2.0",
+            "status": "Alpha"
+        },
+        {
+            "id": "json-encrypter",
+            "name": "JSON Encrypter",
+            "author": "Shawnyxx",
+            "description": "Encrypt and decrypt JSON data.",
+            "path": "/assets/apps/json-tools/jsonEncrypter.html",
+            "icon": "/assets/apps/json-tools/jsonEncrypter-icon.svg",
+            "tags": [
+                "tools",
+                "json",
+                "security"
+            ],
+            "version": "2.0.0",
+            "status": "Test"
+        },
+        {
+            "id": "uml-designer",
+            "name": "UML Designer",
+            "author": "Shawnyxx",
+            "description": "A tool for designing UML diagrams.",
+            "path": "/assets/apps/uml-designer/uml-designer.html",
+            "icon": "/assets/apps/uml-designer/icon.svg",
+            "tags": [
+                "design",
+                "uml",
+                "diagrams"
+            ],
+            "version": "1.0.0",
+            "status": ""
+        }
+    ]
+}

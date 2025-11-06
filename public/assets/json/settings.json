@@ -1,0 +1,92 @@
+{
+    "appearance": {
+        "label": "Appearance",
+        "icon": "palette",
+        "settings": {
+            "wallpaper": {
+                "type": "wallpaper-selector",
+                "label": "Wallpaper",
+                "description": "Choose your home screen wallpaper",
+                "available_wallpapers": [
+                    "/assets/files/wallpapers/black-river.png",
+                    "/assets/files/wallpapers/black-mountains.jpg"
+                ],
+                "current_wallpaper": "/assets/files/wallpapers/black-river.png",
+                "searchTerms": ["wallpaper", "background", "image", "theme"]
+            },
+            "theme": {
+                "type": "select",
+                "label": "Theme",
+                "description": "Choose between light and dark theme",
+                "options": ["dark", "light"],
+                "current_value": "dark",
+                "searchTerms": ["theme", "dark", "light", "mode", "appearance"]
+            }
+        }
+    },
+    "apps": {
+        "label": "Apps",
+        "icon": "apps",
+        "settings": {
+            "installedApps": {
+                "type": "installed-apps",
+                "label": "Installed Apps",
+                "description": "View and manage all installed apps on your device",
+                "searchTerms": ["apps", "installed", "manage", "uninstall", "update", "size"]
+            },
+            "appOrder": {
+                "type": "app-grid",
+                "label": "App Order",
+                "description": "Customize the order of apps on your home screen",
+                "current_value": [],
+                "searchTerms": ["app", "order", "arrange", "organize", "grid"]
+            }
+        }
+    },
+    "updates": {
+        "label": "Updates",
+        "icon": "update",
+        "settings": {
+            "systemUpdate": {
+                "type": "update-check",
+                "label": "System Updates",
+                "description": "Check for and install the latest features and improvements",
+                "searchTerms": ["update", "upgrade", "version", "cache", "refresh", "new features"]
+            }
+        }
+    },
+    "storage": {
+        "label": "Storage",
+        "icon": "storage",
+        "settings": {
+            "storageOverview": {
+                "type": "storage-display",
+                "label": "Storage Usage",
+                "description": "View how much space each type of content is using",
+                "searchTerms": ["storage", "space", "size", "usage", "cache", "memory"]
+            }
+        }
+    },
+    "system": {
+        "label": "System",
+        "icon": "settings",
+        "settings": {
+            "resetSettings": {
+                "type": "button",
+                "label": "Reset All Settings",
+                "description": "Reset all settings to default values",
+                "buttonLabel": "Reset to Default",
+                "action": "reset",
+                "searchTerms": ["reset", "default", "restore", "clear"]
+            },
+            "deleteAllData": {
+                "type": "danger-button",
+                "label": "Delete All My Data",
+                "description": "Permanently delete all your settings, created apps, and stored data. This action cannot be undone.",
+                "buttonLabel": "Delete All Data",
+                "action": "deleteAllData",
+                "searchTerms": ["delete", "remove", "clear", "data", "reset", "erase", "danger"]
+            }
+        }
+    }
+}

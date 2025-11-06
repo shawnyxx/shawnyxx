@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="minecraftGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#22c55e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#15803d;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect x="10" y="10" width="180" height="180" rx="40" fill="url(#minecraftGradient)" filter="url(#shadow)"/>
+  
+  <!-- Minecraft-style grass block -->
+  <g transform="translate(100, 90)">
+    <!-- Top face (grass) -->
+    <path d="M 0,-25 L 40,0 L 0,25 L -40,0 Z" fill="#7dd956" stroke="#15803d" stroke-width="2"/>
+    
+    <!-- Left face (dirt) -->
+    <path d="M -40,0 L -40,40 L 0,65 L 0,25 Z" fill="#8b6f47" stroke="#15803d" stroke-width="2"/>
+    
+    <!-- Right face (dirt) -->
+    <path d="M 40,0 L 40,40 L 0,65 L 0,25 Z" fill="#6b5638" stroke="#15803d" stroke-width="2"/>
+    
+    <!-- Grass texture details -->
+    <rect x="-15" y="-15" width="8" height="8" fill="#22c55e"/>
+    <rect x="7" y="-10" width="8" height="8" fill="#22c55e"/>
+    <rect x="-5" y="-5" width="6" height="6" fill="#16a34a"/>
+  </g>
+  
+  <!-- Calendar page curl -->
+  <g transform="translate(135, 45)">
+    <rect x="0" y="0" width="35" height="40" rx="3" fill="white" stroke="#15803d" stroke-width="2"/>
+    <rect x="0" y="0" width="35" height="10" rx="3" fill="#15803d"/>
+    <text x="17.5" y="28" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#15803d" text-anchor="middle">15</text>
+  </g>
+</svg>

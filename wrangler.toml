@@ -1,0 +1,35 @@
+# Wrangler configuration for deploying the shawnyxx portfolio to Cloudflare
+# Replace placeholders (ACCOUNT_ID, ZONE_ID, and route) with your Cloudflare values.
+# This file is set up to deploy the built Vite output (dist/) as a Workers Sites / static site.
+
+name = "shawnyxx"
+account_id = "4f46d6f7ba477db50fecadf4cfa7a297"
+compatibility_date = "2025-11-13"
+type = "vite"
+workers_dev = true
+
+# If you want to publish to a custom domain using a route, set these values.
+# Example:
+# route = "example.com/*"
+# zone_id = "REPLACE_WITH_ZONE_ID"
+
+[build]
+command = "npm run build"
+
+# This tells Wrangler which folder to upload as the site static assets.
+[site]
+bucket = "dist"
+entry-point = "workers-site"
+
+[env.production]
+# Uncomment and fill these values to publish to your domain when running:
+# wrangler publish --env production
+#route = "example.com/*"
+#zone_id = "REPLACE_WITH_ZONE_ID"
+
+# Notes:
+# - This file will work for deploying static sites via Workers Sites. For Cloudflare Pages
+#   you can instead connect the repo via the Pages UI (recommended for static sites) and
+#   use `npm run build` with `dist/` as the output directory.
+# - To use Wrangler locally, install it: `npm install -g wrangler` (or use `npm run` scripts)
+#   then authenticate: `wrangler login` and publish with `wrangler publish`.

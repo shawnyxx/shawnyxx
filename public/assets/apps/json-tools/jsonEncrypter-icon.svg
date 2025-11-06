@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="encryptGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ef4444;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#b91c1c;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect x="10" y="10" width="180" height="180" rx="40" fill="url(#encryptGradient)" filter="url(#shadow)"/>
+  
+  <!-- Lock body -->
+  <rect x="70" y="95" width="60" height="65" rx="8" fill="white" stroke="white" stroke-width="2"/>
+  
+  <!-- Lock shackle -->
+  <path d="M 85,95 L 85,70 Q 85,50 100,50 Q 115,50 115,70 L 115,95" 
+        fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/>
+  
+  <!-- Keyhole -->
+  <g transform="translate(100, 118)">
+    <circle cx="0" cy="0" r="8" fill="#ef4444"/>
+    <rect x="-3" y="5" width="6" height="15" rx="2" fill="#ef4444"/>
+  </g>
+  
+  <!-- JSON brackets behind lock -->
+  <g opacity="0.4">
+    <text x="50" y="85" font-family="Courier New, monospace" font-size="20" fill="white" font-weight="bold">{</text>
+    <text x="135" y="145" font-family="Courier New, monospace" font-size="20" fill="white" font-weight="bold">}</text>
+  </g>
+  
+  <!-- Shield elements -->
+  <path d="M 100,45 L 105,42 L 110,45 L 110,52 L 105,55 L 100,52 Z" fill="#fbbf24" opacity="0.8"/>
+</svg>

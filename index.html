@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shawnyxx Portfolio</title>
+    <link rel="icon" type="image/x-icon" href="/assets/files/icons/javascript-icon.ico">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="style.css">
+    <!-- <link rel="manifest" href="/manifest.webmanifest"> -->
+    <meta name="theme-color" content="#1e1e1e">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <img src="/assets/files/icons/javascript-icon.ico" alt="Loading..." class="loading-logo">
+        </div>
+    </div>
+
+    <!-- Home Screen -->
+    <div id="home-screen" class="home-screen">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="status-left">
+                <span class="material-symbols-outlined status-icon">apps</span>
+                <span id="current-time">00:00</span>
+            </div>
+            <div class="status-center">
+                <!-- Media Control Widget -->
+                <div id="media-control-widget" class="media-control-widget" style="display: none;">
+                    <button id="widget-prev" class="widget-btn">
+                        <span class="material-symbols-outlined">skip_previous</span>
+                    </button>
+                    <button id="widget-play-pause" class="widget-btn">
+                        <span class="material-symbols-outlined">play_arrow</span>
+                    </button>
+                    <button id="widget-next" class="widget-btn">
+                        <span class="material-symbols-outlined">skip_next</span>
+                    </button>
+                    <span id="widget-track-info" class="widget-track-info">No track playing</span>
+                </div>
+            </div>
+            <div class="status-right">
+                <span class="material-symbols-outlined status-icon">wifi</span>
+                <span id="battery-level">100%</span>
+                <span class="material-symbols-outlined status-icon">battery_full</span>
+            </div>
+        </div>
+
+        <!-- App Grid -->
+        <div id="app-grid" class="app-grid">
+            <!-- Apps will be loaded here dynamically -->
+        </div>
+
+        <!-- Page Indicators -->
+        <div id="page-indicators" class="page-indicators"></div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Settings</h2>
+                <div class="header-buttons">
+                    <button class="header-btn disabled" id="header-save-settings" disabled>
+                        <span class="material-symbols-outlined">save</span>
+                    </button>
+                    <button class="modal-close" id="close-settings">&times;</button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="setting-group">
+                    <label>Wallpaper</label>
+                    <div class="wallpaper-buttons">
+                        <button id="upload-wallpaper" class="icon-btn">
+                            <span class="material-symbols-outlined">upload</span>
+                            Upload
+                        </button>
+                        <button id="paste-wallpaper" class="icon-btn">
+                            <span class="material-symbols-outlined">content_paste</span>
+                            Paste
+                        </button>
+                    </div>
+                    <input type="file" id="wallpaper-file-input" accept="image/*" style="display: none;">
+                    <div id="wallpaper-grid" class="wallpaper-grid"></div>
+                </div>
+                <div class="setting-group">
+                    <label for="theme-select">Theme</label>
+                    <select id="theme-select">
+                        <option value="dark">Dark</option>
+                        <option value="light">Light</option>
+                    </select>
+                </div>
+
+                <!-- Update Section -->
+                <div class="setting-group">
+                    <label>Updates</label>
+                    <div id="update-status" class="update-status">
+                        <div class="update-checking">
+                            <span class="material-symbols-outlined spinning">sync</span>
+                            <span>Checking for updates...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <button id="reset-settings" class="btn-reset">
+                        <span class="material-symbols-outlined">restart_alt</span>
+                        Reset to Default Settings
+                    </button>
+                </div>
+
+                <!-- Danger Zone: clearly labeled so users can find destructive actions -->
+                <div class="danger-section">
+                    <h3 class="danger-title">Danger Zone</h3>
+                    <p class="danger-desc">Actions in this area are irreversible. Use with caution.</p>
+
+                    <div class="setting-group">
+                        <button id="delete-all-data" class="btn-danger">
+                            <span class="material-symbols-outlined">delete_forever</span>
+                            Delete All My Data
+                        </button>
+                        <p style="color: rgba(255, 255, 255, 0.6); font-size: 12px; margin-top: 8px;">
+                            This will permanently delete all your settings, created apps, and stored data.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- App Creator Modal -->
+    <div id="app-creator-modal" class="modal">
+        <div class="modal-content app-creator-content">
+            <div class="modal-header">
+                <h2 id="app-creator-title">App Creator</h2>
+                <div class="header-buttons">
+                    <button class="header-btn" id="submit-app-help-btn" title="How to submit for publishing? It's free btw!">
+                        <span class="material-symbols-outlined">help</span>
+                    </button>
+                    <button class="header-btn disabled" id="header-save-app" disabled>
+                        <span class="material-symbols-outlined">save</span>
+                    </button>
+                    <button class="modal-close" id="close-app-creator">&times;</button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <!-- Home View -->
+                <div id="creator-home-view" class="creator-view active">
+                    <div class="creator-actions">
+                        <button id="create-new-app" class="btn-primary">
+                            <span class="material-symbols-outlined">add</span>
+                            Create New App
+                        </button>
+                        <button id="import-app-xml" class="btn-secondary">
+                            <span class="material-symbols-outlined">upload_file</span>
+                            Import XML
+                        </button>
+                        <input type="file" id="xml-file-input" accept=".xml" style="display: none;">
+                    </div>
+                    <div id="created-apps-list" class="created-apps-list"></div>
+                </div>
+                
+                <!-- Editor View -->
+                <div id="creator-editor-view" class="creator-view">
+                    <div class="editor-form">
+                        <div class="form-group">
+                            <label for="app-name-input">App Name</label>
+                            <input type="text" id="app-name-input" placeholder="Enter app name">
+                        </div>
+                        <div class="form-group">
+                            <label for="app-description-input">Description</label>
+                            <input type="text" id="app-description-input" placeholder="Enter app description">
+                        </div>
+                        <div class="form-group">
+                            <label for="app-icon-input">App Icon</label>
+                            <div class="icon-upload-container">
+                                <button id="upload-app-icon" class="icon-btn">
+                                    <span class="material-symbols-outlined">image</span>
+                                    Upload Icon
+                                </button>
+                                <button id="paste-app-icon" class="icon-btn">
+                                    <span class="material-symbols-outlined">content_paste</span>
+                                    Paste Icon
+                                </button>
+                                <div id="icon-preview" class="icon-preview"></div>
+                                <input type="file" id="app-icon-file-input" accept="image/*" style="display: none;">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="app-lightmode-toggle">Light Mode Compatible</label>
+                            <div class="toggle-container">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="app-lightmode-toggle">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <span class="toggle-label">Enable light mode support for this app</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="app-opensource-toggle">Open Source</label>
+                            <div class="toggle-container">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="app-opensource-toggle">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <span class="toggle-label">Allow others to fork and modify this app</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="app-generic-style-toggle">Use Generic Style Template</label>
+                            <div class="toggle-container">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="app-generic-style-toggle">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <span class="toggle-label" title="It's suggested that you open the generated code in a dedicated code editor to understand the core basics of the generic app style as the file will be very long.">Use the generic app style to get your app featured on the App Store</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="app-html-input">HTML Code</label>
+                            <div id="monaco-editor-container" class="monaco-editor-container"></div>
+                            <textarea id="app-html-input" style="display: none;"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- App Frame Modal -->
+    <div id="app-frame" class="app-frame">
+        <div class="app-frame-header">
+            <button class="app-frame-close" id="close-app">&times;</button>
+            <span class="app-frame-title" id="app-title">App</span>
+        </div>
+        <iframe id="app-iframe" class="app-iframe"></iframe>
+    </div>
+
+    <!-- Context Menu (for apps) -->
+    <div id="context-menu" class="context-menu">
+        <!-- Menu items will be dynamically added here -->
+    </div>
+
+    <!-- Home Context Menu -->
+    <div id="home-context-menu" class="context-menu">
+        <!-- Social links will be dynamically added here -->
+    </div>
+
+    <!-- Selection Rectangle -->
+    <div id="selection-rectangle" class="selection-rectangle"></div>
+
+    <!-- Release Notes Modal -->
+    <div id="release-notes-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Release Notes</h2>
+                <div class="header-buttons">
+                    <button class="header-btn" id="add-release-btn">
+                        <span class="material-symbols-outlined">add</span>
+                    </button>
+                    <button class="modal-close" id="close-release-notes">&times;</button>
+                </div>
+            </div>
+            <div class="modal-body" id="release-notes-list">
+                <!-- Release notes will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Release Creator Modal -->
+    <div id="release-creator-modal" class="modal">
+        <div class="modal-content large-modal-content">
+            <div class="modal-header">
+                <h2>Create Release Note</h2>
+                <div class="header-buttons">
+                    <button class="header-btn" id="preview-release-btn" title="Preview Release">
+                        <span class="material-symbols-outlined">visibility</span>
+                    </button>
+                    <button class="header-btn" id="load-draft-btn" title="Load Draft">
+                        <span class="material-symbols-outlined">upload</span>
+                    </button>
+                    <button class="header-btn" id="export-release-btn" title="Export Release">
+                        <span class="material-symbols-outlined">download</span>
+                    </button>
+                    <button class="header-btn" id="save-draft-btn" title="Save Draft">
+                        <span class="material-symbols-outlined">save</span>
+                    </button>
+                    <button class="modal-close" id="close-release-creator">&times;</button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="release-creator-form">
+                    <div class="form-group">
+                        <label for="release-title">Title</label>
+                        <input type="text" id="release-title" placeholder="Enter release title">
+                    </div>
+                    <div class="form-group">
+                        <label for="release-subtitle">Subtitle</label>
+                        <input type="text" id="release-subtitle" placeholder="Enter release subtitle">
+                    </div>
+                    <div class="form-group">
+                        <label for="release-version">Version</label>
+                        <input type="text" id="release-version" placeholder="e.g., 1.0.0">
+                    </div>
+                    <div class="form-group">
+                        <label>Body Elements</label>
+                        <div class="element-controls">
+                            <button class="icon-btn small-btn" id="add-paragraph-btn">
+                                <span class="material-symbols-outlined">notes</span>
+                                Paragraph
+                            </button>
+                            <button class="icon-btn small-btn" id="add-image-btn">
+                                <span class="material-symbols-outlined">image</span>
+                                Image
+                            </button>
+                            <button class="icon-btn small-btn" id="add-link-btn">
+                                <span class="material-symbols-outlined">link</span>
+                                Link
+                            </button>
+                            <button class="icon-btn small-btn" id="add-video-btn">
+                                <span class="material-symbols-outlined">videocam</span>
+                                Video
+                            </button>
+                        </div>
+                        <div id="body-elements" class="elements-container"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Footer Elements</label>
+                        <div class="element-controls">
+                            <button class="icon-btn small-btn" id="add-footer-paragraph-btn">
+                                <span class="material-symbols-outlined">notes</span>
+                                Paragraph
+                            </button>
+                            <button class="icon-btn small-btn" id="add-footer-image-btn">
+                                <span class="material-symbols-outlined">image</span>
+                                Image
+                            </button>
+                            <button class="icon-btn small-btn" id="add-footer-link-btn">
+                                <span class="material-symbols-outlined">link</span>
+                                Link
+                            </button>
+                            <button class="icon-btn small-btn" id="add-footer-video-btn">
+                                <span class="material-symbols-outlined">videocam</span>
+                                Video
+                            </button>
+                        </div>
+                        <div id="footer-elements" class="elements-container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Submit App Confirmation Modal -->
+    <div id="submit-app-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Submit Your App</h2>
+                <button class="modal-close" id="close-submit-app">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>This action will open your default mail app.</p>
+                <p>If you don't have a mail app configured, click "Show me how" to see instructions on how to submit your app manually.</p>
+                <div class="modal-actions">
+                    <button id="open-mailto-btn" class="btn-primary">
+                        <span class="material-symbols-outlined">mail</span>
+                        Open Mail App
+                    </button>
+                    <button id="show-manual-instructions-btn" class="btn-secondary">
+                        <span class="material-symbols-outlined">help</span>
+                        Show me how
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Manual Submission Instructions Modal -->
+    <div id="manual-instructions-modal" class="modal">
+        <div class="modal-content large-modal-content">
+            <div class="modal-header">
+                <h2>How to Submit Your App</h2>
+                <button class="modal-close" id="close-manual-instructions">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="instructions-content">
+                    <h3>Email Submission Instructions</h3>
+                    <p>Send an email to: <strong>shawnyxx@ecxogames.ca</strong></p>
+                    
+                    <div class="instruction-section">
+                        <h4>Subject Line:</h4>
+                        <div class="copy-box">
+                            <code>Shawnyxx Portfolio App Submission</code>
+                            <button class="copy-btn" data-copy="Shawnyxx Portfolio App Submission">
+                                <span class="material-symbols-outlined">content_copy</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="instruction-section">
+                        <h4>Email Body:</h4>
+                        <div class="copy-box">
+                            <pre>-- Please make sure you include your Author name, and the version of your app --
+
+                                -- Also include your publishing-ready xml file --</pre>
+                            <button class="copy-btn" data-copy="-- Please make sure you include your Author name, and the version of your app --&#10;&#10;-- Also include your publishing-ready xml file --">
+                                <span class="material-symbols-outlined">content_copy</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="instruction-section">
+                        <h4>Required Information:</h4>
+                        <ul>
+                            <li><strong>Your Author Name:</strong> The name you want displayed as the app creator</li>
+                            <li><strong>App Version:</strong> Version number of your app (e.g., 1.0.0)</li>
+                            <li><strong>XML File:</strong> Your publishing-ready XML file exported from the App Creator</li>
+                        </ul>
+                    </div>
+
+                    <div class="instruction-section">
+                        <h4>How to Export Your App as XML:</h4>
+                        <p>Follow the guide below to export your app properly:</p>
+                        <img src="/assets/files/gifs/how-to-export-ready-for-publishing.gif" alt="Export Guide" style="max-width: 100%; border-radius: 8px; margin-top: 10px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <!-- Vite entry: single module that loads styles, registers service worker and initializes firebase -->
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+Date : 2025-11-14 18:30:55
+Directory : d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx
+Total : 81 files,  29828 codes, 1166 comments, 4301 blanks, all 35295 lines
+
+Languages
++--------------------+------------+------------+------------+------------+------------+
+| language           | files      | code       | comment    | blank      | total      |
++--------------------+------------+------------+------------+------------+------------+
+| HTML               |         16 |      9,642 |        152 |      1,368 |     11,162 |
+| JavaScript         |         30 |      9,319 |        790 |      1,363 |     11,472 |
+| PostCSS            |          7 |      6,230 |        162 |        958 |      7,350 |
+| XML                |         12 |      3,768 |         62 |        571 |      4,401 |
+| JSON               |         13 |        720 |          0 |          7 |        727 |
+| JSON with Comments |          1 |         92 |          0 |          0 |         92 |
+| Markdown           |          2 |         57 |          0 |         34 |         91 |
++--------------------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                           | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                              |         81 |     29,828 |      1,166 |      4,301 |     35,295 |
+| . (Files)                                                                                                                      |         12 |      4,137 |        124 |        610 |      4,871 |
+| public                                                                                                                         |         53 |     13,296 |        338 |      1,855 |     15,489 |
+| public (Files)                                                                                                                 |          1 |         71 |         11 |         10 |         92 |
+| public\assets                                                                                                                  |         52 |     13,225 |        327 |      1,845 |     15,397 |
+| public\assets\apps                                                                                                             |         40 |     12,799 |        321 |      1,826 |     14,946 |
+| public\assets\apps\featured-apps                                                                                               |          5 |      3,586 |         20 |        528 |      4,134 |
+| public\assets\apps\gta-online-crew-emblem-creator                                                                              |          2 |      1,245 |         42 |        116 |      1,403 |
+| public\assets\apps\json-tools                                                                                                  |          6 |        622 |         18 |        104 |        744 |
+| public\assets\apps\minecraft-calendar                                                                                          |         25 |      6,275 |        234 |        938 |      7,447 |
+| public\assets\apps\minecraft-calendar (Files)                                                                                  |          5 |      3,507 |         79 |        481 |      4,067 |
+| public\assets\apps\minecraft-calendar\scripts                                                                                  |         17 |      2,458 |        143 |        424 |      3,025 |
+| public\assets\apps\minecraft-calendar\scripts\Animations                                                                       |          1 |         33 |          0 |          3 |         36 |
+| public\assets\apps\minecraft-calendar\scripts\Data                                                                             |          2 |        287 |          6 |         11 |        304 |
+| public\assets\apps\minecraft-calendar\scripts\Features                                                                         |          8 |      1,873 |         86 |        340 |      2,299 |
+| public\assets\apps\minecraft-calendar\scripts\Features\Modals                                                                  |          6 |      1,474 |         76 |        293 |      1,843 |
+| public\assets\apps\minecraft-calendar\scripts\Features\Views                                                                   |          2 |        399 |         10 |         47 |        456 |
+| public\assets\apps\minecraft-calendar\scripts\Notification                                                                     |          1 |         31 |          8 |          6 |         45 |
+| public\assets\apps\minecraft-calendar\scripts\Systems                                                                          |          1 |        114 |         15 |         29 |        158 |
+| public\assets\apps\minecraft-calendar\scripts\Systems\Modal                                                                    |          1 |        114 |         15 |         29 |        158 |
+| public\assets\apps\minecraft-calendar\scripts\Tools                                                                            |          3 |         95 |         19 |         29 |        143 |
+| public\assets\apps\minecraft-calendar\scripts\Tools\Author                                                                     |          1 |         33 |          5 |         10 |         48 |
+| public\assets\apps\minecraft-calendar\scripts\Tools\Date                                                                       |          1 |          0 |          0 |          1 |          1 |
+| public\assets\apps\minecraft-calendar\scripts\Tools\Image                                                                      |          1 |         62 |         14 |         18 |         94 |
+| public\assets\apps\minecraft-calendar\scripts\Variables                                                                        |          1 |         25 |          9 |          6 |         40 |
+| public\assets\apps\minecraft-calendar\styles                                                                                   |          3 |        310 |         12 |         33 |        355 |
+| public\assets\apps\uml-designer                                                                                                |          2 |      1,071 |          7 |        140 |      1,218 |
+| public\assets\files                                                                                                            |          4 |        186 |          6 |          8 |        200 |
+| public\assets\files\icons                                                                                                      |          1 |         30 |          6 |          5 |         41 |
+| public\assets\files\portfolio-content                                                                                          |          3 |        156 |          0 |          3 |        159 |
+| public\assets\files\portfolio-content\json                                                                                     |          3 |        156 |          0 |          3 |        159 |
+| public\assets\json                                                                                                             |          5 |        215 |          0 |          1 |        216 |
+| public\assets\planning                                                                                                         |          1 |          6 |          0 |         10 |         16 |
+| public\assets\release-notes                                                                                                    |          2 |         19 |          0 |          0 |         19 |
+| src                                                                                                                            |         16 |     12,395 |        704 |      1,836 |     14,935 |
+| src (Files)                                                                                                                    |          3 |      4,313 |        433 |        611 |      5,357 |
+| src\apps                                                                                                                       |          5 |      5,237 |        157 |        759 |      6,153 |
+| src\apps\admin                                                                                                                 |          1 |        955 |          5 |        162 |      1,122 |
+| src\apps\app-creator                                                                                                           |          2 |      2,152 |        105 |        288 |      2,545 |
+| src\apps\app-store                                                                                                             |          2 |      2,130 |         47 |        309 |      2,486 |
+| src\pages                                                                                                                      |          2 |        492 |         16 |         43 |        551 |
+| src\pages\assets                                                                                                               |          2 |        492 |         16 |         43 |        551 |
+| src\pages\assets\apps                                                                                                          |          2 |        492 |         16 |         43 |        551 |
+| src\pages\assets\apps\app-store                                                                                                |          2 |        492 |         16 |         43 |        551 |
+| src\scripts                                                                                                                    |          3 |        294 |         44 |         44 |        382 |
+| src\styles                                                                                                                     |          3 |      2,059 |         54 |        379 |      2,492 |
++--------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| filename                                                                                                                       | language           | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\README.md                                                                     | Markdown           |         51 |          0 |         24 |         75 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\guidelines.html                                                               | HTML               |        620 |          9 |         95 |        724 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\help.html                                                                     | HTML               |        989 |         22 |        148 |      1,159 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\index.html                                                                    | HTML               |        388 |         26 |         25 |        439 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\manifest.webmanifest                                                          | JSON               |         51 |          0 |          1 |         52 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\offline.html                                                                  | HTML               |         18 |          0 |          1 |         19 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\package.json                                                                  | JSON               |         21 |          0 |          1 |         22 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\postcss.config.cjs                                                            | JavaScript         |          6 |          0 |          1 |          7 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\featured-apps\about-me.xml                                 | XML                |        919 |          6 |        140 |      1,065 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\featured-apps\gta-5-crew-emblem-creator.xml                | XML                |        625 |          7 |         72 |        704 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\featured-apps\manifest.json                                | JSON               |          7 |          0 |          1 |          8 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\featured-apps\music.xml                                    | XML                |        718 |          5 |        118 |        841 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\featured-apps\settings.xml                                 | XML                |      1,317 |          2 |        197 |      1,516 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\gta-online-crew-emblem-creator\GTA5CrewEmblemCreator.html  | HTML               |      1,225 |         38 |        111 |      1,374 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\gta-online-crew-emblem-creator\icon.svg                    | XML                |         20 |          4 |          5 |         29 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\json-tools\icon.svg                                        | XML                |         25 |          8 |          8 |         41 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\json-tools\image2json-icon.svg                             | XML                |         27 |          4 |          5 |         36 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\json-tools\image2json.html                                 | HTML               |        195 |          0 |         35 |        230 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\json-tools\index.html                                      | HTML               |         22 |          0 |          0 |         22 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\json-tools\jsonEncrypter-icon.svg                          | XML                |         24 |          6 |          7 |         37 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\json-tools\jsonEncrypter.html                              | HTML               |        329 |          0 |         49 |        378 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\minecraft-calendar\data.json                               | JSON               |        195 |          0 |          0 |        195 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\minecraft-calendar\icon.svg                                | XML                |         25 |          7 |          7 |         39 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\minecraft-calendar\index.html                              | HTML               |         95 |          5 |         19 |        119 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\minecraft-calendar\script.js                               | JavaScript         |         95 |         14 |         20 |        129 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\minecraft-calendar\scripts\Animations\Animation.js         | JavaScript         |         33 |          0 |          3 |         36 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\minecraft-calendar\scripts\Data\Data.js                    | JavaScript         |        125 |          6 |         11 |        142 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\minecraft-calendar\scripts\Data\Data.json                  | JSON               |        162 |          0 |          0 |        162 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\minecraft-calendar\scripts\Features\Modals\CityServices.js | JavaScript         |         42 |          0 |          2 |         44 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\minecraft-calendar\scripts\Features\Modals\Diddle.js       | JavaScript         |        230 |          9 |         40 |        279 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\minecraft-calendar\scripts\Features\Modals\Pinboard.js     | JavaScript         |        113 |          6 |         26 |        145 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\minecraft-calendar\scripts\Features\Modals\Recaps.js       | JavaScript         |        853 |         48 |        169 |      1,070 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\minecraft-calendar\scripts\Features\Modals\SharedNotes.js  | JavaScript         |        116 |          7 |         30 |        153 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\minecraft-calendar\scripts\Features\Modals\Tasks.js        | JavaScript         |        120 |          6 |         26 |        152 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\minecraft-calendar\scripts\Features\Views\Calendar.js      | JavaScript         |        387 |         10 |         44 |        441 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\minecraft-calendar\scripts\Features\Views\Loading.js       | JavaScript         |         12 |          0 |          3 |         15 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\minecraft-calendar\scripts\Notification\Notification.js    | JavaScript         |         31 |          8 |          6 |         45 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\minecraft-calendar\scripts\Systems\Modal\Modal.js          | JavaScript         |        114 |         15 |         29 |        158 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\minecraft-calendar\scripts\Tools\Author\Author.js          | JavaScript         |         33 |          5 |         10 |         48 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\minecraft-calendar\scripts\Tools\Date\Date.js              | JavaScript         |          0 |          0 |          1 |          1 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\minecraft-calendar\scripts\Tools\Image\Image.js            | JavaScript         |         62 |         14 |         18 |         94 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\minecraft-calendar\scripts\Variables\Variables.js          | JavaScript         |         25 |          9 |          6 |         40 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\minecraft-calendar\style.css                               | PostCSS            |      3,097 |         53 |        435 |      3,585 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\minecraft-calendar\styles\Form.css                         | PostCSS            |         63 |          1 |          7 |         71 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\minecraft-calendar\styles\Modal.css                        | PostCSS            |        186 |          7 |         19 |        212 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\minecraft-calendar\styles\Services.css                     | PostCSS            |         61 |          4 |          7 |         72 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\uml-designer\icon.svg                                      | XML                |         24 |          7 |          7 |         38 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\apps\uml-designer\uml-designer.html                             | HTML               |      1,047 |          0 |        133 |      1,180 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\files\icons\about-me-icon.svg                                   | XML                |         30 |          6 |          5 |         41 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\files\portfolio-content\json\about.json                         | JSON               |         13 |          0 |          1 |         14 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\files\portfolio-content\json\languages.json                     | JSON               |        114 |          0 |          1 |        115 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\files\portfolio-content\json\projects.json                      | JSON               |         29 |          0 |          1 |         30 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\json\apps.json                                                  | JSON               |         99 |          0 |          0 |         99 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\json\settings.json                                              | JSON with Comments |         92 |          0 |          0 |         92 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\json\socials.json                                               | JSON               |          8 |          0 |          0 |          8 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\json\tracks.json                                                | JSON               |         12 |          0 |          0 |         12 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\json\wallpapers.json                                            | JSON               |          4 |          0 |          1 |          5 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\planning\data.md                                                | Markdown           |          6 |          0 |         10 |         16 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\release-notes\manifest.json                                     | JSON               |          5 |          0 |          0 |          5 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\assets\release-notes\release-25-11.xml                                 | XML                |         14 |          0 |          0 |         14 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\public\sw.js                                                                  | JavaScript         |         71 |         11 |         10 |         92 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\src\apps\admin\index.html                                                     | HTML               |        955 |          5 |        162 |      1,122 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\src\apps\app-creator\index.html                                               | HTML               |      1,017 |         15 |        123 |      1,155 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\src\apps\app-creator\main.js                                                  | JavaScript         |      1,135 |         90 |        165 |      1,390 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\src\apps\app-store\index.html                                                 | HTML               |      1,381 |          8 |        244 |      1,633 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\src\apps\app-store\main.js                                                    | JavaScript         |        749 |         39 |         65 |        853 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\src\main.js                                                                   | JavaScript         |          4 |         11 |          4 |         19 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\src\pages\assets\apps\app-store\index.html                                    | HTML               |        223 |          8 |         31 |        262 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\src\pages\assets\apps\app-store\main.js                                       | JavaScript         |        269 |          8 |         12 |        289 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\src\script.js                                                                 | JavaScript         |      4,306 |        417 |        605 |      5,328 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\src\scripts\Firebase.js                                                       | JavaScript         |         32 |         13 |          8 |         53 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\src\scripts\FirestoreHandler.js                                               | JavaScript         |        255 |         30 |         36 |        321 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\src\scripts\ServiceWorker.js                                                  | JavaScript         |          7 |          1 |          0 |          8 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\src\styles\app-starter-template.html                                          | HTML               |         29 |          2 |          4 |         35 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\src\styles\generic-app-style.css                                              | PostCSS            |        921 |         38 |        187 |      1,146 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\src\styles\generic-stylesheet-demo.html                                       | HTML               |      1,109 |         14 |        188 |      1,311 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\src\tailwind.css                                                              | PostCSS            |          3 |          5 |          2 |         10 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\style.css                                                                     | PostCSS            |      1,899 |         54 |        301 |      2,254 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\sw.js                                                                         | JavaScript         |         71 |         11 |         10 |         92 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\tailwind.config.cjs                                                           | JavaScript         |         12 |          0 |          1 |         13 |
+| d:\Documents\GitHub\Portfolio\Portfolio\shawnyxx\vite.config.js                                                                | JavaScript         |         11 |          2 |          2 |         15 |
+| Total                                                                                                                          |                    |     29,828 |      1,166 |      4,301 |     35,295 |
++--------------------------------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+

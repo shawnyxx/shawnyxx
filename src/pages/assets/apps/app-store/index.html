@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+            background: #0a0a0f;
+            color: #e4e4e7;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .header {
+            padding: 24px 32px;
+            background: #121218;
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid #1f1f28;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #ffffff 0%, #a0a0a8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #1a1a24;
+            border-radius: 14px;
+            padding: 14px 20px;
+            border: 1px solid #27273a;
+            transition: all 0.2s ease;
+        }
+
+        .search-bar:focus-within {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .search-bar .material-symbols-outlined {
+            color: #71717a;
+            font-size: 20px;
+        }
+
+        .search-bar input {
+            flex: 1;
+            background: none;
+            border: none;
+            outline: none;
+            color: #e4e4e7;
+            font-size: 15px;
+        }
+
+        .search-bar input::placeholder {
+            color: #52525b;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            padding: 16px 32px;
+            background: #0f0f14;
+            border-bottom: 1px solid #1f1f28;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            background: transparent;
+            border: 1px solid #27273a;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 14px;
+            font-weight: 500;
+            color: #a1a1aa;
+        }
+
+        .tab:hover {
+            background: #1a1a24;
+            border-color: #3f3f52;
+            color: #e4e4e7;
+        }
+
+        .tab.active {
+            background: #3b82f6;
+            border-color: #3b82f6;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+        }
+
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 32px;
+            background: #0a0a0f;
+        }
+
+        .content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .content::-webkit-scrollbar-thumb {
+            background: #27273a;
+            border-radius: 4px;
+        }
+
+        .content::-webkit-scrollbar-thumb:hover {
+            background: #3f3f52;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .app-card {
+            background: #121218;
+            border: 1px solid #1f1f28;
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 280px;
+        }
+
+        /* ... remaining CSS same as original ... */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>App Store</h1>
+            <div class="search-bar">
+                <span class="material-symbols-outlined">search</span>
+                <input type="text" id="search-input" placeholder="Search apps by name, tags, or author...">
+            </div>
+        </div>
+
+        <div class="tabs">
+            <div class="tab" data-tab="search">
+                <span class="material-symbols-outlined" style="vertical-align: middle; margin-right: 5px;">search</span>
+                Search
+            </div>
+            <div class="tab active" data-tab="featured">
+                <span class="material-symbols-outlined" style="vertical-align: middle; margin-right: 5px;">star</span>
+                Featured
+            </div>
+            <div class="tab" data-tab="community">
+                <span class="material-symbols-outlined" style="vertical-align: middle; margin-right: 5px;">group</span>
+                Community
+            </div>
+            <div class="tab" data-tab="beta">
+                <span class="material-symbols-outlined" style="vertical-align: middle; margin-right: 5px;">science</span>
+                Beta
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Search Tab -->
+            <div class="tab-content" id="search-tab">
+                <div class="apps-grid" id="search-apps-grid">
+                    <!-- Apps will be dynamically loaded here -->
+                </div>
+            </div>
+
+            <!-- Featured Tab -->
+            <div class="tab-content active" id="featured-tab">
+                <div class="apps-grid" id="featured-apps-grid">
+                    <!-- Featured user apps from XML files will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Community Tab -->
+            <div class="tab-content" id="community-tab">
+                <div class="loading-message" style="text-align: center; padding: 40px; color: #71717a;">
+                    <span class="material-symbols-outlined" style="font-size: 48px; display: block; margin-bottom: 16px; animation: spin 2s linear infinite;">sync</span>
+                    Loading community apps...
+                </div>
+                <div class="apps-grid" id="community-apps-grid" style="display: none;">
+                    <!-- Community apps from Firestore will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Beta Tab -->
+            <div class="tab-content" id="beta-tab">
+                <div class="apps-grid" id="beta-apps-grid">
+                    <!-- Beta apps from store.json will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="status-info-btn">
+        ?
+        <div class="status-tooltip">
+            <div class="tooltip-title">Status Legend</div>
+            <div class="tooltip-item">
+                <div class="tooltip-color beta"></div>
+                <div class="tooltip-label">Beta - Testing phase</div>
+            </div>
+            <div class="tooltip-item">
+                <div class="tooltip-color alpha"></div>
+                <div class="tooltip-label">Alpha - Early development</div>
+            </div>
+            <div class="tooltip-item">
+                <div class="tooltip-color new"></div>
+                <div class="tooltip-label">New - Recently added</div>
+            </div>
+            <div class="tooltip-item">
+                <div class="tooltip-color test"></div>
+                <div class="tooltip-label">Test - Experimental</div>
+            </div>
+            <div class="tooltip-item">
+                <div class="tooltip-color last"></div>
+                <div class="tooltip-label">Last Chance - Final update</div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="./main.js"></script>
+</body>
+</html>

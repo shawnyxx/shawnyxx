@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="./icons/icon.png" type="image/x-icon">
+  <meta name="theme-color" content="#5D4037">
+  <title>Minecraft Server Calendar</title>
+  
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles/Modal.css">
+  <link rel="stylesheet" href="styles/Services.css">
+  <link rel="stylesheet" href="styles/Form.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/appwrite@17.0.0"></script>
+</head>
+
+<body>
+  <!-- Loading Screen -->
+  <div id="loadingScreen">
+    <div class="loading-content">
+      <h1 class="loading-title">🏰 Minecraft World Calendar</h1>
+      <p class="loading-subtitle">Preparing your adventure...</p>
+      <div class="loading-blocks">
+        <div class="loading-block"></div>
+        <div class="loading-block"></div>
+        <div class="loading-block"></div>
+        <div class="loading-block"></div>
+        <div class="loading-block"></div>
+      </div>
+      <div class="loading-progress">
+        <div class="loading-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Container -->
+  <div class="main-container" id="mainContainer">
+    <h1 class="main-title">🗓️ Minecraft World Calendar</h1>
+
+    <div class="input-container" id="inputContainer">
+      <label for="daysPlayed">🌅 Enter Days Played in Your World:</label>
+      <input type="number" id="daysPlayed" placeholder="e.g., 123" />
+      <button onclick="generateCalendar()" id="generateBtn">🚀 Generate Calendar</button>
+      <button onclick="CityServices.Open()" class="city-services-btn">🏛️ City Services</button>
+    </div>
+
+    <!-- Calendar Loading Animation -->
+    <div id="calendarLoading" class="calendar-loading" style="display:none;">
+      <h2 class="calendar-loading-title">⚒️ Crafting Your Calendar...</h2>
+      <div class="calendar-loading-blocks">
+        <div class="calendar-loading-block"></div>
+        <div class="calendar-loading-block"></div>
+        <div class="calendar-loading-block"></div>
+        <div class="calendar-loading-block"></div>
+      </div>
+      <p>Placing blocks and organizing your adventures...</p>
+    </div>
+
+    <!-- Calendar Navigation and Content -->
+    <div id="calendarNavigation" style="display:none;">
+      <div
+        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding: 1.5rem; background: linear-gradient(145deg, #5D4037 0%, #6D4C41 50%, #5D4037 100%); border-radius: 12px; border: 3px solid #4A2C20; box-shadow: 0 8px 16px rgba(74, 44, 32, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);">
+        <button onclick="navigateMonth(-1)"
+          style="width: auto; min-height: auto; padding: 1rem 2rem; font-size: 1.1rem; font-weight: 700; background: linear-gradient(145deg, #8B4513 0%, #A0522D 100%); color: #FFF8DC; border: 3px solid #654321; border-radius: 8px; box-shadow: 0 4px 8px rgba(139, 69, 19, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2); transition: all 0.3s ease; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); cursor: pointer; text-transform: uppercase; letter-spacing: 1px;">←
+          Previous</button>
+        <h2 id="calendarTitle" style="margin: 0; flex: 1; text-align: center;"></h2>
+        <button onclick="navigateMonth(1)"
+          style="width: auto; min-height: auto; padding: 1rem 2rem; font-size: 1.1rem; font-weight: 700; background: linear-gradient(145deg, #8B4513 0%, #A0522D 100%); color: #FFF8DC; border: 3px solid #654321; border-radius: 8px; box-shadow: 0 4px 8px rgba(139, 69, 19, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2); transition: all 0.3s ease; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); cursor: pointer; text-transform: uppercase; letter-spacing: 1px;">Next
+          →</button>
+      </div>
+    </div>
+
+    <div class="calendar-container">
+      <div class="calendar-header" id="calendarHeader" style="display:none">
+        <div class="day-name">Sun</div>
+        <div class="day-name">Mon</div>
+        <div class="day-name">Tue</div>
+        <div class="day-name">Wed</div>
+        <div class="day-name">Thu</div>
+        <div class="day-name">Fri</div>
+        <div class="day-name">Sat</div>
+      </div>
+      <div class="calendar-grid" id="calendar"></div>
+    </div>
+  </div>
+
+  <!-- Variables -->
+  <script src="scripts/Variables/Variables.js"></script>
+
+  <script src="scripts/Data/Data.js"></script>
+  
+  <script src="scripts/Systems/Modal/Modal.js"></script>
+  <script src="scripts/Tools/Date/Date.js"></script>
+  <script src="scripts/Notification/Notification.js"></script>
+  <script src="scripts/Tools/Image/Image.js"></script>
+  <script src="scripts/Tools/Author/Author.js"></script>
+  <script src="scripts/Animations/Animation.js"></script>
+  
+  <script src="scripts/Features/Modals/CityServices.js"></script>
+  <script src="scripts/Features/Modals/SharedNotes.js"></script>
+  <script src="scripts/Features/Modals/Pinboard.js"></script>
+  <script src="scripts/Features/Modals/Tasks.js"></script>
+  <script src="scripts/Features/Modals/Diddle.js"></script>
+  <script src="scripts/Features/Modals/Recaps.js"></script>
+  
+  <script src="scripts/Features/Views/Calendar.js"></script>
+  <script src="scripts/Features/Views/Loading.js"></script>
+  
+  <script src="script.js"></script>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,1065 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<app>
+    <id>about-me</id>
+    <name>About Me</name>
+    <author>Shawnyxx</author>
+    <description>Learn more about me, my skills, projects, and download my resume.</description>
+    <version>1.0.1</version>
+    <icon>/assets/files/icons/about-me-icon.svg</icon>
+    <lightmode>false</lightmode>
+    <tags>
+        <tag>user-created</tag>
+        <tag>portfolio</tag>
+    </tags>
+    <htmlContent>
+        <![CDATA[
+            <!DOCTYPE html>
+            <html lang="en">
+            
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>About Me - Portfolio</title>
+                <style>
+                    * {
+                        margin: 0;
+                        padding: 0;
+                        box-sizing: border-box;
+                    }
+
+                    body {
+                        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+                        background: #0a0a0a;
+                        color: #e0e0e0;
+                        height: 100vh;
+                        overflow: hidden;
+                    }
+
+                    .container {
+                        height: 100vh;
+                        overflow-y: auto;
+                        overflow-x: hidden;
+                    }
+
+                    .container::-webkit-scrollbar {
+                        width: 10px;
+                    }
+
+                    .container::-webkit-scrollbar-track {
+                        background: #0a0a0a;
+                    }
+
+                    .container::-webkit-scrollbar-thumb {
+                        background: #333;
+                        border-radius: 5px;
+                    }
+
+                    .container::-webkit-scrollbar-thumb:hover {
+                        background: #444;
+                    }
+
+                    .hero-section {
+                        position: relative;
+                        background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+                        padding: 80px 20px;
+                        text-align: center;
+                        border-bottom: 2px solid transparent;
+                        background-clip: padding-box;
+                        overflow: hidden;
+                    }
+
+                    .hero-section::before {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        background: linear-gradient(90deg, 
+                            transparent, 
+                            rgba(100, 100, 255, 0.1) 25%, 
+                            rgba(100, 200, 255, 0.1) 50%, 
+                            rgba(100, 100, 255, 0.1) 75%, 
+                            transparent
+                        );
+                        animation: shimmer 3s infinite;
+                        pointer-events: none;
+                    }
+
+                    @keyframes shimmer {
+                        0% { transform: translateX(-100%); }
+                        100% { transform: translateX(100%); }
+                    }
+
+                    .hero-section::after {
+                        content: '';
+                        position: absolute;
+                        bottom: -2px;
+                        left: 0;
+                        right: 0;
+                        height: 2px;
+                        background: linear-gradient(90deg, 
+                            transparent, 
+                            rgba(100, 150, 255, 0.5) 20%, 
+                            rgba(150, 100, 255, 0.5) 50%, 
+                            rgba(100, 150, 255, 0.5) 80%, 
+                            transparent
+                        );
+                        animation: borderFlow 4s ease-in-out infinite;
+                    }
+
+                    @keyframes borderFlow {
+                        0%, 100% { opacity: 0.3; }
+                        50% { opacity: 1; }
+                    }
+
+                    .profile-image-container {
+                        margin-bottom: 30px;
+                        position: relative;
+                        display: inline-block;
+                    }
+
+                    @keyframes rotate {
+                        from { transform: rotate(0deg); }
+                        to { transform: rotate(360deg); }
+                    }
+
+                    .profile-image {
+                        width: 180px;
+                        height: 180px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        border: 4px solid #1a1a1a;
+                        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+                        position: relative;
+                        z-index: 1;
+                        transition: transform 0.3s ease;
+                    }
+
+                    .profile-image:hover {
+                        transform: scale(1.05);
+                    }
+
+                    .hero-title {
+                        font-size: 48px;
+                        font-weight: 300;
+                        margin-bottom: 15px;
+                        letter-spacing: 2px;
+                        color: #ffffff;
+                        text-shadow: 0 0 20px rgba(100, 150, 255, 0.3);
+                        position: relative;
+                        z-index: 1;
+                        animation: fadeInUp 0.8s ease-out;
+                    }
+
+                    @keyframes fadeInUp {
+                        from {
+                            opacity: 0;
+                            transform: translateY(20px);
+                        }
+                        to {
+                            opacity: 1;
+                            transform: translateY(0);
+                        }
+                    }
+
+                    .hero-subtitle {
+                        font-size: 18px;
+                        color: #999;
+                        font-weight: 300;
+                        margin-bottom: 30px;
+                        position: relative;
+                        z-index: 1;
+                        animation: fadeInUp 0.8s ease-out 0.2s both;
+                    }
+
+                    .resume-btn {
+                        display: inline-block;
+                        padding: 14px 35px;
+                        background: linear-gradient(135deg, #1a1a1a 0%, #252525 100%);
+                        color: #fff;
+                        border: 1px solid #444;
+                        text-decoration: none;
+                        font-size: 15px;
+                        font-weight: 300;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        position: relative;
+                        z-index: 1;
+                        overflow: hidden;
+                        animation: fadeInUp 0.8s ease-out 0.4s both;
+                    }
+
+                    .resume-btn::before {
+                        content: '';
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        width: 0;
+                        height: 0;
+                        border-radius: 50%;
+                        background: rgba(100, 150, 255, 0.1);
+                        transform: translate(-50%, -50%);
+                        transition: width 0.6s, height 0.6s;
+                    }
+
+                    .resume-btn:hover::before {
+                        width: 300px;
+                        height: 300px;
+                    }
+
+                    .resume-btn:hover {
+                        border-color: rgba(100, 150, 255, 0.5);
+                        transform: translateY(-2px);
+                        box-shadow: 0 5px 15px rgba(100, 150, 255, 0.2);
+                    }
+
+                    .content-wrapper {
+                        max-width: 1200px;
+                        margin: 0 auto;
+                        padding: 40px 20px;
+                    }
+
+                    .section {
+                        margin-bottom: 60px;
+                    }
+
+                    .section-title {
+                        font-size: 32px;
+                        font-weight: 300;
+                        margin-bottom: 25px;
+                        color: #ffffff;
+                        border-bottom: 1px solid #222;
+                        padding-bottom: 15px;
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+                        position: relative;
+                    }
+
+                    .section-icon {
+                        display: none;
+                    }
+
+                    .about-description {
+                        font-size: 16px;
+                        line-height: 1.8;
+                        color: #aaa;
+                        font-weight: 300;
+                        background: #121212;
+                        padding: 30px;
+                        border: 1px solid #222;
+                        border-radius: 4px;
+                        position: relative;
+                        overflow: hidden;
+                    }
+
+                    .about-description::before {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: -100%;
+                        width: 100%;
+                        height: 100%;
+                        background: linear-gradient(90deg, 
+                            transparent, 
+                            rgba(100, 150, 255, 0.03), 
+                            transparent
+                        );
+                        animation: slideRight 3s infinite;
+                    }
+
+                    @keyframes slideRight {
+                        0% { left: -100%; }
+                        100% { left: 100%; }
+                    }
+
+                    .languages-grid {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                        gap: 20px;
+                        margin-top: 20px;
+                    }
+
+                    .language-card {
+                        background: #121212;
+                        border: 1px solid #222;
+                        padding: 25px;
+                        text-align: center;
+                        transition: all 0.3s ease;
+                        cursor: default;
+                        position: relative;
+                        overflow: hidden;
+                    }
+
+                    .language-card::before {
+                        content: attr(data-code);
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        font-family: 'Courier New', monospace;
+                        font-size: 10px;
+                        line-height: 1.4;
+                        color: rgba(100, 150, 255, 0.08);
+                        white-space: pre-wrap;
+                        word-wrap: break-word;
+                        padding: 10px;
+                        overflow: hidden;
+                        pointer-events: none;
+                        transition: transform 0.3s ease;
+                    }
+
+                    .language-card:hover::before {
+                        transform: translateY(-10px);
+                    }
+
+                    .language-card:hover {
+                        background: #1a1a1a;
+                        border-color: rgba(100, 150, 255, 0.3);
+                        transform: translateY(-5px);
+                        box-shadow: 0 8px 24px rgba(100, 150, 255, 0.1);
+                    }
+
+                    .language-icon {
+                        font-size: 48px;
+                        margin-bottom: 12px;
+                        position: relative;
+                        z-index: 1;
+                        filter: grayscale(0.3);
+                        transition: all 0.3s ease;
+                    }
+
+                    .language-card:hover .language-icon {
+                        filter: grayscale(0);
+                        transform: scale(1.1);
+                    }
+
+                    .language-name {
+                        font-size: 16px;
+                        color: #ccc;
+                        font-weight: 300;
+                        position: relative;
+                        z-index: 1;
+                    }
+
+                    .language-level {
+                        font-size: 13px;
+                        color: #666;
+                        margin-top: 8px;
+                        font-weight: 300;
+                        position: relative;
+                        z-index: 1;
+                    }
+
+                    .projects-grid {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+                        gap: 30px;
+                        margin-top: 20px;
+                    }
+
+                    .project-card {
+                        background: #121212;
+                        border: 1px solid #222;
+                        overflow: hidden;
+                        transition: all 0.3s ease;
+                        position: relative;
+                    }
+
+                    .project-card::before {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        background-size: cover;
+                        background-position: center;
+                        opacity: 0;
+                        transition: opacity 0.5s ease;
+                        filter: blur(8px) brightness(0.3);
+                        z-index: 0;
+                    }
+
+                    .project-card:hover::before {
+                        opacity: 1;
+                    }
+
+                    .project-card:hover {
+                        border-color: rgba(100, 150, 255, 0.3);
+                        transform: translateY(-5px);
+                        box-shadow: 0 12px 32px rgba(100, 150, 255, 0.15);
+                    }
+
+                    .project-media {
+                        width: 100%;
+                        height: 220px;
+                        object-fit: cover;
+                        background: #0a0a0a;
+                        transition: transform 0.3s ease;
+                        position: relative;
+                        z-index: 1;
+                    }
+
+                    .project-card:hover .project-media {
+                        transform: scale(1.05);
+                    }
+
+                    .project-content {
+                        padding: 25px;
+                        position: relative;
+                        z-index: 1;
+                        background: #121212;
+                    }
+
+                    .project-title {
+                        font-size: 22px;
+                        margin-bottom: 12px;
+                        color: #ffffff;
+                        font-weight: 300;
+                    }
+
+                    .project-description {
+                        font-size: 14px;
+                        color: #888;
+                        line-height: 1.6;
+                        margin-bottom: 15px;
+                        font-weight: 300;
+                    }
+
+                    .project-tech {
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 8px;
+                        margin-bottom: 15px;
+                    }
+
+                    .tech-tag {
+                        background: #1a1a1a;
+                        color: #aaa;
+                        padding: 6px 12px;
+                        font-size: 12px;
+                        border: 1px solid #333;
+                        font-weight: 300;
+                    }
+
+                    .project-skills {
+                        font-size: 13px;
+                        color: #666;
+                        margin-bottom: 15px;
+                        font-weight: 300;
+                    }
+
+                    .project-link {
+                        display: inline-block;
+                        color: #888;
+                        text-decoration: none;
+                        font-size: 14px;
+                        border: 1px solid #333;
+                        padding: 10px 20px;
+                        transition: all 0.3s ease;
+                        font-weight: 300;
+                        margin-right: 10px;
+                        margin-bottom: 10px;
+                    }
+
+                    .project-link:hover {
+                        background: rgba(100, 150, 255, 0.1);
+                        color: #ccc;
+                        border-color: rgba(100, 150, 255, 0.3);
+                    }
+
+                    .contact-btn {
+                        display: inline-block;
+                        color: #888;
+                        text-decoration: none;
+                        font-size: 14px;
+                        border: 1px solid #333;
+                        padding: 10px 20px;
+                        transition: all 0.3s ease;
+                        font-weight: 300;
+                        cursor: pointer;
+                        background: transparent;
+                        margin-bottom: 10px;
+                    }
+
+                    .contact-btn:hover {
+                        background: rgba(150, 100, 255, 0.1);
+                        color: #ccc;
+                        border-color: rgba(150, 100, 255, 0.3);
+                    }
+
+                    /* Modal Styles */
+                    .modal {
+                        display: none;
+                        position: fixed;
+                        z-index: 1000;
+                        left: 0;
+                        top: 0;
+                        width: 100%;
+                        height: 100%;
+                        background-color: rgba(0, 0, 0, 0.8);
+                        animation: fadeIn 0.3s ease;
+                    }
+
+                    @keyframes fadeIn {
+                        from { opacity: 0; }
+                        to { opacity: 1; }
+                    }
+
+                    .modal.active {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+
+                    .modal-content {
+                        background: #1a1a1a;
+                        border: 1px solid #333;
+                        padding: 40px;
+                        max-width: 500px;
+                        width: 90%;
+                        position: relative;
+                        animation: slideUp 0.3s ease;
+                    }
+
+                    @keyframes slideUp {
+                        from {
+                            transform: translateY(50px);
+                            opacity: 0;
+                        }
+                        to {
+                            transform: translateY(0);
+                            opacity: 1;
+                        }
+                    }
+
+                    .modal-close {
+                        position: absolute;
+                        top: 15px;
+                        right: 20px;
+                        font-size: 28px;
+                        font-weight: 300;
+                        color: #666;
+                        cursor: pointer;
+                        transition: color 0.3s ease;
+                        background: none;
+                        border: none;
+                        padding: 0;
+                        line-height: 1;
+                    }
+
+                    .modal-close:hover {
+                        color: #fff;
+                    }
+
+                    .modal-title {
+                        font-size: 28px;
+                        font-weight: 300;
+                        margin-bottom: 25px;
+                        color: #fff;
+                        border-bottom: 1px solid #333;
+                        padding-bottom: 15px;
+                    }
+
+                    .contact-info {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 20px;
+                    }
+
+                    .contact-item {
+                        display: flex;
+                        align-items: center;
+                        gap: 15px;
+                        padding: 15px;
+                        background: #121212;
+                        border: 1px solid #222;
+                        transition: all 0.3s ease;
+                    }
+
+                    .contact-item:hover {
+                        background: #1a1a1a;
+                        border-color: rgba(100, 150, 255, 0.3);
+                        transform: translateX(5px);
+                    }
+
+                    .contact-item-label {
+                        font-size: 14px;
+                        color: #666;
+                        min-width: 80px;
+                        font-weight: 300;
+                    }
+
+                    .contact-item-value {
+                        font-size: 16px;
+                        color: #ccc;
+                        font-weight: 300;
+                    }
+
+                    .contact-item-value a {
+                        color: #ccc;
+                        text-decoration: none;
+                        transition: color 0.3s ease;
+                    }
+
+                    .contact-item-value a:hover {
+                        color: rgba(100, 150, 255, 0.8);
+                    }
+
+                    .loading {
+                        text-align: center;
+                        padding: 40px;
+                        color: #666;
+                        font-size: 16px;
+                        font-weight: 300;
+                    }
+
+                    .error {
+                        background: #1a0f0f;
+                        color: #ff6666;
+                        padding: 20px;
+                        margin: 20px 0;
+                        border: 1px solid #331a1a;
+                        font-size: 14px;
+                        font-weight: 300;
+                    }
+
+                    @media (max-width: 768px) {
+                        .hero-title {
+                            font-size: 32px;
+                        }
+
+                        .section-title {
+                            font-size: 26px;
+                        }
+
+                        .languages-grid {
+                            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                            gap: 15px;
+                        }
+
+                        .projects-grid {
+                            grid-template-columns: 1fr;
+                        }
+
+                        .content-wrapper {
+                            padding: 30px 15px;
+                        }
+                    }
+                </style>
+            </head>
+
+            <body>
+                <div class="container">
+                    <!-- Hero Section -->
+                    <div class="hero-section">
+                        <div class="profile-image-container">
+                            <img id="profileImage" class="profile-image" src="" alt="Profile Picture">
+                        </div>
+                        <h1 class="hero-title" id="heroName">Loading...</h1>
+                        <p class="hero-subtitle" id="heroRole">Developer & Creator</p>
+                        <a href="#" class="resume-btn" id="resumeBtn">Download Resume</a>
+                    </div>
+
+                    <!-- Contact Modal -->
+                    <div class="modal" id="contactModal">
+                        <div class="modal-content">
+                            <button class="modal-close" id="modalClose">&times;</button>
+                            <h2 class="modal-title">Contact Information</h2>
+                            <div class="contact-info" id="contactInfo">
+                                <div class="loading">Loading contact information...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="content-wrapper">
+                        <!-- About Section -->
+                        <section class="section">
+                            <h2 class="section-title">
+                                <span class="section-icon"></span>
+                                About Me
+                            </h2>
+                            <div class="about-description" id="aboutDescription">
+                                <div class="loading">Loading description...</div>
+                            </div>
+                        </section>
+
+                        <!-- Languages Section -->
+                        <section class="section">
+                            <h2 class="section-title">
+                                <span class="section-icon"></span>
+                                Skills & Languages
+                            </h2>
+                            <div class="languages-grid" id="languagesGrid">
+                                <div class="loading">Loading languages...</div>
+                            </div>
+                        </section>
+
+                        <!-- Projects Section -->
+                        <section class="section">
+                            <h2 class="section-title">
+                                <span class="section-icon"></span>
+                                My Projects
+                            </h2>
+                            <div class="projects-grid" id="projectsGrid">
+                                <div class="loading">Loading projects...</div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <script>
+                    // Get the base URL from the parent window (just the origin, e.g., http://127.0.0.1:5501)
+                    const baseURL = window.location.origin + '/';
+                    
+                    // Configuration - Update these paths based on your folder structure
+                    const CONFIG = {
+                        resumePath: baseURL + 'assets/files/portfolio-content/resume/resume.pdf',
+                        profileImagePath: baseURL + 'assets/files/portfolio-content/photos/profile-photo.jpg',
+                        aboutDataPath: baseURL + 'assets/files/portfolio-content/json/about.json',
+                        languagesDataPath: baseURL + 'assets/files/portfolio-content/json/languages.json',
+                        projectsDataPath: baseURL + 'assets/files/portfolio-content/json/projects.json'
+                    };
+
+                    // Code snippets for language backgrounds
+                    const codeSnippets = {
+                        'HTML/CSS/Javascript': '<div class="container">\\n  <h1>Hello World</h1>\\n  <p>Welcome</p>\\n</div>\\n.container {\\n  display: flex;\\n}\\nfunction init() {\\n  console.log("Hi");\\n}',
+                        'TypeScript': 'interface User {\\n  name: string;\\n  id: number;\\n}\\nclass UserAccount {\\n  name: string;\\n  constructor(name: string) {\\n    this.name = name;\\n  }\\n}',
+                        'Python': 'def hello_world():\\n    print("Hello, World!")\\n\\nclass User:\\n    def __init__(self, name):\\n        self.name = name\\n\\nfor i in range(10):\\n    print(i)',
+                        'Java': 'public class Main {\\n  public static void main(String[] args) {\\n    System.out.println("Hello");\\n  }\\n}\\nclass User {\\n  private String name;\\n}',
+                        'C#': 'using System;\\nnamespace HelloWorld {\\n  class Program {\\n    static void Main() {\\n      Console.WriteLine("Hello");\\n    }\\n  }\\n}',
+                        'React': 'function App() {\\n  const [count, setCount] = useState(0);\\n  return (\\n    <div>\\n      <button onClick={() => setCount(count + 1)}>\\n        Count: {count}\\n      </button>\\n    </div>\\n  );\\n}',
+                        'Vue': '<template>\\n  <div>\\n    <button @click="count++">\\n      Count: {{ count }}\\n    </button>\\n  </div>\\n</template>\\n<script>\\nexport default {\\n  data() {\\n    return { count: 0 }\\n  }\\n}\\n<' + '/script>',
+                        'Node.js': 'const express = require(\'express\');\\nconst app = express();\\n\\napp.get(\'/\', (req, res) => {\\n  res.send(\'Hello World!\');\\n});\\n\\napp.listen(3000);',
+                        'Git': 'git init\\ngit add .\\ngit commit -m "Initial commit"\\ngit push origin main\\ngit branch dev\\ngit checkout dev\\ngit merge main',
+                        'Powershell': 'Get-ChildItem -Path C:\\\\\\nSet-Location -Path D:\\\\\\n$files = Get-Item *\\nForEach ($file in $files) {\\n  Write-Host $file.Name\\n}',
+                        'Lua': 'function greet(name)\\n  print("Hello " .. name)\\nend\\n\\nlocal player = {\\n  name = "Player",\\n  health = 100\\n}\\n\\nfor i=1,10 do\\n  print(i)\\nend',
+                        'default': '// Code\\nfunction example() {\\n  return true;\\n}\\n\\nconst data = {\\n  key: "value"\\n};\\n\\nfor (let i = 0; i < 10; i++) {\\n  console.log(i);\\n}'
+                    };
+
+                    // Initialize the app
+                    document.addEventListener('DOMContentLoaded', () => {
+                        loadProfileImage();
+                        loadAboutData();
+                        loadLanguages();
+                        loadProjects();
+                        setupResumeButton();
+                        setupModal();
+                    });
+
+                    // Load profile image
+                    function loadProfileImage() {
+                        const profileImg = document.getElementById('profileImage');
+                        profileImg.src = CONFIG.profileImagePath;
+                        profileImg.onerror = () => {
+                            profileImg.style.display = 'none';
+                        };
+                    }
+
+                    // Setup resume download button
+                    function setupResumeButton() {
+                        const resumeBtn = document.getElementById('resumeBtn');
+                        resumeBtn.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            window.open(CONFIG.resumePath, '_blank');
+                        });
+                    }
+
+                    // Load about data
+                    async function loadAboutData() {
+                        try {
+                            const response = await fetch(CONFIG.aboutDataPath);
+                            if (!response.ok) throw new Error('Failed to load about data');
+                            
+                            const data = await response.json();
+                            
+                            // Update hero section
+                            if (data.name) {
+                                document.getElementById('heroName').textContent = data.name;
+                            }
+                            if (data.role) {
+                                document.getElementById('heroRole').textContent = data.role;
+                            }
+                            
+                            // Update about description
+                            if (data.description) {
+                                document.getElementById('aboutDescription').innerHTML = data.description;
+                            }
+                        } catch (error) {
+                            console.error('Error loading about data:', error);
+                            document.getElementById('aboutDescription').innerHTML = 
+                                '<div class="error">Failed to load about information. Please check the data file.</div>';
+                        }
+                    }
+
+                    // Load languages
+                    async function loadLanguages() {
+                        try {
+                            const response = await fetch(CONFIG.languagesDataPath);
+                            if (!response.ok) throw new Error('Failed to load languages data');
+                            
+                            const data = await response.json();
+                            const languagesGrid = document.getElementById('languagesGrid');
+                            
+                            if (!data.languages || data.languages.length === 0) {
+                                languagesGrid.innerHTML = '<div class="loading">No languages found.</div>';
+                                return;
+                            }
+                            
+                            languagesGrid.innerHTML = '';
+                            
+                            data.languages.forEach(lang => {
+                                const card = document.createElement('div');
+                                card.className = 'language-card';
+                                
+                                // Get code snippet for this language
+                                const code = codeSnippets[lang.name] || codeSnippets['default'];
+                                card.setAttribute('data-code', code);
+                                
+                                // Create icon element
+                                const iconDiv = document.createElement('div');
+                                iconDiv.className = 'language-icon';
+                                
+                                // Check if icon is an image path or text
+                                const isImagePath = lang.icon && (lang.icon.startsWith('/') || lang.icon.startsWith('http'));
+                                
+                                if (isImagePath) {
+                                    const img = document.createElement('img');
+                                    img.src = baseURL + (lang.icon.startsWith('/') ? lang.icon.substring(1) : lang.icon);
+                                    img.alt = lang.name;
+                                    img.style.width = '48px';
+                                    img.style.height = '48px';
+                                    img.style.objectFit = 'contain';
+                                    iconDiv.appendChild(img);
+                                } else {
+                                    iconDiv.textContent = lang.icon || '📝';
+                                }
+                                
+                                // Create name element
+                                const nameDiv = document.createElement('div');
+                                nameDiv.className = 'language-name';
+                                nameDiv.textContent = lang.name;
+                                
+                                // Create level element if exists
+                                card.appendChild(iconDiv);
+                                card.appendChild(nameDiv);
+                                
+                                if (lang.level) {
+                                    const levelDiv = document.createElement('div');
+                                    levelDiv.className = 'language-level';
+                                    levelDiv.textContent = lang.level;
+                                    card.appendChild(levelDiv);
+                                }
+                                
+                                languagesGrid.appendChild(card);
+                            });
+                        } catch (error) {
+                            console.error('Error loading languages:', error);
+                            document.getElementById('languagesGrid').innerHTML = 
+                                '<div class="error">Failed to load languages. Please check the data file.</div>';
+                        }
+                    }
+
+                    // Load projects
+                    async function loadProjects() {
+                        try {
+                            const response = await fetch(CONFIG.projectsDataPath);
+                            if (!response.ok) throw new Error('Failed to load projects data');
+                            
+                            const data = await response.json();
+                            const projectsGrid = document.getElementById('projectsGrid');
+                            
+                            if (!data.projects || data.projects.length === 0) {
+                                projectsGrid.innerHTML = '<div class="loading">No projects found.</div>';
+                                return;
+                            }
+                            
+                            projectsGrid.innerHTML = '';
+                            
+                            data.projects.forEach(project => {
+                                const card = document.createElement('div');
+                                card.className = 'project-card';
+                                
+                                // Set background preview if URL exists
+                                if (project.url) {
+                                    const screenshotUrl = `https://api.screenshotmachine.com/?key=demo&url=${encodeURIComponent(project.url)}&dimension=1024x768`;
+                                    card.style.setProperty('--preview-url', `url(${screenshotUrl})`);
+                                    card.style.backgroundImage = `var(--preview-url)`;
+                                    card.style.backgroundSize = 'cover';
+                                    card.style.backgroundPosition = 'center';
+                                }
+                                
+                                // Determine media type and create appropriate element
+                                let mediaHTML = '';
+                                if (project.media && project.media.length > 0) {
+                                    const mediaItem = project.media[0]; // Use first media item
+                                    const mediaPath = baseURL + `assets/files/portfolio-content/${mediaItem}`;
+                                    
+                                    if (mediaItem.endsWith('.mp4') || mediaItem.endsWith('.webm')) {
+                                        mediaHTML = `<video class="project-media" autoplay loop muted playsinline>
+                                            <source src="${mediaPath}" type="video/${mediaItem.split('.').pop()}">
+                                        </video>`;
+                                    } else if (mediaItem.endsWith('.gif') || mediaItem.endsWith('.jpg') || 
+                                            mediaItem.endsWith('.jpeg') || mediaItem.endsWith('.png')) {
+                                        mediaHTML = `<img class="project-media" src="${mediaPath}" alt="${project.title}">`;
+                                    }
+                                }
+                                
+                                // Build tech tags
+                                let techTagsHTML = '';
+                                if (project.languages && project.languages.length > 0) {
+                                    techTagsHTML = project.languages.map(lang => 
+                                        `<span class="tech-tag">${lang}</span>`
+                                    ).join('');
+                                }
+                                
+                                // Build skills learned
+                                let skillsHTML = '';
+                                if (project.skillsLearned && project.skillsLearned.length > 0) {
+                                    skillsHTML = `<div class="project-skills">
+                                        <strong>Skills:</strong> ${project.skillsLearned.join(', ')}
+                                    </div>`;
+                                }
+                                
+                                // Build buttons
+                                let buttonsHTML = '';
+                                if (project.url) {
+                                    buttonsHTML += `<a href="${project.url}" class="project-link" target="_blank">View Project →</a>`;
+                                }
+                                if (project.contact) {
+                                    buttonsHTML += `<button class="contact-btn" onclick="openContactModal('${encodeURIComponent(JSON.stringify(project.contact))}', '${project.title}')">Contact</button>`;
+                                }
+                                
+                                card.innerHTML = `
+                                    ${mediaHTML}
+                                    <div class="project-content">
+                                        <h3 class="project-title">${project.title}</h3>
+                                        <p class="project-description">${project.description}</p>
+                                        ${techTagsHTML ? `<div class="project-tech">${techTagsHTML}</div>` : ''}
+                                        ${skillsHTML}
+                                        <div>${buttonsHTML}</div>
+                                    </div>
+                                `;
+                                
+                                projectsGrid.appendChild(card);
+                            });
+                        } catch (error) {
+                            console.error('Error loading projects:', error);
+                            document.getElementById('projectsGrid').innerHTML = 
+                                '<div class="error">Failed to load projects. Please check the data file.</div>';
+                        }
+                    }
+
+                    // Setup modal
+                    function setupModal() {
+                        const modal = document.getElementById('contactModal');
+                        const closeBtn = document.getElementById('modalClose');
+                        
+                        closeBtn.addEventListener('click', () => {
+                            modal.classList.remove('active');
+                        });
+                        
+                        modal.addEventListener('click', (e) => {
+                            if (e.target === modal) {
+                                modal.classList.remove('active');
+                            }
+                        });
+                        
+                        // Load contact info
+                        loadContactInfo();
+                    }
+
+                    // Open contact modal
+                    function openContactModal(contactDataStr, projectTitle) {
+                        const modal = document.getElementById('contactModal');
+                        const modalTitle = modal.querySelector('.modal-title');
+                        
+                        // Update modal title to show project name
+                        if (projectTitle) {
+                            modalTitle.textContent = `Contact - ${projectTitle}`;
+                        } else {
+                            modalTitle.textContent = 'Contact Information';
+                        }
+                        
+                        modal.classList.add('active');
+                        
+                        // If project-specific contact data is provided, use it
+                        if (contactDataStr) {
+                            try {
+                                const contactData = JSON.parse(decodeURIComponent(contactDataStr));
+                                displayContactInfo(contactData);
+                            } catch (error) {
+                                console.error('Error parsing contact data:', error);
+                                loadContactInfo(); // Fallback to default contact info
+                            }
+                        } else {
+                            loadContactInfo(); // Load default contact info
+                        }
+                    }
+
+                    // Display contact information
+                    function displayContactInfo(contactData) {
+                        const contactInfo = document.getElementById('contactInfo');
+                        
+                        if (!contactData || Object.keys(contactData).length === 0) {
+                            contactInfo.innerHTML = '<div class="loading">No contact information available.</div>';
+                            return;
+                        }
+                        
+                        contactInfo.innerHTML = '';
+                        
+                        // Display each contact field
+                        Object.keys(contactData).forEach(key => {
+                            const value = contactData[key];
+                            const item = document.createElement('div');
+                            item.className = 'contact-item';
+                            
+                            let displayValue = value;
+                            
+                            // Make emails and URLs clickable
+                            if (key.toLowerCase() === 'email') {
+                                displayValue = `<a href="mailto:${value}">${value}</a>`;
+                            } else if (typeof value === 'string' && (value.startsWith('http://') || value.startsWith('https://'))) {
+                                displayValue = `<a href="${value}" target="_blank">${value}</a>`;
+                            }
+                            
+                            item.innerHTML = `
+                                <div class="contact-item-label">${key.charAt(0).toUpperCase() + key.slice(1)}:</div>
+                                <div class="contact-item-value">${displayValue}</div>
+                            `;
+                            
+                            contactInfo.appendChild(item);
+                        });
+                    }
+
+                    // Load contact information
+                    async function loadContactInfo() {
+                        try {
+                            const response = await fetch(CONFIG.aboutDataPath);
+                            if (!response.ok) throw new Error('Failed to load contact data');
+                            
+                            const data = await response.json();
+                            
+                            if (!data.contact) {
+                                document.getElementById('contactInfo').innerHTML = '<div class="loading">No contact information available.</div>';
+                                return;
+                            }
+                            
+                            displayContactInfo(data.contact);
+                        } catch (error) {
+                            console.error('Error loading contact info:', error);
+                            document.getElementById('contactInfo').innerHTML = 
+                                '<div class="error">Failed to load contact information.</div>';
+                        }
+                    }
+                </script>
+            </body>
+
+            </html>
+        ]]>
+    </htmlContent>
+</app>

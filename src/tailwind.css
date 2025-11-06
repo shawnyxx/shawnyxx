@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Note: don't use @import after @tailwind rules because CSS requires @import to come first.
+	Your original `style.css` is already linked directly in `index.html`, so it will load
+	alongside the generated Tailwind CSS. If you need to override Tailwind, place overrides
+	in a separate file that's loaded after the generated CSS via a regular <link> in index.html.
+*/

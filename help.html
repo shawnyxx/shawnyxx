@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Platform Help</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .full-container {
+            height: 100vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .full-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .full-container::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+
+        .full-container::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+
+        .full-container::-webkit-scrollbar-thumb:hover {
+            background: #444;
+        }
+
+        /* Sidebar Layout */
+        .sidebar-layout {
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: #121212;
+            border-right: 1px solid #222;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            flex-shrink: 0;
+            overflow-y: auto; /* allow sidebar to scroll when content overflows */
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid #222;
+        }
+
+        .sidebar-title {
+            font-size: 24px;
+            font-weight: 300;
+            color: #fff;
+            margin-bottom: 0;
+        }
+
+        .sidebar-category {
+            padding: 8px 20px; /* smaller padding to reduce gaps between categories */
+            color: #666;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar-nav {
+            flex: none; /* let navs take natural height so categories group at the top */
+            overflow-y: visible;
+            padding: 0; /* remove spacing between category and its nav */
+        }
+
+        .sidebar-nav::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .sidebar-nav::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+
+        .sidebar-nav::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+
+        .sidebar-nav::-webkit-scrollbar-thumb:hover {
+            background: #444;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+            color: #ccc;
+        }
+
+        .nav-item:hover {
+            background: #1a1a1a;
+        }
+
+        .nav-item.active {
+            background: #1a1a1a;
+            border-left-color: rgba(100, 150, 255, 0.8);
+            color: #fff;
+        }
+
+        .nav-item-icon {
+            font-size: 20px;
+            color: #666;
+        }
+
+        .nav-item.active .nav-item-icon {
+            color: rgba(100, 150, 255, 0.8);
+        }
+
+        .nav-item-label {
+            font-size: 15px;
+            font-weight: 300;
+        }
+
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 40px;
+        }
+
+        .main-content::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .main-content::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+
+        .main-content::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 5px;
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-header {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #222;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 300;
+            color: #fff;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-description {
+            font-size: 14px;
+            color: #666;
+            font-weight: 300;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            color: #ffffff;
+            margin-bottom: 10px;
+            font-size: 32px;
+            text-align: center;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+
+        h2 {
+            font-size: 24px;
+            font-weight: 300;
+            color: #fff;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            font-size: 18px;
+            font-weight: 400;
+            color: #fff;
+            margin-top: 24px;
+            margin-bottom: 12px;
+        }
+
+        h4 {
+            font-size: 16px;
+            font-weight: 400;
+            color: #fff;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #aaa;
+            font-weight: 300;
+            margin-bottom: 16px;
+        }
+
+        .subtitle {
+            color: #666;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 14px;
+            font-weight: 300;
+        }
+
+        ul,
+        ol {
+            margin-left: 24px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            color: #aaa;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        strong {
+            color: #fff;
+            font-weight: 400;
+        }
+
+        .alert {
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 300;
+        }
+
+        .alert-info {
+            background: rgba(100, 150, 255, 0.05);
+            color: rgba(100, 150, 255, 0.9);
+            border-color: rgba(100, 150, 255, 0.3);
+        }
+
+        .alert-info strong {
+            color: rgba(100, 150, 255, 1);
+        }
+
+        .alert-success {
+            background: rgba(100, 255, 150, 0.05);
+            color: rgba(100, 255, 150, 0.9);
+            border-color: rgba(100, 255, 150, 0.3);
+        }
+
+        .alert-success strong {
+            color: rgba(100, 255, 150, 1);
+        }
+
+        .alert-warning {
+            background: rgba(255, 200, 100, 0.05);
+            color: rgba(255, 200, 100, 0.9);
+            border-color: rgba(255, 200, 100, 0.3);
+        }
+
+        .alert-warning strong {
+            color: rgba(255, 200, 100, 1);
+        }
+
+        .alert-error {
+            background: rgba(255, 100, 100, 0.05);
+            color: rgba(255, 100, 100, 0.9);
+            border-color: rgba(255, 100, 100, 0.3);
+        }
+
+        .alert-error strong {
+            color: rgba(255, 100, 100, 1);
+        }
+
+        code {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 4px;
+            padding: 3px 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: rgba(100, 150, 255, 0.9);
+        }
+
+        .footer {
+            margin-top: 60px;
+            padding-top: 24px;
+            border-top: 1px solid #222;
+            text-align: center;
+            color: #666;
+            font-size: 13px;
+            padding-bottom: 40px;
+        }
+
+        .card {
+            background: #121212;
+            border: 1px solid #222;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        /* App types styles */
+        .app-types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+            margin-top: 10px;
+        }
+
+        .type-card {
+            background: linear-gradient(180deg, #0f1011, #121212);
+            border: 1px solid #232323;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .type-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 18px;
+            font-weight: 400;
+        }
+
+        .type-icon {
+            font-size: 28px;
+            color: rgba(100,150,255,0.95);
+            background: rgba(255,255,255,0.02);
+            padding: 8px;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .badge {
+            margin-left: auto;
+            background: rgba(100,150,255,0.12);
+            color: rgba(100,150,255,0.95);
+            padding: 4px 8px;
+            border-radius: 999px;
+            font-size: 12px;
+        }
+
+        .type-card p { color: #cfcfcf; margin: 0; }
+
+        .type-card ul { margin-top: 8px; }
+
+        .muted { color: #9aa; }
+
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+
+        @media (max-width: 768px) {
+            .sidebar-layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid #222;
+            }
+
+            .sidebar-nav {
+                max-height: 200px;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            h3 {
+                font-size: 16px;
+            }
+
+            .section-title {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar-layout">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-title">Help</div>
+            </div>
+
+            <!-- Usage Category -->
+            <div class="sidebar-category">Usage</div>
+            <nav class="sidebar-nav">
+                <div class="nav-item active" onclick="switchSection('overview', this)">
+                    <span class="material-symbols-outlined nav-item-icon">info</span>
+                    <span class="nav-item-label">Overview</span>
+                </div>
+                <div class="nav-item" onclick="switchSection('content', this)">
+                    <span class="material-symbols-outlined nav-item-icon">shield</span>
+                    <span class="nav-item-label">Content Requirements</span>
+                </div>
+                <div class="nav-item" onclick="switchSection('technical', this)">
+                    <span class="material-symbols-outlined nav-item-icon">code</span>
+                    <span class="nav-item-label">Technical Requirements</span>
+                </div>
+                <div class="nav-item" onclick="switchSection('best-practices', this)">
+                    <span class="material-symbols-outlined nav-item-icon">lightbulb</span>
+                    <span class="nav-item-label">Best Practices</span>
+                </div>
+            </nav>
+
+            <!-- Documentation Category -->
+            <div class="sidebar-category">Documentation</div>
+            <nav class="sidebar-nav">
+                <div class="nav-item" onclick="switchSection('documentation', this)">
+                    <span class="material-symbols-outlined nav-item-icon">menu_book</span>
+                    <span class="nav-item-label">Overview</span>
+                </div>
+                <div class="nav-item" onclick="switchSection('documentation-styling', this)">
+                    <span class="material-symbols-outlined nav-item-icon">brush</span>
+                    <span class="nav-item-label">Generic Styling</span>
+                </div>
+                <div class="nav-item" onclick="switchSection('documentation-apis', this)">
+                    <span class="material-symbols-outlined nav-item-icon">cloud</span>
+                    <span class="nav-item-label">External APIs & CDNs</span>
+                </div>
+                <div class="nav-item" onclick="switchSection('documentation-size', this)">
+                    <span class="material-symbols-outlined nav-item-icon">compress</span>
+                    <span class="nav-item-label">Size Optimization</span>
+                </div>
+                <div class="nav-item" onclick="switchSection('documentation-resources', this)">
+                    <span class="material-symbols-outlined nav-item-icon">help</span>
+                    <span class="nav-item-label">Resources & Help</span>
+                </div>
+            </nav>
+
+            <!-- App Creator Category -->
+            <div class="sidebar-category">App Creator</div>
+            <nav class="sidebar-nav">
+                <div class="nav-item" onclick="switchSection('app-creator-overview', this)">
+                    <span class="material-symbols-outlined nav-item-icon">code</span>
+                    <span class="nav-item-label">Overview</span>
+                </div>
+                <div class="nav-item" onclick="switchSection('app-creator-creating', this)">
+                    <span class="material-symbols-outlined nav-item-icon">add</span>
+                    <span class="nav-item-label">Creating Apps</span>
+                </div>
+                <div class="nav-item" onclick="switchSection('app-creator-editing', this)">
+                    <span class="material-symbols-outlined nav-item-icon">edit</span>
+                    <span class="nav-item-label">Editing Code</span>
+                </div>
+                <div class="nav-item" onclick="switchSection('app-creator-assets', this)">
+                    <span class="material-symbols-outlined nav-item-icon">image</span>
+                    <span class="nav-item-label">Managing Assets</span>
+                </div>
+                <div class="nav-item" onclick="switchSection('app-creator-publishing', this)">
+                    <span class="material-symbols-outlined nav-item-icon">publish</span>
+                    <span class="nav-item-label">Publishing Apps</span>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Overview Section -->
+            <div class="content-section active" id="overview-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span class="material-symbols-outlined">info</span>
+                        Platform Help Overview
+                    </h2>
+                    <p class="section-description">Quick references, troubleshooting tips and links to get you
+                        building and publishing successfully.</p>
+                </div>
+
+                <div class="overview-hero card" style="display:flex; gap:18px; align-items:flex-start;">
+                    <div style="flex:1;">
+                        <h3 style="margin:0 0 8px 0; font-weight:500; color:#fff;">Get started — fast</h3>
+                        <p style="margin:0 0 12px 0; color:#cfcfcf;">Use the sidebar to open focused help topics. Start
+                            with publishing if you want to share an app, or read the documentation for guidance on
+                            styling and size limits.</p>
+
+                        <div class="quick-actions" style="display:flex; gap:10px; flex-wrap:wrap;">
+                            <a href="#publishing-section" onclick="switchSection('publishing', this)" class="nav-link"
+                                style="background:rgba(100,150,255,0.12); color:rgba(100,150,255,0.95); padding:8px 12px; border-radius:6px; text-decoration:none;">Publish an App</a>
+                            <a href="#documentation-section" onclick="switchSection('documentation', this)" class="nav-link"
+                                style="background:rgba(255,255,255,0.03); color:#ddd; padding:8px 12px; border-radius:6px; text-decoration:none;">Read Docs</a>
+                            <a href="#types-section" onclick="switchSection('types', this)" class="nav-link"
+                                style="background:rgba(100,255,150,0.06); color:rgba(100,255,150,0.95); padding:8px 12px; border-radius:6px; text-decoration:none;">App Types</a>
+                        </div>
+                    </div>
+
+                    <div style="width:320px;">
+                        <div class="small-card card" style="padding:14px; background:#0f1112;">
+                            <div style="font-weight:600; color:#fff;">Before you publish</div>
+                            <ul style="margin-top:8px; color:#cfcfcf;">
+                                <li>Minify and check final HTML size.</li>
+                                <li>Remove large inline assets or move them to a CDN.</li>
+                                <li>Test in multiple browsers and devices.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top:18px;">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Top help topics</div>
+                            <div class="card-description">Common areas developers ask about</div>
+                        </div>
+                    </div>
+                    <div class="card-body" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px;">
+                        <div style="background:rgba(255,255,255,0.02); padding:12px; border-radius:6px;">
+                            <strong>Styling</strong>
+                            <p class="muted" style="margin:6px 0 0 0; font-size:13px;">Use the Generic Styling to keep
+                                consistent UI and smaller bundles.</p>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.02); padding:12px; border-radius:6px;">
+                            <strong>APIs & CDNs</strong>
+                            <p class="muted" style="margin:6px 0 0 0; font-size:13px;">Offload heavy logic and large
+                                libs to external services.</p>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.02); padding:12px; border-radius:6px;">
+                            <strong>Size</strong>
+                            <p class="muted" style="margin:6px 0 0 0; font-size:13px;">Minify, lazy-load and use
+                                optimized images.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Content Requirements Section -->
+            <div class="content-section" id="content-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span class="material-symbols-outlined">shield</span>
+                        Content Requirements
+                    </h2>
+                    <p class="section-description">What you can and cannot include in your content</p>
+                </div>
+
+                <section class="section">
+                    <h3>1.1 Appropriate Content</h3>
+                    <p>Your content must not contain:</p>
+                    <ul>
+                        <li>Malicious code, viruses, or any harmful software</li>
+                        <li>Offensive, discriminatory, or hateful content</li>
+                        <li>Sexually explicit or pornographic material</li>
+                        <li>Content that promotes violence, illegal activities, or self-harm</li>
+                        <li>Copyrighted material without proper authorization</li>
+                        <li>Spam or misleading information</li>
+                    </ul>
+
+                    <h3>1.2 Privacy & Security</h3>
+                    <ul>
+                        <li>Do not collect user data without explicit consent</li>
+                        <li>Do not include tracking scripts or analytics without disclosure</li>
+                        <li>Protect any user input or stored data appropriately</li>
+                        <li>Do not attempt to access or modify other users' data</li>
+                    </ul>
+                </section>
+            </div>
+
+            <!-- Technical Requirements Section -->
+            <div class="content-section" id="technical-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span class="material-symbols-outlined">code</span>
+                        Technical Requirements
+                    </h2>
+                    <p class="section-description">Size limits, metadata, and functionality standards</p>
+                </div>
+
+                <section class="section">
+                    <h3>2.1 File Size Limits</h3>
+                    <div class="alert alert-info">
+                        <p><strong>ℹ️ Size Limit:</strong> Your app's HTML content must be less than
+                            <code>2500 characters</code> or <code>1MB when encoded as Base64</code>.</p>
+                    </div>
+                    <ul>
+                        <li>Optimize your code to stay within the size limit</li>
+                        <li>Use external CDNs for large libraries when possible</li>
+                        <li>Minify your HTML, CSS, and JavaScript</li>
+                    </ul>
+
+                    <h3>2.2 Metadata Standards</h3>
+                    <p>Your content must include:</p>
+                    <ul>
+                        <li><strong>Name:</strong> A clear, descriptive name (no offensive language)</li>
+                        <li><strong>Description:</strong> An accurate description of what your content does</li>
+                        <li><strong>Author:</strong> Your name or username</li>
+                        <li><strong>Version:</strong> A valid version number (e.g., 1.0.0)</li>
+                        <li><strong>Tags:</strong> Relevant tags to help users find your content</li>
+                    </ul>
+
+                    <h3>2.3 Functionality</h3>
+                    <ul>
+                        <li>Your content must be functional and not intentionally broken</li>
+                        <li>Test your content before publishing</li>
+                        <li>Ensure compatibility with modern web browsers</li>
+                        <li>Handle errors gracefully</li>
+                    </ul>
+                </section>
+            </div>
+
+            <!-- Publishing Process Section -->
+            <div class="content-section" id="publishing-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span class="material-symbols-outlined">upload</span>
+                        Publishing Process
+                    </h2>
+                    <p class="section-description">How to publish and update your apps</p>
+                </div>
+
+                <section class="section">
+                    <h3>3.1 From App Creator</h3>
+                    <div class="alert alert-success">
+                        <p><strong>✓ Easy Publishing:</strong> Use the "Export for Publishing" button in the App
+                            Creator, then choose "Community" when prompted.</p>
+                    </div>
+                    <ol>
+                        <li>Create your app in the App Creator</li>
+                        <li>Click "Export for Publishing"</li>
+                        <li>Choose "Publish to Community" (no approval needed)</li>
+                        <li>Enter your author name</li>
+                        <li>Confirm you've read and agree to these guidelines</li>
+                        <li>Enter the version number</li>
+                        <li>Add relevant tags for discoverability</li>
+                        <li>Acknowledge that the app is your original work</li>
+                        <li>Submit your app</li>
+                    </ol>
+
+                    <h3>3.2 Updates</h3>
+                    <ul>
+                        <li>To update an existing app, use the same <strong>App ID</strong></li>
+                        <li>Increment the version number (e.g., 1.0.0 → 1.0.1)</li>
+                        <li>Users will be notified of available updates</li>
+                    </ul>
+                </section>
+            </div>
+
+            <!-- Documentation Section (Overview) -->
+            <div class="content-section" id="documentation-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span class="material-symbols-outlined">menu_book</span>
+                        Documentation Overview
+                    </h2>
+                    <p class="section-description">Guides and reference material to help you build apps for the
+                        platform. Use the links in the Documentation sidebar to open specific articles.</p>
+                </div>
+
+                <section class="section">
+                    <p>This section contains short guides on common topics. Choose one of the Documentation items
+                        in the sidebar to read a focused article on that topic.</p>
+
+                    <ul>
+                        <li><strong>Generic Styling:</strong> How to use and extend the platform's shared styles.</li>
+                        <li><strong>External APIs & CDNs:</strong> Use remote services and CDN-hosted libraries to
+                            reduce bundle sizes.</li>
+                        <li><strong>Size Optimization:</strong> Practical tips to keep your app within platform limits.</li>
+                        <li><strong>Resources & Help:</strong> Where to find documentation, examples and tools.</li>
+                    </ul>
+
+                    <div class="alert alert-info">
+                        <p><strong>Tip:</strong> After reading an article, test your app's final serialized HTML size
+                            and performance using browser DevTools and Lighthouse.</p>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Documentation - Generic Styling -->
+            <div class="content-section" id="documentation-styling-section">
+                <div class="section-header">
+                    <h2 class="section-title"><span class="material-symbols-outlined">brush</span> Generic Styling</h2>
+                    <p class="section-description">How to build apps using the platform's generic styling
+                        baseline.</p>
+                </div>
+                <section class="section">
+                    <h3>Why use Generic Styling</h3>
+                    <p>Generic Styling gives your app a cohesive look and reduces duplication of styles across
+                        apps. It also helps keep individual app bundles smaller by sharing common CSS.</p>
+
+                    <h3>Practical steps</h3>
+                    <ul>
+                        <li>Link or import <code>styles/generic-app-style.css</code> where possible.</li>
+                        <li>Override only the variables or utility classes you need; avoid copying the entire
+                            stylesheet into your app.</li>
+                        <li>Scope custom CSS using prefixed class names (e.g., <code>.myapp-*</code>) to avoid
+                            conflicts.</li>
+                        <li>Use CSS custom properties for theming so you can change colors without large
+                            duplications.</li>
+                    </ul>
+                </section>
+            </div>
+
+            <!-- Documentation - External APIs & CDNs -->
+            <div class="content-section" id="documentation-apis-section">
+                <div class="section-header">
+                    <h2 class="section-title"><span class="material-symbols-outlined">cloud</span> External APIs &amp; CDNs</h2>
+                    <p class="section-description">Guidance for using remote services and CDN libraries safely and
+                        efficiently.</p>
+                </div>
+                <section class="section">
+                    <h3>Using fetch() and remote APIs</h3>
+                    <p>Use the browser's <code>fetch()</code> API to retrieve data. Keep responses small and cache
+                        where appropriate.</p>
+                    <ul>
+                        <li>Use HTTP caching headers on your API to reduce repeated downloads.</li>
+                        <li>Limit request payloads and pagination results to what you need.</li>
+                        <li>Implement graceful fallbacks for when the API is unavailable.</li>
+                    </ul>
+
+                    <h3>Including CDN libraries</h3>
+                    <ul>
+                        <li>Load only the parts of a library you need (CDNs often provide modular bundles).</li>
+                        <li>Use integrity attributes (<code>integrity</code>) when available to protect against
+                            tampering.</li>
+                        <li>Prefer async or defer script loading to avoid blocking rendering.</li>
+                    </ul>
+                </section>
+            </div>
+
+            <!-- Documentation - Size Optimization -->
+            <div class="content-section" id="documentation-size-section">
+                <div class="section-header">
+                    <h2 class="section-title"><span class="material-symbols-outlined">compress</span> Size Optimization</h2>
+                    <p class="section-description">Concrete techniques to reduce final app size.</p>
+                </div>
+                <section class="section">
+                    <h3>Techniques</h3>
+                    <ul>
+                        <li>Minify assets, remove comments, and strip development-only code.</li>
+                        <li>Use tree-shaking where possible to drop unused JS.</li>
+                        <li>Prefer <code>srcset</code> and responsive images to serve smaller images on mobile.</li>
+                        <li>Delay loading of large resources; only inline truly critical CSS/JS.</li>
+                    </ul>
+                </section>
+            </div>
+
+            <!-- Documentation - Resources & Help -->
+            <div class="content-section" id="documentation-resources-section">
+                <div class="section-header">
+                    <h2 class="section-title"><span class="material-symbols-outlined">help</span> Resources &amp; Help</h2>
+                    <p class="section-description">Where to look for answers, examples and tools.</p>
+                </div>
+                <section class="section">
+                    <ul>
+                        <li><a href="https://developer.mozilla.org/" target="_blank">MDN Web Docs</a></li>
+                        <li><a href="https://stackoverflow.com/" target="_blank">Stack Overflow</a></li>
+                        <li>Browser DevTools (Network, Performance, Lighthouse)</li>
+                        <li>Inspect example apps in <code>assets/apps/</code> for patterns</li>
+                    </ul>
+                </section>
+            </div>
+
+            <!-- App Types Section -->
+            <div class="content-section" id="types-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span class="material-symbols-outlined">category</span>
+                        App Types
+                    </h2>
+                    <p class="section-description">Choose the appropriate type when publishing your app. Each type
+                        has different expectations and visibility.</p>
+                </div>
+
+                <div class="app-types-grid">
+                    <div class="type-card">
+                        <div class="type-title">
+                            <span class="material-symbols-outlined type-icon">public</span>
+                            <div>
+                                <div style="font-weight:600">Community</div>
+                                <div class="muted" style="font-size:13px">Instant publishing — your app appears in the community feed</div>
+                            </div>
+                            <span class="badge">Instant</span>
+                        </div>
+
+                        <p>Community apps are great for sharing small, useful utilities, demos or creative items that
+                            follow the platform rules. They are published immediately without manual review.</p>
+
+                        <ul>
+                            <li>Published immediately to the Community tab</li>
+                            <li>Best for lightweight, experimental or early-stage apps</li>
+                            <li>You are responsible for quality and compliance</li>
+                        </ul>
+
+                        <div style="margin-top:auto; display:flex; gap:8px;">
+                            <a class="nav-link" href="#" style="color:rgba(100,150,255,0.95); text-decoration:none;">How to publish</a>
+                            <a class="nav-link" href="#" style="color:#9aa; text-decoration:none;">Community guidelines</a>
+                        </div>
+                    </div>
+
+                    <div class="type-card">
+                        <div class="type-title">
+                            <span class="material-symbols-outlined type-icon">star</span>
+                            <div>
+                                <div style="font-weight:600">Featured</div>
+                                <div class="muted" style="font-size:13px">Curated content with higher visibility</div>
+                            </div>
+                            <span class="badge" style="background:rgba(100,255,150,0.12); color:rgba(100,255,150,0.95);">Curated</span>
+                        </div>
+
+                        <p>Featured apps are hand-picked by moderators and get prominent placement across the
+                            platform. They must meet higher quality and content standards.</p>
+
+                        <ul>
+                            <li>Require manual review and approval</li>
+                            <li>Must follow stricter quality, accessibility and performance standards</li>
+                            <li>Great for polished, production-ready experiences</li>
+                        </ul>
+
+                        <div style="margin-top:auto; display:flex; gap:8px;">
+                            <a class="nav-link" href="#" style="color:rgba(100,150,255,0.95); text-decoration:none;">Submit for featured</a>
+                            <a class="nav-link" href="#" style="color:#9aa; text-decoration:none;">Featured requirements</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Moderation Section -->
+            <div class="content-section" id="moderation-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span class="material-symbols-outlined">gavel</span>
+                        Moderation & Enforcement
+                    </h2>
+                    <p class="section-description">How we keep the community safe</p>
+                </div>
+
+                <div class="alert alert-error">
+                    <p><strong>⚠️ Violations:</strong> Content that violates these guidelines will be removed
+                        immediately. Repeated violations may result in a permanent ban.</p>
+                </div>
+
+                <section class="section">
+                    <h3>5.1 Reporting</h3>
+                    <p>Users can report content that violates these guidelines. All reports will be reviewed promptly.
+                    </p>
+
+                    <h3>5.2 Removal</h3>
+                    <p>Content may be removed for:</p>
+                    <ul>
+                        <li>Violating any of the content requirements</li>
+                        <li>Being non-functional or broken</li>
+                        <li>Receiving multiple valid user complaints</li>
+                        <li>Containing malicious code or security vulnerabilities</li>
+                    </ul>
+                </section>
+            </div>
+
+            <!-- App Creator - Overview Section -->
+            <div class="content-section" id="app-creator-overview-section">
+                <div class="section-header">
+                    <h1 class="section-title">
+                        <span class="material-symbols-outlined">code</span>
+                        App Creator Overview
+                    </h1>
+                    <p class="section-description">Learn about the App Creator tool and its features</p>
+                </div>
+
+                <section class="section">
+                    <h2>What is App Creator?</h2>
+                    <p>App Creator is a powerful web-based tool that allows you to create, edit, and publish custom web applications directly in your browser. It features a Monaco code editor (the same editor used in VS Code) and provides an intuitive interface for managing your apps.</p>
+
+                    <h3>Key Features</h3>
+                    <ul>
+                        <li><strong>Monaco Editor:</strong> Professional code editing with syntax highlighting, auto-completion, and error detection</li>
+                        <li><strong>Asset Management:</strong> Upload and manage images and other assets for your apps</li>
+                        <li><strong>Live Preview:</strong> See your app changes in real-time</li>
+                        <li><strong>Import/Export:</strong> Save your apps as XML files for backup or sharing</li>
+                        <li><strong>Community Publishing:</strong> Share your apps with the community</li>
+                        <li><strong>Keyboard Shortcuts:</strong> Use Ctrl+S to save quickly</li>
+                    </ul>
+                </section>
+            </div>
+
+            <!-- App Creator - Creating Apps Section -->
+            <div class="content-section" id="app-creator-creating-section">
+                <div class="section-header">
+                    <h1 class="section-title">
+                        <span class="material-symbols-outlined">add</span>
+                        Creating New Apps
+                    </h1>
+                    <p class="section-description">How to start building your first app</p>
+                </div>
+
+                <section class="section">
+                    <h2>Getting Started</h2>
+                    <p>To create a new app:</p>
+                    <ol>
+                        <li>Open the App Creator from the main menu</li>
+                        <li>Click the "Create New App" button</li>
+                        <li>Enter a name for your app (required)</li>
+                        <li>Click "Create App" to start editing</li>
+                    </ol>
+
+                    <h3>App Properties</h3>
+                    <p>After creating an app, you can configure:</p>
+                    <ul>
+                        <li><strong>Name:</strong> The display name of your app</li>
+                        <li><strong>Description:</strong> A brief description of what your app does</li>
+                        <li><strong>Icon:</strong> Upload or paste an icon for your app</li>
+                        <li><strong>Options:</strong> Light mode compatibility, open source status, and style templates</li>
+                    </ul>
+                </section>
+            </div>
+
+            <!-- App Creator - Editing Code Section -->
+            <div class="content-section" id="app-creator-editing-section">
+                <div class="section-header">
+                    <h1 class="section-title">
+                        <span class="material-symbols-outlined">edit</span>
+                        Editing Your Code
+                    </h1>
+                    <p class="section-description">Using the code editor effectively</p>
+                </div>
+
+                <section class="section">
+                    <h2>The Code Editor</h2>
+                    <p>The App Creator uses Monaco Editor, providing:</p>
+                    <ul>
+                        <li>Syntax highlighting for HTML, CSS, and JavaScript</li>
+                        <li>Auto-completion and IntelliSense</li>
+                        <li>Error detection and suggestions</li>
+                        <li>Find and replace functionality</li>
+                        <li>Multiple cursor support</li>
+                    </ul>
+
+                    <h3>Menu Buttons</h3>
+                    <p>The code section has several toolbar buttons:</p>
+                    <ul>
+                        <li><strong>Save:</strong> Save your current code changes</li>
+                        <li><strong>Exit:</strong> Return to the home view</li>
+                        <li><strong>Paste Image:</strong> Insert images from your clipboard</li>
+                        <li><strong>Preview:</strong> Open your app in a new window</li>
+                    </ul>
+
+                    <h3>Keyboard Shortcuts</h3>
+                    <ul>
+                        <li><strong>Ctrl+S:</strong> Save your app</li>
+                        <li><strong>Ctrl+Z:</strong> Undo</li>
+                        <li><strong>Ctrl+Y:</strong> Redo</li>
+                        <li><strong>Ctrl+F:</strong> Find</li>
+                    </ul>
+                </section>
+            </div>
+
+            <!-- App Creator - Managing Assets Section -->
+            <div class="content-section" id="app-creator-assets-section">
+                <div class="section-header">
+                    <h1 class="section-title">
+                        <span class="material-symbols-outlined">image</span>
+                        Managing Assets
+                    </h1>
+                    <p class="section-description">How to add and manage images and files</p>
+                </div>
+
+                <section class="section">
+                    <h2>Asset Management</h2>
+                    <p>Assets are images and files used in your apps. The Assets tab shows all assets for your current app.</p>
+
+                    <h3>Adding Assets</h3>
+                    <p>You can add assets in several ways:</p>
+                    <ul>
+                        <li><strong>Upload:</strong> Click "Upload Asset" to select files from your computer</li>
+                        <li><strong>Paste:</strong> Copy images and paste them directly into the code editor</li>
+                        <li><strong>From Clipboard:</strong> Use the "Paste Image" button in the code editor</li>
+                    </ul>
+
+                    <h3>Using Assets in Code</h3>
+                    <p>When you paste or upload an asset, it gets an ID. Use this ID in your HTML:</p>
+                    <code>&lt;img src="asset-id" alt="My Image"&gt;</code>
+
+                    <h3>Managing Assets</h3>
+                    <p>For each asset, you can:</p>
+                    <ul>
+                        <li><strong>View:</strong> Open the asset in a new tab</li>
+                        <li><strong>Replace:</strong> Upload a new file to replace the current one</li>
+                        <li><strong>Delete:</strong> Remove the asset from your app</li>
+                    </ul>
+                </section>
+            </div>
+
+            <!-- App Creator - Publishing Apps Section -->
+            <div class="content-section" id="app-creator-publishing-section">
+                <div class="section-header">
+                    <h1 class="section-title">
+                        <span class="material-symbols-outlined">publish</span>
+                        Publishing Your Apps
+                    </h1>
+                    <p class="section-description">Share your apps with others</p>
+                </div>
+
+                <section class="section">
+                    <h2>Publishing Options</h2>
+                    <p>You can publish your apps in different ways:</p>
+
+                    <h3>Community Publishing</h3>
+                    <p>Share your app with the community:</p>
+                    <ol>
+                        <li>Ensure your app is saved</li>
+                        <li>Click "Publish App" in the Properties tab</li>
+                        <li>Select "Publish to Community"</li>
+                        <li>Your app will appear in the App Store for others to use</li>
+                    </ol>
+
+                    <h3>Featured Publishing</h3>
+                    <p>To get your app featured:</p>
+                    <ol>
+                        <li>Export your app as XML</li>
+                        <li>Email the XML file to shawnyxx@ecxogames.ca</li>
+                        <li>Include your app name, description, and open source status</li>
+                    </ol>
+
+                    <h3>Manual Instructions</h3>
+                    <p>The "Manual Instructions" option provides detailed email templates and export guides.</p>
+                </section>
+            </div>
+
+            <!-- Best Practices Section -->
+            <div class="content-section" id="best-practices-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span class="material-symbols-outlined">lightbulb</span>
+                        Best Practices
+                    </h2>
+                    <p class="section-description">Tips for creating great content</p>
+                </div>
+
+                <section class="section">
+                    <ul>
+                        <li>Write clean, well-commented code</li>
+                        <li>Provide clear instructions for using your content</li>
+                        <li>Use meaningful and accurate tags</li>
+                        <li>Test your content thoroughly before publishing</li>
+                        <li>Respond to user feedback constructively</li>
+                        <li>Keep your content updated and maintained</li>
+                        <li>Consider making your content open-source to help others learn</li>
+                    </ul>
+
+                    <div class="alert alert-info">
+                        <p><strong>ℹ️ Questions?</strong> If you have questions about these guidelines or need
+                            clarification, please contact the platform administrators.</p>
+                    </div>
+                </section>
+
+                <div class="footer"
+                    style="margin-top: 60px; padding-top: 24px; border-top: 1px solid #222; text-align: center; color: #666; font-size: 13px;">
+                    <p>Last updated: November 2025</p>
+                    <p>By using this platform, you agree to these guidelines and terms.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Switch between sidebar sections. Accepts the section name and the clicked element (el).
+        function switchSection(sectionName, el) {
+            // Remove active class from all nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Add active class to clicked nav item (if provided)
+            if (el && el.classList) {
+                el.classList.add('active');
+            } else if (typeof event !== 'undefined' && event.currentTarget) {
+                // fallback for environments where event is available globally
+                event.currentTarget.classList.add('active');
+            }
+
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Show selected section
+            var target = document.getElementById(sectionName + '-section');
+            if (target) target.classList.add('active');
+        }
+    </script>
+</body>
+
+</html>

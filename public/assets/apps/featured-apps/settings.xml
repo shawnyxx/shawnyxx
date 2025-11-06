@@ -1,0 +1,1515 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<app>
+    <id>settings</id>
+    <name>Settings</name>
+    <author>Shawnyxx</author>
+    <description>Customize your portfolio experience with various settings and preferences.</description>
+    <version>2.0</version>
+    <lightmode>false</lightmode>
+    <tags>
+        <tag>system</tag>
+        <tag>settings</tag>
+        <tag>preferences</tag>
+    </tags>
+    <htmlContent>
+        <![CDATA[
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Settings</title>
+                <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+                <style>
+                    * {
+                        margin: 0;
+                        padding: 0;
+                        box-sizing: border-box;
+                    }
+
+                    body {
+                        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+                        background: #0a0a0a;
+                        color: #e0e0e0;
+                        height: 100vh;
+                        overflow: hidden;
+                        display: flex;
+                    }
+
+                    .sidebar {
+                        width: 280px;
+                        background: #121212;
+                        border-right: 1px solid #222;
+                        display: flex;
+                        flex-direction: column;
+                        height: 100vh;
+                    }
+
+                    .sidebar-header {
+                        padding: 20px;
+                        border-bottom: 1px solid #222;
+                    }
+
+                    .sidebar-title {
+                        font-size: 24px;
+                        font-weight: 300;
+                        color: #fff;
+                        margin-bottom: 15px;
+                    }
+
+                    .search-container {
+                        position: relative;
+                    }
+
+                    .search-input {
+                        width: 100%;
+                        padding: 10px 15px 10px 40px;
+                        background: #1a1a1a;
+                        border: 1px solid #333;
+                        border-radius: 4px;
+                        color: #e0e0e0;
+                        font-size: 14px;
+                        transition: all 0.3s ease;
+                    }
+
+                    .search-input:focus {
+                        outline: none;
+                        border-color: rgba(100, 150, 255, 0.5);
+                        background: #222;
+                    }
+
+                    .search-icon {
+                        position: absolute;
+                        left: 12px;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        color: #666;
+                        pointer-events: none;
+                        font-size: 20px;
+                    }
+
+                    .sidebar-nav {
+                        flex: 1;
+                        overflow-y: auto;
+                        padding: 10px 0;
+                    }
+
+                    .sidebar-nav::-webkit-scrollbar {
+                        width: 8px;
+                    }
+
+                    .sidebar-nav::-webkit-scrollbar-track {
+                        background: #121212;
+                    }
+
+                    .sidebar-nav::-webkit-scrollbar-thumb {
+                        background: #333;
+                        border-radius: 4px;
+                    }
+
+                    .nav-item {
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+                        padding: 12px 20px;
+                        cursor: pointer;
+                        transition: all 0.2s ease;
+                        border-left: 3px solid transparent;
+                    }
+
+                    .nav-item:hover {
+                        background: #1a1a1a;
+                    }
+
+                    .nav-item.active {
+                        background: #1a1a1a;
+                        border-left-color: rgba(100, 150, 255, 0.8);
+                    }
+
+                    .nav-item-icon {
+                        font-size: 20px;
+                        color: #666;
+                    }
+
+                    .nav-item.active .nav-item-icon {
+                        color: rgba(100, 150, 255, 0.8);
+                    }
+
+                    .nav-item-label {
+                        font-size: 15px;
+                        font-weight: 300;
+                        color: #ccc;
+                    }
+
+                    .nav-item.active .nav-item-label {
+                        color: #fff;
+                    }
+
+                    .main-content {
+                        flex: 1;
+                        overflow-y: auto;
+                        padding: 40px;
+                    }
+
+                    .main-content::-webkit-scrollbar {
+                        width: 10px;
+                    }
+
+                    .main-content::-webkit-scrollbar-track {
+                        background: #0a0a0a;
+                    }
+
+                    .main-content::-webkit-scrollbar-thumb {
+                        background: #333;
+                        border-radius: 5px;
+                    }
+
+                    .content-section {
+                        display: none;
+                        animation: fadeIn 0.3s ease;
+                    }
+
+                    .content-section.active {
+                        display: block;
+                    }
+
+                    @keyframes fadeIn {
+                        from {
+                            opacity: 0;
+                            transform: translateY(10px);
+                        }
+                        to {
+                            opacity: 1;
+                            transform: translateY(0);
+                        }
+                    }
+
+                    .section-header {
+                        margin-bottom: 30px;
+                        padding-bottom: 20px;
+                        border-bottom: 1px solid #222;
+                    }
+
+                    .section-title {
+                        font-size: 32px;
+                        font-weight: 300;
+                        color: #fff;
+                        margin-bottom: 8px;
+                    }
+
+                    .section-description {
+                        font-size: 14px;
+                        color: #666;
+                        font-weight: 300;
+                    }
+
+                    .setting-item {
+                        background: #121212;
+                        border: 1px solid #222;
+                        padding: 25px;
+                        margin-bottom: 20px;
+                        border-radius: 4px;
+                        transition: all 0.3s ease;
+                    }
+
+                    .setting-item:hover {
+                        border-color: #333;
+                        background: #1a1a1a;
+                    }
+
+                    .setting-header {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: flex-start;
+                        margin-bottom: 10px;
+                    }
+
+                    .setting-label {
+                        font-size: 16px;
+                        font-weight: 400;
+                        color: #fff;
+                        margin-bottom: 5px;
+                    }
+
+                    .setting-description {
+                        font-size: 13px;
+                        color: #666;
+                        font-weight: 300;
+                        line-height: 1.5;
+                    }
+
+                    .setting-control {
+                        margin-top: 15px;
+                    }
+
+                    select {
+                        width: 100%;
+                        max-width: 300px;
+                        padding: 10px 15px;
+                        background: #1a1a1a;
+                        border: 1px solid #333;
+                        border-radius: 4px;
+                        color: #e0e0e0;
+                        font-size: 14px;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                    }
+
+                    select:hover {
+                        border-color: #444;
+                    }
+
+                    select:focus {
+                        outline: none;
+                        border-color: rgba(100, 150, 255, 0.5);
+                    }
+
+                    .wallpaper-grid {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                        gap: 15px;
+                        margin-top: 15px;
+                    }
+
+                    .wallpaper-item {
+                        position: relative;
+                        padding-bottom: 75%;
+                        border: 2px solid #333;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        overflow: hidden;
+                        transition: all 0.3s ease;
+                    }
+
+                    .wallpaper-item:hover {
+                        border-color: #444;
+                        transform: translateY(-2px);
+                    }
+
+                    .wallpaper-item.selected {
+                        border-color: rgba(100, 150, 255, 0.8);
+                        box-shadow: 0 0 0 2px rgba(100, 150, 255, 0.2);
+                    }
+
+                    .wallpaper-item img {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                    }
+
+                    .wallpaper-item .checkmark {
+                        position: absolute;
+                        top: 8px;
+                        right: 8px;
+                        width: 24px;
+                        height: 24px;
+                        background: rgba(100, 150, 255, 0.9);
+                        border-radius: 50%;
+                        display: none;
+                        align-items: center;
+                        justify-content: center;
+                        color: #fff;
+                        font-size: 16px;
+                    }
+
+                    .wallpaper-item.selected .checkmark {
+                        display: flex;
+                    }
+
+                    .wallpaper-actions {
+                        display: flex;
+                        gap: 10px;
+                        margin-top: 15px;
+                    }
+
+                    .btn {
+                        padding: 10px 20px;
+                        background: #1a1a1a;
+                        border: 1px solid #333;
+                        border-radius: 4px;
+                        color: #ccc;
+                        font-size: 14px;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 8px;
+                    }
+
+                    .btn:hover {
+                        background: #222;
+                        border-color: #444;
+                    }
+
+                    .btn-primary {
+                        background: linear-gradient(135deg, #1a1a1a 0%, #252525 100%);
+                        border-color: rgba(100, 150, 255, 0.3);
+                    }
+
+                    .btn-primary:hover {
+                        border-color: rgba(100, 150, 255, 0.5);
+                        box-shadow: 0 5px 15px rgba(100, 150, 255, 0.2);
+                    }
+
+                    .btn-danger {
+                        border-color: rgba(255, 100, 100, 0.3);
+                    }
+
+                    .btn-danger:hover {
+                        border-color: rgba(255, 100, 100, 0.5);
+                        background: rgba(255, 100, 100, 0.1);
+                    }
+
+                    .btn-danger-alt {
+                        background: rgba(255, 100, 100, 0.15);
+                        border: 2px solid rgba(255, 100, 100, 0.4);
+                        color: #ff6b6b;
+                        padding: 12px 24px;
+                        border-radius: 8px;
+                        cursor: pointer;
+                        font-size: 14px;
+                        font-weight: 500;
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        transition: all 0.2s ease;
+                        width: 100%;
+                        justify-content: center;
+                    }
+
+                    .btn-danger-alt:hover {
+                        border-color: rgba(255, 100, 100, 0.6);
+                        background: rgba(255, 100, 100, 0.25);
+                        box-shadow: 0 4px 12px rgba(255, 100, 100, 0.2);
+                    }
+
+                    .danger-zone {
+                        background: rgba(255, 100, 100, 0.05);
+                        border: 1px solid rgba(255, 100, 100, 0.2);
+                        border-radius: 8px;
+                        padding: 16px;
+                        margin-top: 8px;
+                    }
+
+                    .danger-zone-header {
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        color: #ff6b6b;
+                        font-weight: 600;
+                        margin-bottom: 12px;
+                        font-size: 14px;
+                    }
+
+                    .danger-zone-header .material-symbols-outlined {
+                        font-size: 20px;
+                    }
+
+                    .no-results {
+                        text-align: center;
+                        padding: 60px 20px;
+                        color: #666;
+                    }
+
+                    .no-results-icon {
+                        font-size: 64px;
+                        margin-bottom: 15px;
+                        opacity: 0.5;
+                    }
+
+                    .no-results-text {
+                        font-size: 18px;
+                        font-weight: 300;
+                    }
+
+                    .storage-list {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 15px;
+                        margin-top: 15px;
+                    }
+
+                    .storage-item {
+                        background: #1a1a1a;
+                        border: 1px solid #333;
+                        padding: 20px;
+                        border-radius: 4px;
+                        transition: all 0.3s ease;
+                    }
+
+                    .storage-item:hover {
+                        border-color: #444;
+                    }
+
+                    .storage-item-header {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        margin-bottom: 10px;
+                    }
+
+                    .storage-item-title {
+                        font-size: 16px;
+                        font-weight: 400;
+                        color: #fff;
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                    }
+
+                    .storage-item-size {
+                        font-size: 18px;
+                        font-weight: 300;
+                        color: rgba(100, 150, 255, 0.8);
+                    }
+
+                    .storage-item-details {
+                        font-size: 13px;
+                        color: #666;
+                        margin-bottom: 10px;
+                    }
+
+                    .storage-bar {
+                        width: 100%;
+                        height: 8px;
+                        background: #0a0a0a;
+                        border-radius: 4px;
+                        overflow: hidden;
+                    }
+
+                    .storage-bar-fill {
+                        height: 100%;
+                        background: linear-gradient(90deg, rgba(100, 150, 255, 0.6), rgba(150, 100, 255, 0.6));
+                        border-radius: 4px;
+                        transition: width 0.3s ease;
+                    }
+
+                    .storage-total {
+                        background: #1a1a1a;
+                        border: 2px solid rgba(100, 150, 255, 0.3);
+                        padding: 25px;
+                        border-radius: 4px;
+                        margin-bottom: 20px;
+                        text-align: center;
+                    }
+
+                    .storage-total-size {
+                        font-size: 48px;
+                        font-weight: 300;
+                        color: #fff;
+                        margin-bottom: 5px;
+                    }
+
+                    .storage-total-label {
+                        font-size: 14px;
+                        color: #666;
+                    }
+
+                    .app-list {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 15px;
+                        margin-top: 15px;
+                    }
+
+                    .app-list-item {
+                        background: #1a1a1a;
+                        border: 1px solid #222;
+                        padding: 20px;
+                        border-radius: 4px;
+                        transition: all 0.3s ease;
+                    }
+
+                    .app-list-item:hover {
+                        border-color: #333;
+                        background: #222;
+                    }
+
+                    .app-item-header {
+                        display: flex;
+                        align-items: center;
+                        gap: 15px;
+                    }
+
+                    .app-item-icon {
+                        width: 48px;
+                        height: 48px;
+                        border-radius: 12px;
+                        object-fit: cover;
+                        background: #333;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 24px;
+                        color: #666;
+                        flex-shrink: 0;
+                    }
+
+                    .app-item-icon img {
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 12px;
+                        object-fit: cover;
+                    }
+
+                    .app-item-info {
+                        flex: 1;
+                        min-width: 0;
+                    }
+
+                    .app-item-name {
+                        font-size: 16px;
+                        font-weight: 500;
+                        color: #fff;
+                        margin-bottom: 4px;
+                    }
+
+                    .app-item-meta {
+                        font-size: 13px;
+                        color: #666;
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                    }
+
+                    .app-item-version {
+                        display: flex;
+                        align-items: center;
+                        gap: 4px;
+                    }
+
+                    .app-item-size {
+                        display: flex;
+                        align-items: center;
+                        gap: 4px;
+                    }
+
+                    .app-item-update-badge {
+                        background: rgba(100, 150, 255, 0.2);
+                        color: rgba(100, 150, 255, 0.9);
+                        padding: 2px 8px;
+                        border-radius: 10px;
+                        font-size: 11px;
+                        font-weight: 500;
+                    }
+
+                    .app-item-actions {
+                        display: flex;
+                        gap: 8px;
+                        margin-left: auto;
+                        flex-shrink: 0;
+                    }
+
+                    .app-item-actions .btn {
+                        padding: 8px 16px;
+                        white-space: nowrap;
+                    }
+
+                    .app-list-empty {
+                        text-align: center;
+                        padding: 40px 20px;
+                        color: #666;
+                    }
+
+                    .app-list-empty .material-symbols-outlined {
+                        font-size: 64px;
+                        color: #333;
+                        margin-bottom: 15px;
+                    }
+
+                    @media (max-width: 768px) {
+                        .sidebar {
+                            width: 100%;
+                            position: absolute;
+                            z-index: 100;
+                            transform: translateX(-100%);
+                            transition: transform 0.3s ease;
+                        }
+
+                        .sidebar.open {
+                            transform: translateX(0);
+                        }
+
+                        .main-content {
+                            padding: 20px;
+                        }
+                    }
+
+                    /* Update Status Styles */
+                    .update-status-container {
+                        padding: 16px;
+                        border-radius: 10px;
+                        background: rgba(255, 255, 255, 0.03);
+                        border: 1px solid rgba(255, 255, 255, 0.1);
+                        margin-top: 10px;
+                    }
+
+                    .update-checking,
+                    .update-available,
+                    .update-current,
+                    .update-error {
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+                        font-size: 14px;
+                        margin-bottom: 10px;
+                    }
+
+                    .update-checking {
+                        color: rgba(255, 255, 255, 0.7);
+                    }
+
+                    .update-available {
+                        color: #ff9800;
+                    }
+
+                    .update-current {
+                        color: #4caf50;
+                    }
+
+                    .update-error {
+                        color: #f44336;
+                    }
+
+                    .update-status-container .material-symbols-outlined {
+                        font-size: 24px;
+                    }
+
+                    .spinning {
+                        animation: spin 1s linear infinite;
+                    }
+
+                    @keyframes spin {
+                        from { transform: rotate(0deg); }
+                        to { transform: rotate(360deg); }
+                    }
+
+                    .btn-update {
+                        width: 100%;
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 8px;
+                        padding: 12px 20px;
+                        background: linear-gradient(135deg, rgba(100, 150, 255, 0.8) 0%, rgba(120, 100, 255, 0.8) 100%);
+                        color: #ffffff;
+                        border: none;
+                        border-radius: 8px;
+                        cursor: pointer;
+                        font-size: 14px;
+                        font-weight: 600;
+                        transition: all 0.3s ease;
+                    }
+
+                    .btn-update:hover {
+                        background: linear-gradient(135deg, rgba(100, 150, 255, 1) 0%, rgba(120, 100, 255, 1) 100%);
+                        transform: translateY(-2px);
+                        box-shadow: 0 4px 12px rgba(100, 150, 255, 0.4);
+                    }
+
+                    .btn-update:active {
+                        transform: translateY(0);
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="sidebar">
+                    <div class="sidebar-header">
+                        <h1 class="sidebar-title">Settings</h1>
+                        <div class="search-container">
+                            <span class="material-symbols-outlined search-icon">search</span>
+                            <input 
+                                type="text" 
+                                class="search-input" 
+                                id="searchInput" 
+                                placeholder="Search settings..."
+                            >
+                        </div>
+                    </div>
+                    <nav class="sidebar-nav" id="sidebarNav">
+                        <!-- Navigation items will be dynamically generated -->
+                    </nav>
+                </div>
+
+                <main class="main-content" id="mainContent">
+                    <!-- Content sections will be dynamically generated -->
+                </main>
+
+                <script>
+                    const baseURL = window.location.origin + '/';
+                    let settingsData = null;
+                    let currentSettings = {};
+
+                    // Initialize
+                    document.addEventListener('DOMContentLoaded', async () => {
+                        await loadSettings();
+                        await loadCurrentSettings();
+                        renderSidebar();
+                        renderContent();
+                        setupEventListeners();
+                        
+                        // Activate first category by default
+                        const firstCategory = Object.keys(settingsData)[0];
+                        if (firstCategory) {
+                            activateCategory(firstCategory);
+                        }
+                    });
+
+                    // Load settings structure from JSON
+                    async function loadSettings() {
+                        try {
+                            const response = await fetch(baseURL + 'assets/json/settings.json');
+                            settingsData = await response.json();
+                        } catch (error) {
+                            console.error('Error loading settings:', error);
+                            settingsData = {};
+                        }
+                    }
+
+                    // Load current settings from localStorage
+                    async function loadCurrentSettings() {
+                        try {
+                            const stored = localStorage.getItem('webhub-settings');
+                            if (stored) {
+                                const parsedSettings = JSON.parse(stored);
+                                
+                                // Extract current values from the new structure
+                                currentSettings = {
+                                    wallpaper: parsedSettings.wallpaper || '/assets/files/wallpapers/black-river.png',
+                                    theme: parsedSettings.theme || 'dark',
+                                    appOrder: parsedSettings.appOrder || []
+                                };
+                            } else {
+                                // Default settings
+                                currentSettings = {
+                                    wallpaper: '/assets/files/wallpapers/black-river.png',
+                                    theme: 'dark',
+                                    appOrder: []
+                                };
+                            }
+                        } catch (error) {
+                            console.error('Error loading current settings:', error);
+                            currentSettings = {
+                                wallpaper: '/assets/files/wallpapers/black-river.png',
+                                theme: 'dark',
+                                appOrder: []
+                            };
+                        }
+                    }
+
+                    // Save settings to localStorage
+                    function saveSettings() {
+                        try {
+                            localStorage.setItem('webhub-settings', JSON.stringify(currentSettings));
+                            
+                            // Notify parent window to reload
+                            if (window.parent !== window) {
+                                window.parent.postMessage({
+                                    type: 'SETTINGS_UPDATED'
+                                }, '*');
+                            }
+                        } catch (error) {
+                            console.error('Error saving settings:', error);
+                        }
+                    }
+
+                    // Render sidebar navigation
+                    function renderSidebar() {
+                        const nav = document.getElementById('sidebarNav');
+                        nav.innerHTML = '';
+
+                        Object.keys(settingsData).forEach(categoryKey => {
+                            const category = settingsData[categoryKey];
+                            
+                            const navItem = document.createElement('div');
+                            navItem.className = 'nav-item';
+                            navItem.dataset.category = categoryKey;
+                            navItem.innerHTML = `
+                                <span class="material-symbols-outlined nav-item-icon">${category.icon || 'settings'}</span>
+                                <span class="nav-item-label">${category.label}</span>
+                            `;
+                            
+                            navItem.addEventListener('click', () => {
+                                activateCategory(categoryKey);
+                            });
+                            
+                            nav.appendChild(navItem);
+                        });
+                    }
+
+                    // Render content sections
+                    function renderContent() {
+                        const content = document.getElementById('mainContent');
+                        content.innerHTML = '';
+
+                        Object.keys(settingsData).forEach(categoryKey => {
+                            const category = settingsData[categoryKey];
+                            
+                            const section = document.createElement('div');
+                            section.className = 'content-section';
+                            section.dataset.category = categoryKey;
+                            
+                            section.innerHTML = `
+                                <div class="section-header">
+                                    <h2 class="section-title">${category.label}</h2>
+                                </div>
+                            `;
+                            
+                            // Render each setting in the category
+                            Object.keys(category.settings).forEach(settingKey => {
+                                const setting = category.settings[settingKey];
+                                const settingElement = renderSetting(settingKey, setting);
+                                section.appendChild(settingElement);
+                            });
+                            
+                            content.appendChild(section);
+                        });
+                    }
+
+                    // Render individual setting
+                    function renderSetting(key, setting) {
+                        const settingItem = document.createElement('div');
+                        settingItem.className = 'setting-item';
+                        settingItem.dataset.settingKey = key;
+                        
+                        let controlHTML = '';
+                        
+                        switch (setting.type) {
+                            case 'select':
+                                controlHTML = `
+                                    <select id="setting-${key}" class="setting-control">
+                                        ${setting.options.map(option => `
+                                            <option value="${option}" ${currentSettings[key] === option ? 'selected' : ''}>
+                                                ${option.charAt(0).toUpperCase() + option.slice(1)}
+                                            </option>
+                                        `).join('')}
+                                    </select>
+                                `;
+                                break;
+                                
+                            case 'wallpaper-selector':
+                                const currentWallpaper = currentSettings.wallpaper || setting.current_wallpaper;
+                                controlHTML = `
+                                    <div class="wallpaper-actions">
+                                        <button class="btn" onclick="uploadWallpaper()">
+                                            <span class="material-symbols-outlined">upload</span>
+                                            Upload
+                                        </button>
+                                        <button class="btn" onclick="pasteWallpaper()">
+                                            <span class="material-symbols-outlined">content_paste</span>
+                                            Paste
+                                        </button>
+                                    </div>
+                                    <div class="wallpaper-grid" id="wallpaper-grid">
+                                        ${setting.available_wallpapers.map(wallpaper => `
+                                            <div class="wallpaper-item ${currentWallpaper === wallpaper ? 'selected' : ''}" 
+                                                 data-wallpaper="${wallpaper}"
+                                                 onclick="selectWallpaper('${wallpaper}')">
+                                                <img src="${baseURL}${wallpaper.startsWith('/') ? wallpaper.substring(1) : wallpaper}" alt="Wallpaper">
+                                                <span class="material-symbols-outlined checkmark">check</span>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                `;
+                                break;
+                                
+                            case 'app-grid':
+                                controlHTML = `
+                                    <div class="setting-description" style="margin-top: 10px;">
+                                        App order customization is managed automatically by dragging apps on the home screen.
+                                    </div>
+                                `;
+                                break;
+
+                            case 'installed-apps':
+                                const installedAppsData = getInstalledApps();
+                                if (installedAppsData.length === 0) {
+                                    controlHTML = `
+                                        <div class="app-list-empty">
+                                            <span class="material-symbols-outlined">apps</span>
+                                            <div>No apps installed</div>
+                                        </div>
+                                    `;
+                                } else {
+                                    controlHTML = `
+                                        <div class="app-list">
+                                            ${installedAppsData.map(app => `
+                                                <div class="app-list-item" data-app-id="${app.id}">
+                                                    <div class="app-item-header">
+                                                        <div class="app-item-icon">
+                                                            ${(() => {
+                                                                const _i = (app.icon || '').toString().trim();
+                                                                if (!_i) return '<span class="material-symbols-outlined">apps</span>';
+                                                                if (_i.startsWith('<')) return _i;
+                                                                if (_i.startsWith('data:') || _i.startsWith('http') || _i.startsWith('/')) return '<img src="' + _i + '" alt="' + app.name + '">';
+                                                                return '<span class="material-symbols-outlined">' + _i + '</span>';
+                                                            })()}
+                                                        </div>
+                                                        <div class="app-item-info">
+                                                            <div class="app-item-name">${app.name}</div>
+                                                            <div class="app-item-meta">
+                                                                <span class="app-item-version">
+                                                                    <span class="material-symbols-outlined" style="font-size: 16px;">info</span>
+                                                                    v${app.version}
+                                                                </span>
+                                                                <span class="app-item-size">
+                                                                    <span class="material-symbols-outlined" style="font-size: 16px;">storage</span>
+                                                                    ${app.size}
+                                                                </span>
+                                                                ${app.hasUpdate ? '<span class="app-item-update-badge">Update Available</span>' : ''}
+                                                            </div>
+                                                        </div>
+                                                        <div class="app-item-actions">
+                                                            ${app.hasUpdate ? `
+                                                                <button class="btn btn-primary" onclick="handleAppUpdate('${app.id}')" title="Update to v${app.storeVersion}">
+                                                                    <span class="material-symbols-outlined">system_update</span>
+                                                                    Update
+                                                                </button>
+                                                            ` : ''}
+                                                            ${app.canUninstall ? `
+                                                                <button class="btn btn-danger" onclick="handleAppUninstall('${app.id}', '${app.name.replace(/'/g, "\\'")}')">
+                                                                    <span class="material-symbols-outlined">delete</span>
+                                                                    Uninstall
+                                                                </button>
+                                                            ` : `
+                                                                <button class="btn" disabled title="System apps cannot be uninstalled">
+                                                                    <span class="material-symbols-outlined">lock</span>
+                                                                    System
+                                                                </button>
+                                                            `}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    `;
+                                }
+                                break;
+
+                            case 'storage-display':
+                                const storageData = calculateStorageUsage();
+                                controlHTML = `
+                                    <div class="storage-total">
+                                        <div class="storage-total-size">${storageData.totalFormatted}</div>
+                                        <div class="storage-total-label">Total Storage Used</div>
+                                    </div>
+                                    <div class="storage-list">
+                                        ${storageData.items.map(item => `
+                                            <div class="storage-item">
+                                                <div class="storage-item-header">
+                                                    <div class="storage-item-title">
+                                                        <span class="material-symbols-outlined">${item.icon}</span>
+                                                        ${item.label}
+                                                    </div>
+                                                    <div class="storage-item-size">${item.sizeFormatted}</div>
+                                                </div>
+                                                <div class="storage-item-details">${item.details}</div>
+                                                <div class="storage-bar">
+                                                    <div class="storage-bar-fill" style="width: ${item.percentage}%"></div>
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                `;
+                                break;
+                                
+                            case 'update-check':
+                                controlHTML = `
+                                    <div id="update-status-display" class="update-status-container">
+                                        <div class="update-checking">
+                                            <span class="material-symbols-outlined spinning">sync</span>
+                                            <span>Checking for updates...</span>
+                                        </div>
+                                    </div>
+                                `;
+                                break;
+                                
+                            case 'button':
+                                controlHTML = `
+                                    <button class="btn btn-danger" onclick="${setting.action}Settings()">
+                                        <span class="material-symbols-outlined">restart_alt</span>
+                                        ${setting.buttonLabel}
+                                    </button>
+                                `;
+                                break;
+                                
+                            case 'danger-button':
+                                controlHTML = `
+                                    <div class="danger-zone">
+                                        <div class="danger-zone-header">
+                                            <span class="material-symbols-outlined">warning</span>
+                                            <span class="danger-zone-title">Danger Zone</span>
+                                        </div>
+                                        <button class="btn btn-danger" onclick="${setting.action}Settings()">
+                                            <span class="material-symbols-outlined">delete_forever</span>
+                                            ${setting.buttonLabel}
+                                        </button>
+                                    </div>
+                                `;
+                                break;
+                                
+                            default:
+                                controlHTML = '<p class="setting-description">This setting is managed automatically by the system.</p>';
+                        }
+                        
+                        settingItem.innerHTML = `
+                            <div class="setting-header">
+                                <div>
+                                    <div class="setting-label">${setting.label}</div>
+                                    <div class="setting-description">${setting.description}</div>
+                                </div>
+                            </div>
+                            <div class="setting-control">
+                                ${controlHTML}
+                            </div>
+                        `;
+                        
+                        return settingItem;
+                    }
+
+                    // Activate category
+                    function activateCategory(categoryKey) {
+                        // Update nav items
+                        document.querySelectorAll('.nav-item').forEach(item => {
+                            item.classList.remove('active');
+                            if (item.dataset.category === categoryKey) {
+                                item.classList.add('active');
+                            }
+                        });
+                        
+                        // Update content sections
+                        document.querySelectorAll('.content-section').forEach(section => {
+                            section.classList.remove('active');
+                            if (section.dataset.category === categoryKey) {
+                                section.classList.add('active');
+                                
+                                // If activating the updates category, check for updates
+                                if (categoryKey === 'updates') {
+                                    setTimeout(() => checkForUpdates(), 100);
+                                }
+                            }
+                        });
+                    }
+
+                    // Check for updates
+                    async function checkForUpdates() {
+                        const updateDisplay = document.getElementById('update-status-display');
+                        if (!updateDisplay) return;
+                        
+                        const SITE_VERSION = '1.0.0'; // This should match the version in script.js
+                        
+                        try {
+                            // Get the current cached version
+                            const cachedVersion = localStorage.getItem('site-version') || '0.0.0';
+                            
+                            // Check if online
+                            if (!navigator.onLine) {
+                                updateDisplay.innerHTML = `
+                                    <div class="update-error">
+                                        <span class="material-symbols-outlined">wifi_off</span>
+                                        <span>Offline - Cannot check for updates</span>
+                                    </div>
+                                `;
+                                return;
+                            }
+                            
+                            // Simulate checking by making a request
+                            await new Promise(resolve => setTimeout(resolve, 1000));
+                            
+                            if (cachedVersion !== SITE_VERSION) {
+                                // Update available
+                                updateDisplay.innerHTML = `
+                                    <div class="update-available">
+                                        <span class="material-symbols-outlined">update</span>
+                                        <span>An update is available, please do it to get all the new features</span>
+                                    </div>
+                                    <button class="btn-update" onclick="applyUpdate()">
+                                        <span class="material-symbols-outlined">download</span>
+                                        Update Now
+                                    </button>
+                                `;
+                            } else {
+                                // Up to date
+                                updateDisplay.innerHTML = `
+                                    <div class="update-current">
+                                        <span class="material-symbols-outlined">check_circle</span>
+                                        <span>All features are currently up to date</span>
+                                    </div>
+                                `;
+                            }
+                        } catch (error) {
+                            console.error('Error checking for updates:', error);
+                            updateDisplay.innerHTML = `
+                                <div class="update-error">
+                                    <span class="material-symbols-outlined">error</span>
+                                    <span>Could not check for updates</span>
+                                </div>
+                            `;
+                        }
+                    }
+
+                    // Apply update by clearing cache and reloading
+                    async function applyUpdate() {
+                        const confirmed = confirm('This will clear the cache and reload the page to apply the latest updates. Continue?');
+                        if (!confirmed) return;
+                        
+                        try {
+                            const SITE_VERSION = '1.0.0';
+                            
+                            // Clear all caches
+                            if ('caches' in window) {
+                                const cacheNames = await caches.keys();
+                                await Promise.all(
+                                    cacheNames.map(cacheName => caches.delete(cacheName))
+                                );
+                            }
+                            
+                            // Update the stored version
+                            localStorage.setItem('site-version', SITE_VERSION);
+                            
+                            // Reload the page
+                            window.top.location.reload(true);
+                        } catch (error) {
+                            console.error('Error applying update:', error);
+                            alert('Error applying update. Please try a hard refresh (Ctrl+Shift+R)');
+                        }
+                    }
+
+                    // Calculate storage usage
+                    function calculateStorageUsage() {
+                        const items = [];
+                        let totalBytes = 0;
+
+                        // Calculate size for each localStorage item
+                        const storageKeys = {
+                            'webhub-created-apps': { label: 'Installed Apps', icon: 'download', details: 'Apps installed from the App Store' },
+                            'webhub-settings': { label: 'Settings', icon: 'settings', details: 'Your preferences and configurations' },
+                            'app-creator-apps': { label: 'Created Apps', icon: 'code', details: 'Apps you created with App Creator' },
+                            'release-notes-draft': { label: 'Release Notes Draft', icon: 'description', details: 'Draft release notes' }
+                        };
+
+                        Object.keys(storageKeys).forEach(key => {
+                            const data = localStorage.getItem(key);
+                            if (data) {
+                                const bytes = new Blob([data]).size;
+                                totalBytes += bytes;
+                                items.push({
+                                    key: key,
+                                    label: storageKeys[key].label,
+                                    icon: storageKeys[key].icon,
+                                    details: storageKeys[key].details,
+                                    size: bytes,
+                                    sizeFormatted: formatBytes(bytes),
+                                    percentage: 0 // Will be calculated after
+                                });
+                            }
+                        });
+
+                        // Check for other localStorage items not in our list
+                        const knownKeys = Object.keys(storageKeys);
+                        const otherBytes = 0;
+                        let otherCount = 0;
+                        for (let i = 0; i < localStorage.length; i++) {
+                            const key = localStorage.key(i);
+                            if (!knownKeys.includes(key)) {
+                                const data = localStorage.getItem(key);
+                                if (data) {
+                                    const bytes = new Blob([data]).size;
+                                    totalBytes += bytes;
+                                    otherCount++;
+                                }
+                            }
+                        }
+
+                        if (otherCount > 0) {
+                            items.push({
+                                key: 'other',
+                                label: 'Other Data',
+                                icon: 'folder',
+                                details: `${otherCount} other item(s)`,
+                                size: otherBytes,
+                                sizeFormatted: formatBytes(otherBytes),
+                                percentage: 0
+                            });
+                        }
+
+                        // Calculate percentages
+                        items.forEach(item => {
+                            item.percentage = totalBytes > 0 ? (item.size / totalBytes * 100).toFixed(1) : 0;
+                        });
+
+                        // Sort by size descending
+                        items.sort((a, b) => b.size - a.size);
+
+                        return {
+                            total: totalBytes,
+                            totalFormatted: formatBytes(totalBytes),
+                            items: items
+                        };
+                    }
+
+                    // Format bytes to human-readable format
+                    function formatBytes(bytes) {
+                        if (bytes === 0) return '0 Bytes';
+                        const k = 1024;
+                        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                        const i = Math.floor(Math.log(bytes) / Math.log(k));
+                        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+                    }
+
+                    // Get installed apps with their data
+                    function getInstalledApps() {
+                        const installedApps = [];
+                        
+                        try {
+                            // Get created/installed apps from localStorage
+                            const createdAppsData = localStorage.getItem('webhub-created-apps');
+                            if (createdAppsData) {
+                                const createdApps = JSON.parse(createdAppsData);
+                                
+                                createdApps.forEach(app => {
+                                    if (app.addedToHome) {
+                                        // Calculate app size
+                                        const appSize = new Blob([JSON.stringify(app)]).size;
+                                        
+                                        // Check if update is available (simplified check)
+                                        const hasUpdate = false; // Will be enhanced with actual update check
+                                        
+                                        installedApps.push({
+                                            id: app.id,
+                                            name: app.name,
+                                            icon: app.icon || 'apps',
+                                            version: app.version || '1.0',
+                                            size: formatBytes(appSize),
+                                            hasUpdate: hasUpdate,
+                                            storeVersion: app.version || '1.0',
+                                            canUninstall: true
+                                        });
+                                    }
+                                });
+                            }
+                            
+                            // Add preinstalled apps (Settings, etc.) from localStorage if available
+                            const settingsData = localStorage.getItem('webhub-settings');
+                            if (settingsData) {
+                                const settingsSize = new Blob([settingsData]).size;
+                                
+                                installedApps.push({
+                                    id: 'settings',
+                                    name: 'Settings',
+                                    icon: 'settings',
+                                    version: '2.0',
+                                    size: formatBytes(settingsSize),
+                                    hasUpdate: false,
+                                    storeVersion: '2.0',
+                                    canUninstall: false
+                                });
+                            }
+                            
+                        } catch (error) {
+                            console.error('Error getting installed apps:', error);
+                        }
+                        
+                        return installedApps;
+                    }
+
+                    // Handle app update
+                    function handleAppUpdate(appId) {
+                        // Send message to parent window to handle update
+                        if (window.parent !== window) {
+                            window.parent.postMessage({
+                                type: 'UPDATE_APP',
+                                appId: appId
+                            }, '*');
+                        }
+                    }
+
+                    // Handle app uninstall
+                    function handleAppUninstall(appId, appName) {
+                        // Send message to parent window to handle uninstall
+                        if (window.parent !== window) {
+                            window.parent.postMessage({
+                                type: 'UNINSTALL_APP',
+                                appId: appId,
+                                appName: appName
+                            }, '*');
+                        }
+                    }
+
+                    // Setup event listeners
+                    function setupEventListeners() {
+                        // Search functionality
+                        const searchInput = document.getElementById('searchInput');
+                        searchInput.addEventListener('input', handleSearch);
+                        
+                        // Theme select
+                        const themeSelect = document.getElementById('setting-theme');
+                        if (themeSelect) {
+                            themeSelect.addEventListener('change', (e) => {
+                                currentSettings.theme = e.target.value;
+                                saveSettings();
+                            });
+                        }
+                    }
+
+                    // Handle search
+                    function handleSearch(e) {
+                        const query = e.target.value.toLowerCase().trim();
+                        
+                        if (!query) {
+                            // Show all settings
+                            document.querySelectorAll('.setting-item').forEach(item => {
+                                item.style.display = 'block';
+                            });
+                            return;
+                        }
+                        
+                        let hasResults = false;
+                        
+                        // Search through all settings
+                        Object.keys(settingsData).forEach(categoryKey => {
+                            const category = settingsData[categoryKey];
+                            
+                            Object.keys(category.settings).forEach(settingKey => {
+                                const setting = category.settings[settingKey];
+                                const settingElement = document.querySelector(`[data-setting-key="${settingKey}"]`);
+                                
+                                if (!settingElement) return;
+                                
+                                // Check if search matches
+                                const searchTerms = setting.searchTerms || [];
+                                const matches = searchTerms.some(term => term.includes(query)) ||
+                                               setting.label.toLowerCase().includes(query) ||
+                                               setting.description.toLowerCase().includes(query);
+                                
+                                if (matches) {
+                                    settingElement.style.display = 'block';
+                                    hasResults = true;
+                                } else {
+                                    settingElement.style.display = 'none';
+                                }
+                            });
+                        });
+                    }
+
+                    // Select wallpaper
+                    function selectWallpaper(wallpaperPath) {
+                        // Update UI
+                        document.querySelectorAll('.wallpaper-item').forEach(item => {
+                            item.classList.remove('selected');
+                            if (item.dataset.wallpaper === wallpaperPath) {
+                                item.classList.add('selected');
+                            }
+                        });
+                        
+                        // Save setting
+                        currentSettings.wallpaper = wallpaperPath;
+                        saveSettings();
+                    }
+
+                    // Upload wallpaper
+                    function uploadWallpaper() {
+                        const input = document.createElement('input');
+                        input.type = 'file';
+                        input.accept = 'image/*';
+                        input.onchange = (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                                const reader = new FileReader();
+                                reader.onload = (event) => {
+                                    const dataUrl = event.target.result;
+                                    addCustomWallpaper(dataUrl);
+                                };
+                                reader.readAsDataURL(file);
+                            }
+                        };
+                        input.click();
+                    }
+
+                    // Paste wallpaper
+                    async function pasteWallpaper() {
+                        try {
+                            const items = await navigator.clipboard.read();
+                            for (const item of items) {
+                                if (item.types.includes('image/png') || item.types.includes('image/jpeg')) {
+                                    const blob = await item.getType(item.types[0]);
+                                    const reader = new FileReader();
+                                    reader.onload = (event) => {
+                                        const dataUrl = event.target.result;
+                                        addCustomWallpaper(dataUrl);
+                                    };
+                                    reader.readAsDataURL(blob);
+                                    return;
+                                }
+                            }
+                            alert('No image found in clipboard');
+                        } catch (error) {
+                            console.error('Error pasting image:', error);
+                            alert('Failed to paste image from clipboard');
+                        }
+                    }
+
+                    // Add custom wallpaper
+                    function addCustomWallpaper(dataUrl) {
+                        const grid = document.getElementById('wallpaper-grid');
+                        
+                        const item = document.createElement('div');
+                        item.className = 'wallpaper-item selected';
+                        item.dataset.wallpaper = dataUrl;
+                        item.onclick = () => selectWallpaper(dataUrl);
+                        item.innerHTML = `
+                            <img src="${dataUrl}" alt="Custom Wallpaper">
+                            <span class="material-symbols-outlined checkmark">check</span>
+                        `;
+                        
+                        // Remove selected from others
+                        document.querySelectorAll('.wallpaper-item').forEach(el => {
+                            el.classList.remove('selected');
+                        });
+                        
+                        grid.appendChild(item);
+                        
+                        // Save
+                        currentSettings.wallpaper = dataUrl;
+                        saveSettings();
+                    }
+
+                    // Reset settings
+                    function resetSettings() {
+                        if (confirm('Are you sure you want to reset all settings to default? This action cannot be undone.')) {
+                            currentSettings = {
+                                wallpaper: '/assets/files/wallpapers/black-river.png',
+                                theme: 'dark',
+                                appOrder: []
+                            };
+                            saveSettings();
+                            
+                            // Reload the page
+                            window.location.reload();
+                        }
+                    }
+
+                    // Delete all data
+                    function deleteAllDataSettings() {
+                        const firstConfirm = confirm('⚠️ WARNING ⚠️\n\nThis will permanently delete ALL your data including:\n- All settings\n- All created apps\n- All stored data\n\nThis action CANNOT be undone!\n\nAre you absolutely sure?');
+                        
+                        if (!firstConfirm) return;
+                        
+                        const secondConfirm = confirm('Final confirmation:\n\nType "DELETE" in your mind and click OK to proceed with deleting all your data.\n\nThis is your last chance to cancel!');
+                        
+                        if (!secondConfirm) return;
+                        
+                        // Send message to parent window to delete all data
+                        window.parent.postMessage({
+                            type: 'DELETE_ALL_DATA'
+                        }, '*');
+                    }
+                </script>
+            </body>
+            </html>
+        ]]>
+    </htmlContent>
+</app>

@@ -1,0 +1,114 @@
+{
+  "languages": [
+    {
+      "name": "HTML/CSS/Javascript",
+      "icon": "/assets/files/portfolio-content/languages/html.png",
+      "level": "Advanced"
+    },
+    {
+      "name": "TypeScript",
+      "icon": "/assets/files/portfolio-content/languages/typescript.png",
+      "level": "Advanced"
+    },
+    {
+      "name": "Python",
+      "icon": "/assets/files/portfolio-content/languages/python.png",
+      "level": "Advanced"
+    },
+    {
+      "name": "Java",
+      "icon": "/assets/files/portfolio-content/languages/java.png",
+      "level": "Advanced"
+    },
+    {
+      "name": "C#",
+      "icon": "/assets/files/portfolio-content/languages/csharp.png",
+      "level": "Intermediate"
+    },
+    {
+      "name": "React",
+      "icon": "/assets/files/portfolio-content/languages/react.png",
+      "level": "Advanced"
+    },
+    {
+      "name": "Vue",
+      "icon": "/assets/files/portfolio-content/languages/vue.png",
+      "level": "Advanced"
+    },
+    {
+      "name": "Node.js",
+      "icon": "/assets/files/portfolio-content/languages/node.png",
+      "level": "Advanced"
+    },
+    {
+      "name": "Git",
+      "icon": "/assets/files/portfolio-content/languages/git.png",
+      "level": "Advanced"
+    },
+    {
+      "name": "Powershell",
+      "icon": "/assets/files/portfolio-content/languages/pwsh.png",
+      "level": "Intermediate"
+    },
+    {
+      "name": "Lua",
+      "icon": "/assets/files/portfolio-content/languages/lua.png",
+      "level": "Beginner"
+    },
+    {
+      "name": "Unreal Engine",
+      "icon": "/assets/files/portfolio-content/languages/unreal.png",
+      "level": "Intermediate"
+    },
+    {
+      "name": "Unity",
+      "icon": "/assets/files/portfolio-content/languages/unity.png",
+      "level": "Intermediate"
+    },
+    {
+      "name": "Blender",
+      "icon": "/assets/files/portfolio-content/languages/blender.png",
+      "level": "Proficient"
+    },
+    {
+      "name": "Photoshop",
+      "icon": "/assets/files/portfolio-content/languages/photoshop.png",
+      "level": "Proficient"
+    },
+    {
+      "name": "Illustrator",
+      "icon": "/assets/files/portfolio-content/languages/illustrator.png",
+      "level": "Advanced"
+    },
+    {
+      "name": "Figma",
+      "icon": "/assets/files/portfolio-content/languages/figma.png",
+      "level": "Proficient"
+    },
+    {
+      "name": "Adobe Premiere Pro",
+      "icon": "/assets/files/portfolio-content/languages/premiere.png",
+      "level": "Advanced"
+    },
+    {
+      "name": "Adobe After Effects",
+      "icon": "/assets/files/portfolio-content/languages/aftereffects.png",
+      "level": "Advanced"
+    },
+    {
+      "name": "DaVinci Resolve",
+      "icon": "/assets/files/portfolio-content/languages/davinci.png",
+      "level": "Advanced"
+    },
+    {
+      "name": "FL Studio",
+      "icon": "/assets/files/portfolio-content/languages/flstudio.png",
+      "level": "Beginner"
+    },
+    {
+      "name": "Spamming ChatGPT",
+      "icon": "/assets/files/portfolio-content/languages/chatgpt.png",
+      "level": "The best"
+    }
+  ]
+}

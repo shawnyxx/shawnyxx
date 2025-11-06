@@ -1,0 +1,29 @@
+{
+  "projects": [
+    {
+      "title": "Ecxo Games",
+      "description": "Co-Founded by me and my friend, Ecxo Games is a game development studio based in Montreal, Canada. We focus on web-based games and apps.",
+      "languages": ["HTML/CSS/JavaScript", "Python", "Java", "C#", "Rust", "And more..."],
+      "skillsLearned": ["User Experience", "App architecture", "Content management", "Dynamic loading", "Database management", "And more..."],
+      "url": "https://ecxogames.ca",
+      "media": [],
+      "contact": {
+        "email": "support@ecxogames.ca",
+        "website": "https://ecxogames.ca/"
+      }
+    },
+    {
+      "title": "GTA High Class",
+      "description": "Grand Theft Auto High Class, aka GTA High Class, is a content creation project co-founded by me and 3 friends. Two of them left, and one joined, there is now 3 of us. We do content creationon all platforms.",
+      "languages": ["Vue, Typescript", "Appwrite", "Service Status Systems"],
+      "skillsLearned": ["Self-Sustained Application", "User Support Systems", "Progressive Website", "Caching", "VFX", "Video Editing", "Social Media Skills"],
+      "url": "https://gtahighclass.appwrite.network",
+      "media": [],
+      "contact": {
+        "email": "high.class.gtav@gmail.com",
+        "website": "https://gtahighclass.appwrite.network",
+        "direct messaging": "Via TikTok and Instagram"
+      }
+    }
+  ]
+}

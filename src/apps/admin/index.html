@@ -1,0 +1,1816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <style>
+        /* =============================================================================
+           ADMIN PANEL - Based on Generic App Stylesheet
+           ============================================================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* ==================== LAYOUT ==================== */
+
+        .sidebar-layout {
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: #121212;
+            border-right: 1px solid #222;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            flex-shrink: 0;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid #222;
+        }
+
+        .sidebar-title {
+            font-size: 24px;
+            font-weight: 300;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px 0;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+            color: #ccc;
+        }
+
+        .nav-item:hover {
+            background: #1a1a1a;
+        }
+
+        .nav-item.active {
+            background: #1a1a1a;
+            border-left-color: rgba(100, 150, 255, 0.8);
+            color: #fff;
+        }
+
+        .nav-item-icon {
+            font-size: 20px;
+            color: #666;
+        }
+
+        .nav-item.active .nav-item-icon {
+            color: rgba(100, 150, 255, 0.8);
+        }
+
+        .nav-item-label {
+            font-size: 15px;
+            font-weight: 300;
+        }
+
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 40px;
+        }
+
+        .main-content::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .main-content::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+
+        .main-content::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 5px;
+        }
+
+        /* ==================== SECTIONS ==================== */
+
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .section-header {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #222;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 300;
+            color: #fff;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-description {
+            font-size: 14px;
+            color: #666;
+            font-weight: 300;
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* ==================== TICKETS SECTION ==================== */
+
+        .tickets-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .ticket-card {
+            background: #121212;
+            border: 1px solid #222;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .ticket-card:hover {
+            border-color: #333;
+            background: #1a1a1a;
+        }
+
+        .ticket-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .ticket-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .ticket-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .status-pending {
+            background: #ff6b35;
+            color: #ffffff;
+        }
+
+        .status-done {
+            background: #4caf50;
+            color: #ffffff;
+        }
+
+        .ticket-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: #aaaaaa;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            color: #ffffff;
+            word-break: break-word;
+        }
+
+        .ticket-description {
+            background: #1a1a1a;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            border-left: 3px solid #007bff;
+        }
+
+        .ticket-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        /* ==================== APPS SECTION ==================== */
+
+        .apps-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .ban-reviews-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .app-card {
+            background: #121212;
+            border: 1px solid #222;
+            padding: 20px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .app-card:hover {
+            border-color: #333;
+            background: #1a1a1a;
+        }
+
+        .app-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .app-icon {
+            width: 48px;
+            height: 48px;
+            background: #1a1a1a;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #666;
+        }
+
+        .app-info h3 {
+            color: #fff;
+            margin-bottom: 5px;
+            font-size: 18px;
+        }
+
+        .app-meta {
+            color: #666;
+            font-size: 12px;
+        }
+
+        .app-description {
+            color: #ccc;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .app-stats {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* ==================== BUTTONS ==================== */
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #1a1a1a;
+            color: #888;
+            border: 1px solid #333;
+            font-size: 14px;
+            font-weight: 300;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background: #222;
+            color: #aaa;
+            border-color: #444;
+        }
+
+        .btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .btn:disabled:hover {
+            background: #1a1a1a;
+            color: #888;
+            border-color: #333;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #1a1a1a 0%, #252525 100%);
+            color: #fff;
+            border-color: #444;
+        }
+
+        .btn-primary:hover {
+            border-color: rgba(100, 150, 255, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(100, 150, 255, 0.2);
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: #ffffff;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: #ffffff;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 12px;
+        }
+
+        /* ==================== LOADING STATES ==================== */
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #cccccc;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #333;
+            border-top: 3px solid rgba(100, 150, 255, 0.8);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ==================== EMPTY STATES ==================== */
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #cccccc;
+        }
+
+        .empty-state .material-symbols-outlined {
+            font-size: 48px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        /* ==================== ERROR MESSAGES ==================== */
+
+        .error-message {
+            background: #dc3545;
+            color: #ffffff;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* ==================== REFRESH BUTTON ==================== */
+
+        .refresh-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            transition: all 0.2s ease;
+        }
+
+        .refresh-btn:hover {
+            background: #0056b3;
+            transform: scale(1.1);
+        }
+
+        /* ==================== TOGGLE ==================== */
+
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #333;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: rgba(100, 150, 255, 0.8);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+
+        .toggle-label {
+            font-size: 14px;
+            color: #888;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .settings-container {
+            max-width: 600px;
+        }
+
+        /* ==================== COMPACT VIEW ==================== */
+
+        .ticket-card.compact {
+            padding: 12px;
+        }
+
+        .compact-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+        }
+
+        .compact-row:hover {
+            background: #1a1a1a;
+            border-radius: 4px;
+            padding: 8px;
+            margin: -8px;
+        }
+
+        .compact-title {
+            font-weight: bold;
+            color: #fff;
+            flex: 1;
+        }
+
+        .compact-author,
+        .compact-app,
+        .compact-status,
+        .compact-date,
+        .compact-count {
+            font-size: 12px;
+            color: #ccc;
+        }
+
+        .compact-status.status-pending {
+            color: #ff6b35;
+        }
+
+        .compact-status.status-done {
+            color: #4caf50;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 250px;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+
+            .app-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .ticket-info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar-layout">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-title">Admin Panel</div>
+            </div>
+            <div class="sidebar-nav">
+                <div class="nav-item active" data-section="tickets">
+                    <span class="material-symbols-outlined nav-item-icon">delete</span>
+                    <span class="nav-item-label">Deletion Requests</span>
+                </div>
+                <div class="nav-item" data-section="apps">
+                    <span class="material-symbols-outlined nav-item-icon">apps</span>
+                    <span class="nav-item-label">Community Apps</span>
+                </div>
+                <div class="nav-item" data-section="ban-reviews">
+                    <span class="material-symbols-outlined nav-item-icon">gavel</span>
+                    <span class="nav-item-label">Ban Reviews</span>
+                </div>
+                <div class="nav-item" data-section="settings">
+                    <span class="material-symbols-outlined nav-item-icon">settings</span>
+                    <span class="nav-item-label">Settings</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Deletion Requests Section -->
+            <div id="tickets-section" class="content-section active">
+                <div class="section">
+                    <div class="section-header">
+                        <h1 class="section-title">
+                            <span class="material-symbols-outlined">delete</span>
+                            Deletion Requests
+                        </h1>
+                        <p class="section-description">Manage app deletion requests from users</p>
+                    </div>
+                    <div id="tickets-container" class="tickets-container">
+                        <div class="loading">
+                            <div class="spinner"></div>
+                            Loading deletion requests...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Community Apps Section -->
+            <div id="apps-section" class="content-section">
+                <div class="section">
+                    <div class="section-header">
+                        <h1 class="section-title">
+                            <span class="material-symbols-outlined">apps</span>
+                            Community Apps
+                        </h1>
+                        <p class="section-description">View all published community apps</p>
+                        <div class="search-container" style="margin-top: 20px; margin-bottom: 20px;">
+                            <input type="text" id="app-search" placeholder="Search apps by name, author, or ID..." style="width: 100%; padding: 12px 15px; background: #1a1a1a; border: 1px solid #333; color: #ccc; font-size: 14px; border-radius: 4px;">
+                        </div>
+                    </div>
+                    <div id="apps-container" class="apps-container">
+                        <div class="loading">
+                            <div class="spinner"></div>
+                            Loading community apps...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ban Reviews Section -->
+            <div id="ban-reviews-section" class="content-section">
+                <div class="section">
+                    <div class="section-header">
+                        <h1 class="section-title">
+                            <span class="material-symbols-outlined">gavel</span>
+                            Ban Review Requests
+                        </h1>
+                        <p class="section-description">Review requests to lift app bans</p>
+                    </div>
+                    <div id="ban-reviews-container" class="ban-reviews-container">
+                        <div class="loading">
+                            <div class="spinner"></div>
+                            Loading ban review requests...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Section -->
+            <div id="settings-section" class="content-section">
+                <div class="section">
+                    <div class="section-header">
+                        <h1 class="section-title">
+                            <span class="material-symbols-outlined">settings</span>
+                            Settings
+                        </h1>
+                        <p class="section-description">Configure admin panel preferences</p>
+                    </div>
+                    <div class="settings-container">
+                        <div class="form-group">
+                            <div class="toggle-container">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="hide-completed-toggle">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <span class="toggle-label">Hide Completed/Done</span>
+                            </div>
+                            <p style="color: #666; font-size: 12px; margin-top: 5px;">Hide all items that have been marked as done or completed</p>
+                        </div>
+                        <div class="form-group">
+                            <div class="toggle-container">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="group-requests-toggle">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <span class="toggle-label">Group Excessive Requests</span>
+                            </div>
+                            <p style="color: #666; font-size: 12px; margin-top: 5px;">Group similar or identical requests to save space</p>
+                        </div>
+                        <div class="form-group">
+                            <div class="toggle-container">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="compact-view-toggle">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <span class="toggle-label">Compact View</span>
+                            </div>
+                            <p style="color: #666; font-size: 12px; margin-top: 5px;">Show compact rows with details in modals</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <button class="refresh-btn" id="refresh-btn" title="Refresh">
+        <span class="material-symbols-outlined">refresh</span>
+    </button>
+
+    <!-- Detail Modal -->
+    <div id="detail-modal" class="modal">
+        <div class="modal-content large-modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Details</h2>
+                <button class="modal-close" id="close-detail-modal">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import FirestoreHandler from '../../scripts/FirestoreHandler.js';
+
+        let tickets = {};
+        let apps = [];
+        let settings = {
+            hideCompleted: false,
+            groupRequests: false,
+            compactView: false
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSettings();
+            setupNavigation();
+            loadTickets();
+            document.getElementById('refresh-btn').addEventListener('click', refreshCurrentSection);
+            
+            // Setup search functionality
+            const searchInput = document.getElementById('app-search');
+            if (searchInput) {
+                searchInput.addEventListener('input', renderApps);
+            }
+
+            // Setup settings toggles
+            document.getElementById('hide-completed-toggle').addEventListener('change', saveSettings);
+            document.getElementById('group-requests-toggle').addEventListener('change', saveSettings);
+            document.getElementById('compact-view-toggle').addEventListener('change', saveSettings);
+
+            // Setup modal close
+            document.getElementById('close-detail-modal').addEventListener('click', () => {
+                document.getElementById('detail-modal').style.display = 'none';
+            });
+        });
+
+        function setupNavigation() {
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const section = this.dataset.section;
+                    switchSection(section);
+                });
+            });
+        }
+
+        function switchSection(sectionName) {
+            // Update nav
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            const activeItem = document.querySelector(`[data-section="${sectionName}"]`);
+            if (activeItem) {
+                activeItem.classList.add('active');
+            }
+
+            // Update content
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            const activeSection = document.getElementById(`${sectionName}-section`);
+            if (activeSection) {
+                activeSection.classList.add('active');
+            }
+
+            // Load content for specific sections
+            if (sectionName === 'tickets') {
+                loadTickets();
+            } else if (sectionName === 'apps') {
+                loadApps();
+            } else if (sectionName === 'ban-reviews') {
+                loadBanReviews();
+            } else if (sectionName === 'settings') {
+                // Settings don't need loading
+            }
+        }
+
+        function refreshCurrentSection() {
+            const activeSection = document.querySelector('.content-section.active');
+            if (activeSection.id === 'tickets-section') {
+                loadTickets();
+            } else if (activeSection.id === 'apps-section') {
+                loadApps();
+            } else if (activeSection.id === 'ban-reviews-section') {
+                loadBanReviews();
+            }
+        }
+
+        async function loadTickets() {
+            const container = document.getElementById('tickets-container');
+            container.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    Loading deletion requests...
+                </div>
+            `;
+
+            try {
+                const result = await FirestoreHandler({ Method: 'get', CollectionName: 'data', Document: 'programs_data', SubCollection: 'shawnyxx', SubDocument: 'tickets' });
+                tickets = result || {};
+
+                renderTickets();
+            } catch (error) {
+                console.error('Error loading tickets:', error);
+                container.innerHTML = `
+                    <div class="error-message">
+                        <span class="material-symbols-outlined">error</span>
+                        Failed to load deletion requests. Please try again.
+                    </div>
+                `;
+            }
+        }
+
+        function renderTickets() {
+            const container = document.getElementById('tickets-container');
+
+            if (!tickets || Object.keys(tickets).length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <span class="material-symbols-outlined">inbox</span>
+                        <h3>No deletion requests</h3>
+                        <p>All caught up! No pending deletion requests to review.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = '';
+
+            // Sort tickets by timestamp (newest first)
+            let sortedTickets = Object.entries(tickets).sort((a, b) => b[0].localeCompare(a[0]));
+
+            // Apply settings
+            if (settings.hideCompleted) {
+                sortedTickets = sortedTickets.filter(([_, ticket]) => ticket.status !== 'done');
+            }
+
+            if (settings.groupRequests) {
+                // Group by app_id for deletion requests
+                const grouped = {};
+                sortedTickets.forEach(([ticketId, ticket]) => {
+                    const key = ticket.app_id || ticketId;
+                    if (!grouped[key]) {
+                        grouped[key] = [];
+                    }
+                    grouped[key].push({ ticketId, ticket });
+                });
+                sortedTickets = Object.entries(grouped).map(([key, group]) => [key, group]);
+            }
+
+            if (sortedTickets.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <span class="material-symbols-outlined">inbox</span>
+                        <h3>No requests to show</h3>
+                        <p>All requests are hidden based on your settings.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            sortedTickets.forEach(item => {
+                let ticketCard;
+                if (settings.groupRequests && Array.isArray(item[1])) {
+                    ticketCard = createGroupedTicketCard(item[0], item[1]);
+                } else {
+                    const [ticketId, ticket] = item;
+                    ticketCard = createTicketCard(ticketId, ticket);
+                }
+                container.appendChild(ticketCard);
+            });
+        }
+
+        function createTicketCard(ticketId, ticket) {
+            const card = document.createElement('div');
+            card.className = 'ticket-card';
+
+            if (settings.compactView) {
+                card.classList.add('compact');
+                card.addEventListener('click', () => showTicketDetails(ticketId, ticket));
+                card.innerHTML = `
+                    <div class="compact-row">
+                        <span class="compact-title">${ticket.type === 'app_ban_review_request' ? 'Ban Review' : 'Deletion'} #${ticketId.slice(-6)}</span>
+                        <span class="compact-author">${ticket.author || 'N/A'}</span>
+                        <span class="compact-app">App: ${ticket.app_id || 'N/A'}</span>
+                        <span class="compact-status ${ticket.status === 'done' ? 'status-done' : 'status-pending'}">${ticket.status === 'done' ? 'Done' : 'Pending'}</span>
+                        <span class="compact-date">${new Date(parseInt(ticketId)).toLocaleDateString()}</span>
+                    </div>
+                `;
+            } else {
+                const statusClass = ticket.status === 'done' ? 'status-done' : 'status-pending';
+                const statusText = ticket.status === 'done' ? 'Done' : 'Pending';
+
+                const title = ticket.type === 'app_ban_review_request' ? 'Ban Review Request' : 'Deletion Request';
+
+                card.innerHTML = `
+                    <div class="ticket-header">
+                        <div class="ticket-title">${title} #${ticketId.slice(-6)}</div>
+                        <div class="ticket-status ${statusClass}">${statusText}</div>
+                    </div>
+                    <div class="ticket-info">
+                        <div class="info-item">
+                            <div class="info-label">Author</div>
+                            <div class="info-value">${ticket.author || 'N/A'}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">App ID</div>
+                            <div class="info-value">${ticket.app_id || 'N/A'}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Email</div>
+                            <div class="info-value">${ticket.email || 'N/A'}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Submitted</div>
+                            <div class="info-value">${new Date(parseInt(ticketId)).toLocaleString()}</div>
+                        </div>
+                    </div>
+                    <div class="ticket-description">
+                        <strong>Description:</strong><br>
+                        ${ticket.description || 'No description provided'}
+                    </div>
+                    <div class="ticket-actions">
+                        ${ticket.status !== 'done' ? `<button class="btn btn-success" onclick="markAsDone('${ticketId}')">
+                            <span class="material-symbols-outlined">check</span>
+                            Mark as Done
+                        </button>` : ''}
+                        <button class="btn btn-danger" onclick="deleteTicket('${ticketId}')">
+                            <span class="material-symbols-outlined">delete</span>
+                            Delete Request
+                        </button>
+                    </div>
+                `;
+            }
+
+            return card;
+        }
+
+        async function loadApps() {
+            const container = document.getElementById('apps-container');
+            container.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    Loading community apps...
+                </div>
+            `;
+
+            try {
+                const result = await FirestoreHandler({ Method: 'get', CollectionName: 'data', Document: 'programs_data', SubCollection: 'shawnyxx', SubDocument: 'apps' });
+                const appsData = result || { community: [], removed: [] };
+                apps = appsData.community || [];
+                // Store removed for ban count
+                window.removedApps = appsData.removed || [];
+
+                renderApps();
+            } catch (error) {
+                console.error('Error loading apps:', error);
+                container.innerHTML = `
+                    <div class="error-message">
+                        <span class="material-symbols-outlined">error</span>
+                        Failed to load community apps. Please try again.
+                    </div>
+                `;
+            }
+        }
+
+        function renderApps() {
+            const container = document.getElementById('apps-container');
+            const searchInput = document.getElementById('app-search');
+            const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
+
+            if (!apps || apps.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <span class="material-symbols-outlined">apps</span>
+                        <h3>No community apps</h3>
+                        <p>No apps have been published to the community yet.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Filter apps based on search term
+            const filteredApps = apps.filter(app => {
+                const name = (app.name || '').toLowerCase();
+                const author = (app.author || '').toLowerCase();
+                const id = (app.id || '').toLowerCase();
+                return name.includes(searchTerm) || author.includes(searchTerm) || id.includes(searchTerm);
+            });
+
+            const appGrid = document.createElement('div');
+            appGrid.className = 'app-grid';
+
+            filteredApps.forEach(app => {
+                const appCard = createAppCard(app);
+                appGrid.appendChild(appCard);
+            });
+
+            container.innerHTML = '';
+            container.appendChild(appGrid);
+        }
+
+        function createAppCard(app) {
+            const card = document.createElement('div');
+            card.className = 'app-card';
+
+            const iconHtml = app.icon ? `<img src="${app.icon}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">` : '<span class="material-symbols-outlined">apps</span>';
+
+            // Count ban history
+            const banCount = window.removedApps.filter(removed => removed.id === app.id).length;
+
+            card.innerHTML = `
+                <div class="app-header">
+                    <div class="app-icon">
+                        ${iconHtml}
+                    </div>
+                    <div class="app-info">
+                        <h3>${app.name || 'Unknown App'}</h3>
+                        <div class="app-meta">by ${app.author || 'Unknown'} • v${app.version || '1.0.0'}</div>
+                    </div>
+                </div>
+                <div class="app-description">
+                    ${app.description || 'No description available'}
+                </div>
+                <div class="app-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">${app.downloads || 0}</div>
+                        <div class="stat-label">Downloads</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">${app.rating || 0}</div>
+                        <div class="stat-label">Rating</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">${banCount}</div>
+                        <div class="stat-label">Bans</div>
+                    </div>
+                </div>
+                <div class="app-actions" style="display: flex; justify-content: flex-end; margin-top: 15px;">
+                    <button class="btn btn-danger btn-sm" onclick="deleteCommunityApp('${app.id}')">
+                        <span class="material-symbols-outlined">block</span>
+                        Ban App
+                    </button>
+                </div>
+            `;
+
+            return card;
+        }
+
+        async function loadBanReviews() {
+            const container = document.getElementById('ban-reviews-container');
+            container.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    Loading ban review requests...
+                </div>
+            `;
+
+            try {
+                const result = await FirestoreHandler({ Method: 'get', CollectionName: 'data', Document: 'programs_data', SubCollection: 'shawnyxx', SubDocument: 'tickets' });
+                const allTickets = result || {};
+
+                // Ensure removedApps is loaded
+                if (!window.removedApps) {
+                    const appsResult = await FirestoreHandler({ Method: 'get', CollectionName: 'data', Document: 'programs_data', SubCollection: 'shawnyxx', SubDocument: 'apps' });
+                    window.removedApps = appsResult?.removed || [];
+                }
+
+                // Filter for ban review requests and exclude permanent bans
+                const banReviewTickets = Object.entries(allTickets).filter(([_, ticket]) => 
+                    ticket.type === 'app_ban_review_request' && 
+                    !window.removedApps?.find(app => app.id === ticket.app_id && app.isPermanentBan)
+                );
+
+                renderBanReviews(Object.fromEntries(banReviewTickets));
+            } catch (error) {
+                console.error('Error loading ban review requests:', error);
+                container.innerHTML = `
+                    <div class="error-message">
+                        <span class="material-symbols-outlined">error</span>
+                        Failed to load ban review requests. Please try again.
+                    </div>
+                `;
+            }
+        }
+
+        function renderBanReviews(banReviewTickets) {
+            const container = document.getElementById('ban-reviews-container');
+
+            if (!banReviewTickets || Object.keys(banReviewTickets).length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <span class="material-symbols-outlined">inbox</span>
+                        <h3>No ban review requests</h3>
+                        <p>All caught up! No pending ban review requests to process.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = '';
+
+            // Group tickets by app_id
+            const groupedTickets = {};
+            Object.entries(banReviewTickets).forEach(([ticketId, ticket]) => {
+                const appId = ticket.app_id;
+                if (!groupedTickets[appId]) {
+                    groupedTickets[appId] = [];
+                }
+                groupedTickets[appId].push({ ticketId, ticket });
+            });
+
+            // Sort groups by the newest ticket in each group
+            let sortedGroups = Object.entries(groupedTickets).sort((a, b) => {
+                const aNewest = Math.max(...a[1].map(t => parseInt(t.ticketId)));
+                const bNewest = Math.max(...b[1].map(t => parseInt(t.ticketId)));
+                return bNewest - aNewest;
+            });
+
+            // Apply settings
+            if (settings.hideCompleted) {
+                sortedGroups = sortedGroups.filter(([_, tickets]) => tickets.some(t => t.ticket.status !== 'done'));
+            }
+
+            if (sortedGroups.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <span class="material-symbols-outlined">inbox</span>
+                        <h3>No requests to show</h3>
+                        <p>All requests are hidden based on your settings.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            sortedGroups.forEach(([appId, tickets]) => {
+                const ticketCard = createGroupedBanReviewCard(appId, tickets);
+                container.appendChild(ticketCard);
+            });
+        }
+
+        function createGroupedTicketCard(appId, ticketGroup) {
+            const card = document.createElement('div');
+            card.className = 'ticket-card';
+
+            // Check if any ticket is pending
+            const hasPending = ticketGroup.some(t => t.ticket.status !== 'done');
+            const statusClass = hasPending ? 'status-pending' : 'status-done';
+            const statusText = hasPending ? 'Pending' : 'Done';
+
+            // Get the latest ticket for details
+            const latestTicket = ticketGroup.sort((a, b) => parseInt(b.ticketId) - parseInt(a.ticketId))[0].ticket;
+
+            if (settings.compactView) {
+                card.classList.add('compact');
+                card.addEventListener('click', () => showGroupedTicketDetails(appId, ticketGroup));
+                card.innerHTML = `
+                    <div class="compact-row">
+                        <span class="compact-title">Grouped Deletion Requests</span>
+                        <span class="compact-author">${latestTicket.author || 'N/A'}</span>
+                        <span class="compact-app">App: ${appId}</span>
+                        <span class="compact-status ${statusClass}">${statusText}</span>
+                        <span class="compact-count">${ticketGroup.length} requests</span>
+                    </div>
+                `;
+            } else {
+                card.innerHTML = `
+                    <div class="ticket-header">
+                        <div class="ticket-title">Grouped Deletion Requests for App ${appId}</div>
+                        <div class="ticket-status ${statusClass}">${statusText}</div>
+                    </div>
+                    <div class="ticket-info">
+                        <div class="info-item">
+                            <div class="info-label">Author</div>
+                            <div class="info-value">${latestTicket.author || 'N/A'}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">App ID</div>
+                            <div class="info-value">${appId}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Requests</div>
+                            <div class="info-value">${ticketGroup.length} ${ticketGroup.length === 1 ? 'time' : 'times'}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Latest Request</div>
+                            <div class="info-value">${new Date(parseInt(ticketGroup[0].ticketId)).toLocaleString()}</div>
+                        </div>
+                    </div>
+                    <div class="ticket-description">
+                        <strong>Latest Description:</strong><br>
+                        ${latestTicket.description || 'No description provided'}
+                    </div>
+                    <div class="ticket-actions">
+                        ${hasPending ? `<button class="btn btn-success" onclick="markGroupAsDone('${appId}')">
+                            <span class="material-symbols-outlined">check</span>
+                            Mark All as Done
+                        </button>` : ''}
+                        <button class="btn btn-danger" onclick="deleteAllTicketsForApp('${appId}')">
+                            <span class="material-symbols-outlined">delete</span>
+                            Delete All Requests
+                        </button>
+                    </div>
+                `;
+            }
+
+            return card;
+        }
+
+        function createGroupedBanReviewCard(appId, tickets) {
+            const card = document.createElement('div');
+            card.className = 'ticket-card';
+
+            // Check if any ticket is pending
+            const hasPending = tickets.some(t => t.ticket.status !== 'done');
+            const statusClass = hasPending ? 'status-pending' : 'status-done';
+            const statusText = hasPending ? 'Pending' : 'Done';
+
+            // Get the latest ticket for details
+            const latestTicket = tickets.sort((a, b) => parseInt(b.ticketId) - parseInt(a.ticketId))[0].ticket;
+
+            if (settings.compactView) {
+                card.classList.add('compact');
+                card.addEventListener('click', () => showGroupedBanReviewDetails(appId, tickets));
+                card.innerHTML = `
+                    <div class="compact-row">
+                        <span class="compact-title">Ban Review for App ${appId}</span>
+                        <span class="compact-author">${latestTicket.author || 'N/A'}</span>
+                        <span class="compact-app">App: ${appId}</span>
+                        <span class="compact-status ${statusClass}">${statusText}</span>
+                        <span class="compact-count">${tickets.length} requests</span>
+                    </div>
+                `;
+            } else {
+                card.innerHTML = `
+                    <div class="ticket-header">
+                        <div class="ticket-title">Ban Review Request for App ${appId}</div>
+                        <div class="ticket-status ${statusClass}">${statusText}</div>
+                    </div>
+                    <div class="ticket-info">
+                        <div class="info-item">
+                            <div class="info-label">Author</div>
+                            <div class="info-value">${latestTicket.author || 'N/A'}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">App ID</div>
+                            <div class="info-value">${appId}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Requests</div>
+                            <div class="info-value">${tickets.length} ${tickets.length === 1 ? 'time' : 'times'}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Latest Request</div>
+                            <div class="info-value">${new Date(latestTicket.submittedAt || parseInt(tickets[0].ticketId)).toLocaleString()}</div>
+                        </div>
+                    </div>
+                    <div class="ticket-description">
+                        <strong>Latest Description:</strong><br>
+                        ${latestTicket.description || 'No description provided'}
+                    </div>
+                    <div class="ticket-actions">
+                        ${hasPending ? `<button class="btn btn-success" onclick="unbanApp('${appId}')">
+                            <span class="material-symbols-outlined">check</span>
+                            Unban App
+                        </button>` : ''}
+                        <button class="btn btn-danger" onclick="deleteAllTicketsForApp('${appId}')">
+                            <span class="material-symbols-outlined">delete</span>
+                            Delete All Requests
+                        </button>
+                    </div>
+                `;
+            }
+
+            return card;
+        }
+
+        async function unbanApp(appId) {
+            // Check if this is a permanent ban
+            const appToUnban = window.removedApps.find(app => app.id === appId);
+            if (appToUnban && appToUnban.isPermanentBan) {
+                alert('This app has been permanently banned and cannot be unbanned.');
+                return;
+            }
+
+            if (!confirm('Are you sure you want to unban this app? This will restore the app to the community store and allow the user to publish again.')) return;
+
+            try {
+                // Get current apps data
+                const currentData = await FirestoreHandler({
+                    Method: 'get',
+                    CollectionName: 'data',
+                    Document: 'programs_data',
+                    SubCollection: 'shawnyxx',
+                    SubDocument: 'apps'
+                }) || { removed: [], community: [] };
+
+                // Find the app in removed array
+                const removedAppIndex = currentData.removed?.findIndex(a => a.id === appId);
+                if (removedAppIndex !== -1) {
+                    const appToRestore = currentData.removed[removedAppIndex];
+
+                    // Mark as unbanned in removed array (keep for ban history)
+                    currentData.removed[removedAppIndex].isBanned = false;
+                    currentData.removed[removedAppIndex].unbannedAt = new Date().toISOString();
+                    currentData.removed[removedAppIndex].unbannedBy = 'admin';
+
+                    // Add back to community array (remove admin metadata)
+                    const { adminMessage, removedAt, removedBy, isBanned, unbannedAt, unbannedBy, ...cleanApp } = appToRestore;
+                    currentData.community = currentData.community || [];
+                    currentData.community.push(cleanApp);
+
+                    // Save the updated apps data
+                    await FirestoreHandler({
+                        Method: 'set',
+                        CollectionName: 'data',
+                        Document: 'programs_data',
+                        SubCollection: 'shawnyxx',
+                        SubDocument: 'apps',
+                        Data: currentData
+                    });
+                }
+
+                // Mark all ban review tickets for this app as done
+                const allTickets = await FirestoreHandler({
+                    Method: 'get',
+                    CollectionName: 'data',
+                    Document: 'programs_data',
+                    SubCollection: 'shawnyxx',
+                    SubDocument: 'tickets'
+                }) || {};
+
+                Object.keys(allTickets).forEach(ticketId => {
+                    const ticket = allTickets[ticketId];
+                    if (ticket.type === 'app_ban_review_request' && ticket.app_id === appId) {
+                        ticket.status = 'done';
+                    }
+                });
+
+                await FirestoreHandler({
+                    Method: 'set',
+                    CollectionName: 'data',
+                    Document: 'programs_data',
+                    SubCollection: 'shawnyxx',
+                    SubDocument: 'tickets',
+                    Data: allTickets
+                });
+
+                loadBanReviews();
+                loadApps(); // Refresh the apps list to show the restored app
+                alert('App unbanned and restored successfully! The app is now back in the community store.');
+            } catch (error) {
+                console.error('Error unbanning app:', error);
+                alert('Failed to unban app. Please try again.');
+            }
+        }
+
+        async function markAsDone(ticketId) {
+            if (!confirm('Mark this deletion request as done?')) return;
+
+            try {
+                tickets[ticketId].status = 'done';
+
+                await FirestoreHandler({
+                    Method: 'set',
+                    CollectionName: 'data',
+                    Document: 'programs_data',
+                    SubCollection: 'shawnyxx',
+                    SubDocument: 'tickets',
+                    Data: tickets
+                });
+
+                renderTickets();
+                alert('Request marked as done successfully!');
+            } catch (error) {
+                console.error('Error marking ticket as done:', error);
+                alert('Failed to mark request as done. Please try again.');
+            }
+        }
+
+        async function deleteTicket(ticketId) {
+            if (!confirm('Delete this deletion request permanently?')) return;
+
+            try {
+                delete tickets[ticketId];
+
+                await FirestoreHandler({
+                    Method: 'set',
+                    CollectionName: 'data',
+                    Document: 'programs_data',
+                    SubCollection: 'shawnyxx',
+                    SubDocument: 'tickets',
+                    Data: tickets
+                });
+
+                renderTickets();
+                alert('Request deleted successfully!');
+            } catch (error) {
+                console.error('Error deleting ticket:', error);
+                alert('Failed to delete request. Please try again.');
+            }
+        }
+
+        async function deleteCommunityApp(appId) {
+            const message = prompt('Deleting an app will notify the user. Please enter a message for the user:');
+            if (message === null) return; // User cancelled
+
+            if (!message.trim()) {
+                alert('Please enter a message for the user.');
+                return;
+            }
+
+            // Check ban history
+            const banHistory = window.removedApps.filter(removed => removed.id === appId);
+            const isThirdBan = banHistory.length >= 2; // This will be the 3rd ban
+
+            const confirmMessage = isThirdBan 
+                ? 'This is the THIRD ban for this app. It will be PERMANENTLY removed from the app store and cannot be appealed. The user will still see the ban message but cannot publish again. Continue?'
+                : 'Are you sure you want to delete this app from the community store?';
+
+            if (!confirm(confirmMessage)) return;
+
+            try {
+                // Get current apps data
+                const currentData = await FirestoreHandler({
+                    Method: 'get',
+                    CollectionName: 'data',
+                    Document: 'programs_data',
+                    SubCollection: 'shawnyxx',
+                    SubDocument: 'apps'
+                }) || { community: [] };
+
+                // Find the app to delete
+                const appIndex = currentData.community?.findIndex(a => a.id === appId);
+                if (appIndex === -1) {
+                    alert('App not found.');
+                    return;
+                }
+
+                const appToDelete = currentData.community[appIndex];
+
+                // Remove from community array
+                currentData.community.splice(appIndex, 1);
+
+                // Initialize removed array if it doesn't exist
+                if (!currentData.removed) {
+                    currentData.removed = [];
+                }
+
+                // Remove any existing entries for this app ID to prevent duplicates
+                currentData.removed = currentData.removed.filter(app => app.id !== appId);
+
+                if (!isThirdBan) {
+                    // Normal ban - add to removed array
+                    const removedApp = {
+                        ...appToDelete,
+                        adminMessage: message.trim(),
+                        removedAt: new Date().toISOString(),
+                        removedBy: 'admin',
+                        isBanned: true
+                    };
+                    currentData.removed.push(removedApp);
+                } else {
+                    // Third ban - permanent removal, add with permanent flag
+                    const permanentBanApp = {
+                        ...appToDelete,
+                        adminMessage: message.trim(),
+                        removedAt: new Date().toISOString(),
+                        removedBy: 'admin',
+                        isBanned: true,
+                        isPermanentBan: true
+                    };
+                    currentData.removed.push(permanentBanApp);
+                }
+
+                // Save updated data
+                await FirestoreHandler({
+                    Method: 'set',
+                    CollectionName: 'data',
+                    Document: 'programs_data',
+                    SubCollection: 'shawnyxx',
+                    SubDocument: 'apps',
+                    Data: currentData
+                });
+
+                // Refresh the apps list and removed apps
+                loadApps();
+                const banMessage = isThirdBan 
+                    ? 'App permanently banned! This app has been completely removed from the app store and cannot be appealed.' 
+                    : 'App banned successfully! The user will be notified.';
+                alert(banMessage);
+            } catch (error) {
+                console.error('Error deleting app:', error);
+                alert('Failed to delete app. Please try again.');
+            }
+        }
+
+        async function deleteAllTicketsForApp(appId) {
+            if (!confirm('Delete all ban review requests for this app permanently?')) return;
+
+            try {
+                const allTickets = await FirestoreHandler({
+                    Method: 'get',
+                    CollectionName: 'data',
+                    Document: 'programs_data',
+                    SubCollection: 'shawnyxx',
+                    SubDocument: 'tickets'
+                }) || {};
+
+                // Remove all ban review tickets for this app
+                Object.keys(allTickets).forEach(ticketId => {
+                    const ticket = allTickets[ticketId];
+                    if (ticket.type === 'app_ban_review_request' && ticket.app_id === appId) {
+                        delete allTickets[ticketId];
+                    }
+                });
+
+                await FirestoreHandler({
+                    Method: 'set',
+                    CollectionName: 'data',
+                    Document: 'programs_data',
+                    SubCollection: 'shawnyxx',
+                    SubDocument: 'tickets',
+                    Data: allTickets
+                });
+
+                loadBanReviews();
+                alert('All requests deleted successfully!');
+            } catch (error) {
+                console.error('Error deleting tickets:', error);
+                alert('Failed to delete requests. Please try again.');
+            }
+        }
+
+        // Make functions global for onclick handlers
+        window.markAsDone = markAsDone;
+        window.deleteTicket = deleteTicket;
+        window.deleteCommunityApp = deleteCommunityApp;
+        window.unbanApp = unbanApp;
+        window.deleteAllTicketsForApp = deleteAllTicketsForApp;
+        window.showTicketDetails = showTicketDetails;
+        window.showGroupedTicketDetails = showGroupedTicketDetails;
+        window.showGroupedBanReviewDetails = showGroupedBanReviewDetails;
+        window.markGroupAsDone = markGroupAsDone;
+
+        function showTicketDetails(ticketId, ticket) {
+            const modal = document.getElementById('detail-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalBody = document.getElementById('modal-body');
+
+            modalTitle.textContent = `${ticket.type === 'app_ban_review_request' ? 'Ban Review' : 'Deletion'} Request Details`;
+            modalBody.innerHTML = `
+                <div class="ticket-info">
+                    <div class="info-item">
+                        <div class="info-label">Author</div>
+                        <div class="info-value">${ticket.author || 'N/A'}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">App ID</div>
+                        <div class="info-value">${ticket.app_id || 'N/A'}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Email</div>
+                        <div class="info-value">${ticket.email || 'N/A'}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Submitted</div>
+                        <div class="info-value">${new Date(parseInt(ticketId)).toLocaleString()}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Status</div>
+                        <div class="info-value">${ticket.status === 'done' ? 'Done' : 'Pending'}</div>
+                    </div>
+                </div>
+                <div class="ticket-description">
+                    <strong>Description:</strong><br>
+                    ${ticket.description || 'No description provided'}
+                </div>
+                <div class="ticket-actions">
+                    ${ticket.status !== 'done' ? `<button class="btn btn-success" onclick="markAsDone('${ticketId}'); document.getElementById('detail-modal').style.display='none';">
+                        <span class="material-symbols-outlined">check</span>
+                        Mark as Done
+                    </button>` : ''}
+                    <button class="btn btn-danger" onclick="deleteTicket('${ticketId}'); document.getElementById('detail-modal').style.display='none';">
+                        <span class="material-symbols-outlined">delete</span>
+                        Delete Request
+                    </button>
+                </div>
+            `;
+            modal.style.display = 'block';
+        }
+
+        function showGroupedTicketDetails(appId, ticketGroup) {
+            const modal = document.getElementById('detail-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalBody = document.getElementById('modal-body');
+
+            const hasPending = ticketGroup.some(t => t.ticket.status !== 'done');
+            const latestTicket = ticketGroup.sort((a, b) => parseInt(b.ticketId) - parseInt(a.ticketId))[0].ticket;
+
+            modalTitle.textContent = `Grouped Deletion Requests for App ${appId}`;
+            modalBody.innerHTML = `
+                <div class="ticket-info">
+                    <div class="info-item">
+                        <div class="info-label">Author</div>
+                        <div class="info-value">${latestTicket.author || 'N/A'}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">App ID</div>
+                        <div class="info-value">${appId}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Requests</div>
+                        <div class="info-value">${ticketGroup.length} ${ticketGroup.length === 1 ? 'time' : 'times'}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Status</div>
+                        <div class="info-value">${hasPending ? 'Pending' : 'Done'}</div>
+                    </div>
+                </div>
+                <div class="ticket-description">
+                    <strong>Latest Description:</strong><br>
+                    ${latestTicket.description || 'No description provided'}
+                </div>
+                <div style="margin-top: 20px;">
+                    <strong>All Requests:</strong>
+                    <div style="max-height: 200px; overflow-y: auto; margin-top: 10px;">
+                        ${ticketGroup.map(t => `
+                            <div style="border-bottom: 1px solid #333; padding: 10px 0;">
+                                <div><strong>ID:</strong> ${t.ticketId.slice(-6)}</div>
+                                <div><strong>Submitted:</strong> ${new Date(parseInt(t.ticketId)).toLocaleString()}</div>
+                                <div><strong>Status:</strong> ${t.ticket.status === 'done' ? 'Done' : 'Pending'}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                <div class="ticket-actions">
+                    ${hasPending ? `<button class="btn btn-success" onclick="markGroupAsDone('${appId}'); document.getElementById('detail-modal').style.display='none';">
+                        <span class="material-symbols-outlined">check</span>
+                        Mark All as Done
+                    </button>` : ''}
+                    <button class="btn btn-danger" onclick="deleteAllTicketsForApp('${appId}'); document.getElementById('detail-modal').style.display='none';">
+                        <span class="material-symbols-outlined">delete</span>
+                        Delete All Requests
+                    </button>
+                </div>
+            `;
+            modal.style.display = 'block';
+        }
+
+        function showGroupedBanReviewDetails(appId, tickets) {
+            const modal = document.getElementById('detail-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalBody = document.getElementById('modal-body');
+
+            const hasPending = tickets.some(t => t.ticket.status !== 'done');
+            const latestTicket = tickets.sort((a, b) => parseInt(b.ticketId) - parseInt(a.ticketId))[0].ticket;
+
+            modalTitle.textContent = `Ban Review Requests for App ${appId}`;
+            modalBody.innerHTML = `
+                <div class="ticket-info">
+                    <div class="info-item">
+                        <div class="info-label">Author</div>
+                        <div class="info-value">${latestTicket.author || 'N/A'}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">App ID</div>
+                        <div class="info-value">${appId}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Requests</div>
+                        <div class="info-value">${tickets.length} ${tickets.length === 1 ? 'time' : 'times'}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Status</div>
+                        <div class="info-value">${hasPending ? 'Pending' : 'Done'}</div>
+                    </div>
+                </div>
+                <div class="ticket-description">
+                    <strong>Latest Description:</strong><br>
+                    ${latestTicket.description || 'No description provided'}
+                </div>
+                <div style="margin-top: 20px;">
+                    <strong>All Requests:</strong>
+                    <div style="max-height: 200px; overflow-y: auto; margin-top: 10px;">
+                        ${tickets.map(t => `
+                            <div style="border-bottom: 1px solid #333; padding: 10px 0;">
+                                <div><strong>ID:</strong> ${t.ticketId.slice(-6)}</div>
+                                <div><strong>Submitted:</strong> ${new Date(t.ticket.submittedAt || parseInt(t.ticketId)).toLocaleString()}</div>
+                                <div><strong>Status:</strong> ${t.ticket.status === 'done' ? 'Done' : 'Pending'}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                <div class="ticket-actions">
+                    ${hasPending ? `<button class="btn btn-success" onclick="unbanApp('${appId}'); document.getElementById('detail-modal').style.display='none';">
+                        <span class="material-symbols-outlined">check</span>
+                        Unban App
+                    </button>` : ''}
+                    <button class="btn btn-danger" onclick="deleteAllTicketsForApp('${appId}'); document.getElementById('detail-modal').style.display='none';">
+                        <span class="material-symbols-outlined">delete</span>
+                        Delete All Requests
+                    </button>
+                </div>
+            `;
+            modal.style.display = 'block';
+        }
+
+        async function markGroupAsDone(appId) {
+            if (!confirm('Mark all deletion requests for this app as done?')) return;
+
+            try {
+                // Find all tickets for this app
+                const appTickets = Object.keys(tickets).filter(ticketId => tickets[ticketId].app_id === appId);
+
+                for (const ticketId of appTickets) {
+                    tickets[ticketId].status = 'done';
+                }
+
+                await FirestoreHandler({
+                    Method: 'set',
+                    CollectionName: 'data',
+                    Document: 'programs_data',
+                    SubCollection: 'shawnyxx',
+                    SubDocument: 'tickets',
+                    Data: tickets
+                });
+
+                renderTickets();
+                alert('All requests marked as done successfully!');
+            } catch (error) {
+                console.error('Error marking group as done:', error);
+                alert('Failed to mark requests as done. Please try again.');
+            }
+        }
+        window.showTicketDetails = showTicketDetails;
+
+        function loadSettings() {
+            const saved = localStorage.getItem('adminSettings');
+            if (saved) {
+                settings = { ...settings, ...JSON.parse(saved) };
+            }
+            document.getElementById('hide-completed-toggle').checked = settings.hideCompleted;
+            document.getElementById('group-requests-toggle').checked = settings.groupRequests;
+            document.getElementById('compact-view-toggle').checked = settings.compactView;
+        }
+
+        function saveSettings() {
+            settings.hideCompleted = document.getElementById('hide-completed-toggle').checked;
+            settings.groupRequests = document.getElementById('group-requests-toggle').checked;
+            settings.compactView = document.getElementById('compact-view-toggle').checked;
+            localStorage.setItem('adminSettings', JSON.stringify(settings));
+            // Re-render current section to apply settings
+            refreshCurrentSection();
+        }
+    </script>
+</body>
+</html>

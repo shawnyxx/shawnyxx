@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a1a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a0a0a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="dotGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6496ff;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#9664ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#64c8ff;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="512" height="512" rx="115" fill="url(#bgGradient)"/>
+  
+  <!-- 3x3 Grid of Dots -->
+  <!-- Row 1 -->
+  <circle cx="170" cy="170" r="35" fill="url(#dotGradient)" filter="url(#glow)"/>
+  <circle cx="256" cy="170" r="35" fill="url(#dotGradient)" filter="url(#glow)"/>
+  <circle cx="342" cy="170" r="35" fill="url(#dotGradient)" filter="url(#glow)"/>
+  
+  <!-- Row 2 -->
+  <circle cx="170" cy="256" r="35" fill="url(#dotGradient)" filter="url(#glow)"/>
+  <circle cx="256" cy="256" r="35" fill="url(#dotGradient)" filter="url(#glow)"/>
+  <circle cx="342" cy="256" r="35" fill="url(#dotGradient)" filter="url(#glow)"/>
+  
+  <!-- Row 3 -->
+  <circle cx="170" cy="342" r="35" fill="url(#dotGradient)" filter="url(#glow)"/>
+  <circle cx="256" cy="342" r="35" fill="url(#dotGradient)" filter="url(#glow)"/>
+  <circle cx="342" cy="342" r="35" fill="url(#dotGradient)" filter="url(#glow)"/>
+</svg>

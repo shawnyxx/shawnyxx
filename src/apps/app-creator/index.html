@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Creator</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
+    <style>
+        /* =============================================================================
+           APP CREATOR - Based on Generic App Stylesheet
+           ============================================================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* ==================== LAYOUT ==================== */
+
+        .sidebar-layout {
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: #121212;
+            border-right: 1px solid #222;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            flex-shrink: 0;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid #222;
+        }
+
+        .sidebar-title {
+            font-size: 24px;
+            font-weight: 300;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px 0;
+        }
+
+        .nav-section {
+            margin-bottom: 20px;
+        }
+
+        .nav-section-title {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            font-weight: 500;
+            padding: 0 20px 8px 20px;
+            border-bottom: 1px solid #222;
+            margin-bottom: 10px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+            color: #ccc;
+            position: relative;
+        }
+
+        .nav-item:hover {
+            background: #1a1a1a;
+        }
+
+        .nav-item.active {
+            background: #1a1a1a;
+            border-left-color: rgba(100, 150, 255, 0.8);
+            color: #fff;
+        }
+
+        .nav-item-icon {
+            font-size: 20px;
+            color: #666;
+        }
+
+        .nav-item.active .nav-item-icon {
+            color: rgba(100, 150, 255, 0.8);
+        }
+
+        .nav-item-label {
+            font-size: 15px;
+            font-weight: 300;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #c82333;
+            color: white;
+            border-radius: 10px;
+            padding: 2px 6px;
+            font-size: 11px;
+            font-weight: 600;
+            min-width: 16px;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .app-nav-section {
+            display: none;
+        }
+
+        .app-nav-section.active {
+            display: block;
+        }
+
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-content::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .main-content::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+
+        .main-content::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 5px;
+        }
+
+        /* ==================== SECTIONS ==================== */
+
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .section-header {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #222;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 300;
+            color: #fff;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-description {
+            font-size: 14px;
+            color: #666;
+            font-weight: 300;
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .content-section.active {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* ==================== HOME VIEW ==================== */
+
+        .creator-actions {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .created-apps-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .app-card {
+            background: #121212;
+            border: 1px solid #222;
+            padding: 20px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .app-card:hover {
+            border-color: rgba(100, 150, 255, 0.5);
+            background: #1a1a1a;
+        }
+
+        .app-card-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: #666;
+        }
+
+        .app-card-title {
+            font-size: 18px;
+            font-weight: 400;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .app-card-description {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        /* ==================== BANNED APPS ==================== */
+
+        .banned-apps-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .banned-app-card {
+            background: #121212;
+            border: 1px solid #c82333;
+            padding: 20px;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .banned-app-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #c82333;
+        }
+
+        .banned-app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .banned-app-info h3 {
+            font-size: 18px;
+            font-weight: 400;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .banned-app-info p {
+            font-size: 14px;
+            color: #666;
+            margin: 0;
+        }
+
+        .review-claim-btn {
+            background: rgba(100, 150, 255, 0.1);
+            border: 1px solid rgba(100, 150, 255, 0.5);
+            color: rgba(100, 150, 255, 0.8);
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .banned-app-card.lifted {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .lifted-mark {
+            background: rgba(40, 167, 69, 0.1);
+            border: 1px solid rgba(40, 167, 69, 0.5);
+            color: rgba(40, 167, 69, 0.8);
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .permanent-mark {
+            background: rgba(220, 53, 69, 0.1);
+            border: 1px solid rgba(220, 53, 69, 0.5);
+            color: rgba(220, 53, 69, 0.8);
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* ==================== ASSETS ==================== */
+
+        .assets-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .asset-card {
+            background: #121212;
+            border: 1px solid #222;
+            padding: 20px;
+            border-radius: 4px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .asset-card:hover {
+            border-color: rgba(100, 150, 255, 0.5);
+            background: #1a1a1a;
+        }
+
+        .asset-card img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .asset-card div {
+            font-size: 14px;
+            color: #ccc;
+            margin-bottom: 10px;
+        }
+
+        .asset-card button {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: #888;
+            padding: 5px 10px;
+            margin: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .asset-card button:hover {
+            background: #222;
+            color: #aaa;
+        }
+
+        .asset-card input {
+            margin-top: 10px;
+        }
+
+        /* ==================== EDITOR VIEW ==================== */
+
+        .editor-form {
+            max-width: 800px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            color: #888;
+            font-weight: 300;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="url"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: #ccc;
+            font-size: 14px;
+            font-weight: 300;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        input[type="url"]:focus,
+        input[type="number"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: rgba(100, 150, 255, 0.5);
+            background: #1e1e1e;
+        }
+
+        /* ==================== MONACO EDITOR ==================== */
+
+        #code-section .section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 0;
+        }
+
+        .monaco-editor-container {
+            flex: 1;
+            min-height: 600px;
+        }
+
+        .monaco-editor-container.fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 9999;
+        }
+
+        .editor-toolbar {
+            background: #1a1a1a;
+            border-bottom: 1px solid #333;
+            padding: 10px 15px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .editor-menu {
+            background: #1e1e1e;
+            border-bottom: 1px solid #333;
+            padding: 12px 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .editor-menu button {
+            background: transparent;
+            border: none;
+            color: #ccc;
+            padding: 8px 12px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border-radius: 4px;
+        }
+
+        .editor-menu button:hover {
+            background: #2a2a2a;
+            color: #fff;
+        }
+
+        .editor-menu button:not(:last-child)::after {
+            content: '|';
+            margin-left: 15px;
+            color: #666;
+        }
+
+        .editor-toolbar select {
+            background: #121212;
+            border: 1px solid #333;
+            color: #ccc;
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+
+        .editor-toolbar button {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: #888;
+            padding: 5px 10px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .editor-toolbar button:hover {
+            background: #222;
+            color: #aaa;
+        }
+
+        /* ==================== ICON UPLOAD ==================== */
+
+        .icon-upload-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .icon-preview {
+            width: 64px;
+            height: 64px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: #666;
+        }
+
+        .icon-upload-btn {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: #888;
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .icon-upload-btn:hover {
+            background: #222;
+            color: #aaa;
+        }
+
+        /* ==================== TOGGLE ==================== */
+
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #333;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: rgba(100, 150, 255, 0.8);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+
+        .toggle-label {
+            font-size: 14px;
+            color: #888;
+        }
+
+        /* ==================== BUTTONS ==================== */
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #1a1a1a;
+            color: #888;
+            border: 1px solid #333;
+            font-size: 14px;
+            font-weight: 300;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background: #222;
+            color: #aaa;
+            border-color: #444;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #1a1a1a 0%, #252525 100%);
+            color: #fff;
+            border-color: #444;
+        }
+
+        .btn-primary:hover {
+            border-color: rgba(100, 150, 255, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(100, 150, 255, 0.2);
+        }
+
+        .btn-secondary {
+            background: #1a1a1a;
+            color: #aaa;
+            border-color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #222;
+            color: #ccc;
+        }
+
+        /* ==================== MODALS ==================== */
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-content {
+            background: #121212;
+            margin: 0 auto;
+            padding: 0;
+            border: 1px solid #333;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .large-modal-content {
+            max-width: 800px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: #fff;
+            font-size: 24px;
+            font-weight: 300;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 28px;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            color: #fff;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        .instructions-content h3 {
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
+        .instruction-section {
+            margin-bottom: 20px;
+        }
+
+        .instruction-section h4 {
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .copy-box {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #ccc;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar-layout">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-title">App Creator</div>
+            </div>
+            <div class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-item active" data-section="home">
+                        <span class="material-symbols-outlined nav-item-icon">home</span>
+                        <span class="nav-item-label">Home</span>
+                    </div>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-section-title">Support</div>
+                    <div class="nav-item" data-section="deletion-request">
+                        <span class="material-symbols-outlined nav-item-icon">delete_forever</span>
+                        <span class="nav-item-label">Request Deletion</span>
+                    </div>
+                    <div class="nav-item" data-section="ban-review-request">
+                        <span class="material-symbols-outlined nav-item-icon">gavel</span>
+                        <span class="nav-item-label">Request Ban Review</span>
+                    </div>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-section-title">Moderation</div>
+                    <div class="nav-item" data-section="app-bans">
+                        <span class="material-symbols-outlined nav-item-icon">block</span>
+                        <span class="nav-item-label">App Bans</span>
+                    </div>
+                    <div class="nav-item" data-section="published-apps">
+                        <span class="material-symbols-outlined nav-item-icon">publish</span>
+                        <span class="nav-item-label">Published Apps</span>
+                    </div>
+                </div>
+                <div id="app-nav-section" class="app-nav-section">
+                    <div class="nav-section-title" id="app-nav-title">Current App</div>
+                    <div class="nav-item" data-section="properties">
+                        <span class="material-symbols-outlined nav-item-icon">settings</span>
+                        <span class="nav-item-label">Properties</span>
+                    </div>
+                    <div class="nav-item" data-section="code">
+                        <span class="material-symbols-outlined nav-item-icon">code</span>
+                        <span class="nav-item-label">Code</span>
+                    </div>
+                    <div class="nav-item" data-section="assets">
+                        <span class="material-symbols-outlined nav-item-icon">image</span>
+                        <span class="nav-item-label">Assets</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Home View -->
+            <div id="home-section" class="content-section active">
+                <div class="section">
+                    <div class="section-header">
+                        <h1 class="section-title">
+                            <span class="material-symbols-outlined">apps</span>
+                            Your Apps
+                        </h1>
+                        <p class="section-description">Create and manage your custom apps. Use Ctrl+S to save while editing.</p>
+                    </div>
+                    <div class="creator-actions">
+                        <button id="create-new-app" class="btn btn-primary">
+                            <span class="material-symbols-outlined">add</span>
+                            Create New App
+                        </button>
+                        <button id="import-app-xml" class="btn btn-secondary">
+                            <span class="material-symbols-outlined">upload_file</span>
+                            Import XML
+                        </button>
+                        <input type="file" id="xml-file-input" accept=".xml" style="display: none;">
+                    </div>
+                    <div id="created-apps-list" class="created-apps-list">
+                        <!-- Apps will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Properties View -->
+            <div id="properties-section" class="content-section">
+                <div class="section">
+                    <div class="section-header">
+                        <h1 class="section-title">
+                            <span class="material-symbols-outlined">settings</span>
+                            App Properties
+                        </h1>
+                        <p class="section-description">Configure your app settings and metadata</p>
+                    </div>
+                    <div class="editor-form">
+                        <div class="form-group">
+                            <label for="app-name-input">App Name</label>
+                            <input type="text" id="app-name-input" placeholder="Enter app name">
+                        </div>
+                        <div class="form-group">
+                            <label for="app-description-input">Description</label>
+                            <input type="text" id="app-description-input" placeholder="Enter app description">
+                        </div>
+                        <div class="form-group">
+                            <label>App Icon</label>
+                            <div class="icon-upload-container">
+                                <div class="icon-preview" id="icon-preview">
+                                    <span class="material-symbols-outlined">apps</span>
+                                </div>
+                                <button class="icon-upload-btn" id="upload-icon-btn">
+                                    <span class="material-symbols-outlined">upload</span>
+                                    Upload Icon
+                                </button>
+                                <button class="icon-upload-btn" id="paste-icon-btn">
+                                    <span class="material-symbols-outlined">content_paste</span>
+                                    Paste Icon
+                                </button>
+                                <input type="file" id="icon-file-input" accept="image/*" style="display: none;">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Options</label>
+                            <div class="form-group">
+                                <div class="toggle-container">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="app-lightmode-toggle">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                    <span class="toggle-label">Light Mode Compatible</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="toggle-container">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="app-opensource-toggle">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                    <span class="toggle-label">Open Source</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="toggle-container">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="app-generic-style-toggle" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                    <span class="toggle-label">Use Generic Style Template</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button id="save-app-btn" class="btn btn-primary" title="Save your app changes">
+                                <span class="material-symbols-outlined">save</span>
+                                Save App
+                            </button>
+                            <button id="export-app-btn" class="btn btn-secondary" title="Export app as XML file">
+                                <span class="material-symbols-outlined">download</span>
+                                Export XML
+                            </button>
+                            <button id="publish-app-btn" class="btn btn-secondary" title="Publish your app">
+                                <span class="material-symbols-outlined">publish</span>
+                                Publish App
+                            </button>
+                        </div>
+                        <div id="alternative-publish-container" style="display: none; text-align: right; margin-top: 10px;">
+                            <button id="alternative-publish-btn" style="background: none; border: none; color: rgba(100, 150, 255, 0.9); text-decoration: underline; cursor: pointer; font-size: 14px;">
+                                No, I want to publish it
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Code View -->
+            <div id="code-section" class="content-section">
+                <div class="section">
+                    <div class="section-header">
+                        <h1 class="section-title">
+                            <span class="material-symbols-outlined">code</span>
+                            Code Editor
+                        </h1>
+                        <p class="section-description">Edit your app's HTML code</p>
+                    </div>
+                    <div class="editor-menu">
+                        <button id="save-menu-btn" title="Save your code changes">
+                            <span class="material-symbols-outlined">save</span>
+                            Save
+                        </button>
+                        <button id="exit-menu-btn" title="Exit to home view">
+                            <span class="material-symbols-outlined">logout</span>
+                            Exit
+                        </button>
+                        <button id="paste-image-menu-btn" title="Paste image from clipboard">
+                            <span class="material-symbols-outlined">content_paste</span>
+                            Paste Image
+                        </button>
+                        <button id="preview-menu-btn" title="Preview your app">
+                            <span class="material-symbols-outlined">visibility</span>
+                            Preview
+                        </button>
+                    </div>
+                    <div id="monaco-editor-container" class="monaco-editor-container"></div>
+                </div>
+            </div>
+
+            <!-- Assets View -->
+            <div id="assets-section" class="content-section">
+                <div class="section">
+                    <div class="section-header">
+                        <h1 class="section-title">
+                            <span class="material-symbols-outlined">image</span>
+                            Assets Manager
+                        </h1>
+                        <p class="section-description">Manage images and other assets for your app</p>
+                    </div>
+                    <div class="asset-actions" style="margin-bottom: 20px;">
+                        <button id="add-asset-btn" class="btn btn-primary">
+                            <span class="material-symbols-outlined">add</span>
+                            Add Asset
+                        </button>
+                        <button id="paste-asset-btn" class="btn btn-secondary">
+                            <span class="material-symbols-outlined">content_paste</span>
+                            Paste from Clipboard
+                        </button>
+                        <input type="file" id="asset-file-input" accept="image/*" multiple style="display: none;">
+                    </div>
+                    <div id="assets-list" class="assets-list">
+                        <!-- Assets will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deletion Request View -->
+            <div id="deletion-request-section" class="content-section">
+                <div class="section">
+                    <div class="section-header">
+                        <h1 class="section-title">
+                            <span class="material-symbols-outlined">delete_forever</span>
+                            Request App Deletion
+                        </h1>
+                        <p class="section-description">Request deletion of an app from the community store that you no longer have access to.</p>
+                    </div>
+                    <div class="editor-form">
+                        <p style="color: #666; margin-bottom: 20px;">If you've lost access to an app you published (e.g., deleted your local copy) and want it removed from the community store, submit a deletion request. We'll review it and remove the app if appropriate.</p>
+                        <button id="submit-deletion-request" class="btn btn-primary">
+                            <span class="material-symbols-outlined">send</span>
+                            Submit Deletion Request
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ban Review Request View -->
+            <div id="ban-review-request-section" class="content-section">
+                <div class="section">
+                    <div class="section-header">
+                        <h1 class="section-title">
+                            <span class="material-symbols-outlined">gavel</span>
+                            Request Ban Review
+                        </h1>
+                        <p class="section-description">Request a review of your banned app to have the ban lifted.</p>
+                    </div>
+                    <div class="editor-form">
+                        <p style="color: #666; margin-bottom: 20px;">If you believe your app was banned unfairly or you have made the necessary changes, you can request a ban review. We'll review your case and may lift the ban if appropriate.</p>
+                        <button id="submit-ban-review-request" class="btn btn-primary">
+                            <span class="material-symbols-outlined">send</span>
+                            Submit App Ban Review
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- App Bans View -->
+            <div id="app-bans-section" class="content-section">
+                <div class="section">
+                    <div class="section-header">
+                        <h1 class="section-title">
+                            <span class="material-symbols-outlined">block</span>
+                            App Bans
+                        </h1>
+                        <p class="section-description">View apps that have been banned from the community store.</p>
+                    </div>
+                    <div id="banned-apps-list" class="banned-apps-list">
+                        <div class="loading">
+                            <div class="spinner"></div>
+                            Loading banned apps...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Published Apps View -->
+            <div id="published-apps-section" class="content-section">
+                <div class="section">
+                    <div class="section-header">
+                        <h1 class="section-title">
+                            <span class="material-symbols-outlined">publish</span>
+                            Published Apps
+                        </h1>
+                        <p class="section-description">View and manage your published apps.</p>
+                    </div>
+                    <div id="published-apps-list" class="created-apps-list">
+                        <!-- Apps will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- New App Modal -->
+    <div id="new-app-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create New App</h2>
+                <button class="modal-close" id="close-new-app-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="new-app-name">App Name</label>
+                    <input type="text" id="new-app-name" placeholder="Enter app name" maxlength="50">
+                </div>
+                <div class="modal-actions">
+                    <button id="create-app-confirm" class="btn btn-primary">
+                        <span class="material-symbols-outlined">add</span>
+                        Create App
+                    </button>
+                    <button id="create-app-cancel" class="btn btn-secondary">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Publish Modal -->
+    <div id="publish-modal" class="modal">
+        <div class="modal-content large-modal-content">
+            <div class="modal-header">
+                <h2>Publish Your App</h2>
+                <button class="modal-close" id="close-publish-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Choose how you want to publish your app:</p>
+                <div class="modal-actions">
+                    <button id="open-mailto-btn" class="btn btn-primary">
+                        <span class="material-symbols-outlined">mail</span>
+                        Submit for Featured
+                    </button>
+                    <button id="publish-community-btn" class="btn btn-secondary">
+                        <span class="material-symbols-outlined">group</span>
+                        Publish to Community
+                    </button>
+                    <button id="show-manual-instructions-btn" class="btn btn-secondary">
+                        <span class="material-symbols-outlined">help</span>
+                        Manual Instructions
+                    </button>
+                </div>
+                
+                <!-- Community Publish Fields -->
+                <div id="community-publish-fields" style="display: none; margin-top: 20px;">
+                    <h3 style="color: #fff; margin-bottom: 15px;">Community Publishing Details</h3>
+                    <div class="form-group">
+                        <label for="publish-author">Author Name</label>
+                        <input type="text" id="publish-author" placeholder="Your name or username" value="Anonymous">
+                    </div>
+                    <div class="form-group">
+                        <label for="publish-version">Version</label>
+                        <input type="text" id="publish-version" placeholder="e.g., 1.0.0" value="1.0.0">
+                    </div>
+                    <div class="form-group">
+                        <label for="publish-tags">Tags (comma-separated)</label>
+                        <input type="text" id="publish-tags" placeholder="e.g., utility, tool, game" value="">
+                    </div>
+                    <div class="modal-actions">
+                        <button id="confirm-community-publish" class="btn btn-primary">
+                            <span class="material-symbols-outlined">publish</span>
+                            Publish to Community
+                        </button>
+                        <button id="cancel-community-publish" class="btn btn-secondary">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Deletion Request Modal -->
+    <div id="deletion-request-modal" class="modal">
+        <div class="modal-content large-modal-content">
+            <div class="modal-header">
+                <h2>Request App Deletion</h2>
+                <button class="modal-close" id="close-deletion-request-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="deletion-author">Your Name/Author</label>
+                    <input type="text" id="deletion-author" placeholder="Enter your name or author name">
+                </div>
+                <div class="form-group">
+                    <label for="deletion-app-id">App ID (if known)</label>
+                    <input type="text" id="deletion-app-id" placeholder="Enter the app ID if you remember it">
+                </div>
+                <div class="form-group">
+                    <label for="deletion-email">Your Email</label>
+                    <input type="email" id="deletion-email" placeholder="Enter your email address">
+                </div>
+                <div class="form-group">
+                    <label for="deletion-description">Description</label>
+                    <textarea id="deletion-description" placeholder="Describe your issue and why you want the app deleted" rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="deletion-consent"> I consent to this deletion request being processed
+                    </label>
+                </div>
+                <div class="modal-actions">
+                    <button id="submit-deletion-ticket" class="btn btn-primary">
+                        <span class="material-symbols-outlined">send</span>
+                        Submit Request
+                    </button>
+                    <button id="cancel-deletion-request" class="btn btn-secondary">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="../../scripts/FirestoreHandler.js"></script>
+    <script type="module" src="main.js"></script>
+</body>
+</html>
